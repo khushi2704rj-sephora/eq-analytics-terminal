@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use this software in your research or business analytics projects, please cite it as below."
+authors:
+- family-names: "Kothari"
+  given-names: "Khushi"
+title: "Nexus Equity Terminal: RAG-Powered AI Financial Analysis Platform"
+version: 2.0.0
+date-released: 2026-02-24
+url: "https://github.com/khushi2704rj-sephora/eq-analytics-terminal"
+repository-code: "https://github.com/khushi2704rj-sephora/eq-analytics-terminal"
+abstract: "An enterprise-grade quantitative trading and equity research platform bridging deterministic financial modeling (DCF) with Generative AI (Llama-3.1). Features dynamic retrieval-augmented generation (RAG) for ingesting SEC filings and a macroeconomic shock simulator."

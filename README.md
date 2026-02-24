@@ -51,6 +51,59 @@ These qualitative insights are then seamlessly injected into quantitative sandbo
 
 ---
 
+## 📂 Repository Structure
+
+```
+eq-analytics-terminal/
+│
+├── README.md                       ← You are here
+├── LICENSE                         ← MIT License
+├── CITATION.cff                    ← Academic citation metadata
+├── CONTRIBUTING.md                 ← Contribution guidelines
+├── .github/workflows/              ← CI/CD Actions
+│   └── python-app.yml
+│
+├── docs/                           ← Research documentation
+│   ├── SETUP.md                    ← Full local & cloud deployment guide
+│   ├── ARCHITECTURE.md             ← Technical architecture & RAG data-flow
+│   └── METHODOLOGY.md              ← Academic research framework
+│
+├── app.py                          ← Main Streamlit application
+├── macro_universe.json             ← Simulated baseline for 30 tech companies
+└── requirements.txt                ← Python dependencies
+```
+
+---
+
+## 📚 Documentation
+
+| Document | Description |
+|---|---|
+| [📖 Setup Guide](docs/SETUP.md) | Step-by-step installation & configuration |
+| [🏗️ Architecture](docs/ARCHITECTURE.md) | Pipeline architecture and FAISS vector indexing breakdown |
+| [🔬 Methodology](docs/METHODOLOGY.md) | Research framework, DCF integration, and hallucination mitigation |
+| [🤝 Contributing](CONTRIBUTING.md) | Guidelines for academic and open-source contributions |
+
+---
+
+## 📝 Citation
+
+If you use this research, pipeline, or methodology in your academic work, please cite:
+
+```bibtex
+@software{nexus_terminal_2026,
+  author       = {Kothari, Khushi},
+  title        = {Nexus Equity Terminal: RAG-Powered AI Financial Analysis Platform},
+  year         = {2026},
+  publisher    = {GitHub},
+  url          = {https://github.com/khushi2704rj-sephora/eq-analytics-terminal}
+}
+```
+
+> See [`CITATION.cff`](CITATION.cff) for machine-readable citation metadata.
+
+---
+
 ## 🚀 Installation & Local Deployment
 
 To run this terminal locally, ensure you have Python 3.10+ installed and a valid HuggingFace Access Token.
