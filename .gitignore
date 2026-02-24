@@ -1,0 +1,57 @@
+# ===========================
+# Environment & Secrets
+# ===========================
+.env
+.env.*
+config/*.env
+!config/env.example
+
+# ===========================
+# Data Files (too large for git)
+# ===========================
+*.xlsx
+*.csv
+*.xls
+data/raw/
+data/processed/
+data/exports/
+*.sqlite3
+*.db
+
+# ===========================
+# Python
+# ===========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.eggs/
+venv/
+.venv/
+env/
+
+# ===========================
+# IDE & OS
+# ===========================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+*.tmp
+*.bak
+
+# ===========================
+# Jupyter Notebooks (checkpoints)
+# ===========================
+.ipynb_checkpoints/
+
+# ===========================
+# Logs
+# ===========================
+logs/
+*.log
