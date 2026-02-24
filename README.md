@@ -1,5 +1,10 @@
 <div align="center">
-  <img src="assets/banner.png" alt="Nexus Equity Terminal Banner" width="100%">
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0d1117,50:1a2a4f,100:3b82f6&height=220&section=header&text=Nexus%20Equity%20Terminal&fontSize=42&fontColor=ffffff&animation=fadeIn&fontAlignY=35&desc=AI-Powered%20Financial%20Analysis%20%7C%20RAG%20Pipelines%20%7C%20DCF%20Valuation&descSize=16&descAlignY=55&descColor=cccccc" alt="Banner" width="100%">
+
+</div>
+
+<div align="center">
 
   # ⚡ Nexus Equity Terminal
   
@@ -71,4 +76,24 @@ streamlit run app.py
 
 <div align="center">
   <i>Developed as a Capstone Demonstrator for Advanced Business Analytics and AI.</i>
+</div>
+
+---
+
+<div align="center">
+
+### 👩‍💻 Author
+
+**Khushi Kothari**
+
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/khushi2704rj-sephora)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/khushi-kothari--/)
+[![Gmail](https://img.shields.io/badge/Gmail-D14836?style=flat-square&logo=gmail&logoColor=white)](mailto:khushi2704.ak@gmail.com)
+
+*MSc Business Analytics · Financial Modeling & Equity Research*
+
+---
+
+⭐ **If this project helps your research, please star the repository** ⭐
+
 </div>
