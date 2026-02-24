@@ -17,7 +17,7 @@ import random
 # ─────────────────────────────────────────────
 # PAGE CONFIG & ULTRA-PREMIUM STYLING
 # ─────────────────────────────────────────────
-st.set_page_config(page_title='Warwick Analytics Terminal | Capstone', page_icon='⚡', layout='wide', initial_sidebar_state='collapsed')
+st.set_page_config(page_title='Nexus Equity Terminal | Capstone', page_icon='⚡', layout='wide', initial_sidebar_state='collapsed')
 
 st.markdown('''<style>
 /* Core Terminal Reset */
@@ -104,7 +104,7 @@ div[data-testid="stTabs"] button[aria-selected="true"] {
 # Fake top navigation bar
 st.markdown('''
 <div class="terminal-nav">
-    <div class="nav-brand">WARWICK // EQ.ANALYTICS.TERMINAL [V2]</div>
+    <div class="nav-brand">NEXUS // EQ.ANALYTICS.TERMINAL [V2]</div>
     <div class="nav-status">SYSTEM ONLINE // LATENCY: 12ms</div>
 </div>
 ''', unsafe_allow_html=True)

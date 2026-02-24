@@ -1,7 +1,7 @@
 <div align="center">
-  <img src="assets/banner.png" alt="Warwick Analytics Terminal Banner" width="100%">
+  <img src="assets/banner.png" alt="Nexus Equity Terminal Banner" width="100%">
 
-  # ⚡ Warwick Analytics Terminal
+  # ⚡ Nexus Equity Terminal
   
   **Enterprise-Grade Equity Research M&A Dashboard powered by RAG, Llama-3.1, and Dynamic FAISS Indexing.**
 
@@ -18,7 +18,7 @@
 
 ## 📖 Overview
 
-The **Warwick Analytics Terminal** (V2 Enterprise) is a quantitative trading and equity research platform designed to bridge the gap between deterministic financial modeling and Generative AI. 
+The **Nexus Equity Terminal** (V2 Enterprise) is a quantitative trading and equity research platform designed to bridge the gap between deterministic financial modeling and Generative AI. 
 
 Instead of relying on static APIs, this terminal utilizes a **Dynamic Retrieval-Augmented Generation (RAG) pipeline** to ingest live SEC 10-K and Annual Report PDFs, vectorizes the semantic context via `sentence-transformers`, and leverages `Llama-3.1-8B-Instruct` to generate heavily structured institutional analyst briefs. 
 
