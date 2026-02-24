@@ -1,0 +1,662 @@
+{
+  "Microsoft": {
+    "company_name": "Microsoft",
+    "sector": "Financials",
+    "fiscal_year": "FY2025",
+    "competitive_scores": {
+      "innovation": 4,
+      "market_position": 8,
+      "financial_health": 10,
+      "risk_profile": 7
+    },
+    "management_tone": "Cautious",
+    "management_tone_score": 6,
+    "wacc": 0.102,
+    "growth_rate": 0.049,
+    "fcf_base": 7661,
+    "analyst_verdict": "Maintain weighting on Microsoft given current sector dynamics.",
+    "sensitivity": {
+      "rates": -0.04,
+      "inflation": -0.79,
+      "supply_chain": -0.33
+    }
+  },
+  "NVIDIA": {
+    "company_name": "NVIDIA",
+    "sector": "Financials",
+    "fiscal_year": "FY2025",
+    "competitive_scores": {
+      "innovation": 5,
+      "market_position": 5,
+      "financial_health": 8,
+      "risk_profile": 4
+    },
+    "management_tone": "Defensive",
+    "management_tone_score": 8,
+    "wacc": 0.078,
+    "growth_rate": 0.031,
+    "fcf_base": 10336,
+    "analyst_verdict": "Maintain weighting on NVIDIA given current sector dynamics.",
+    "sensitivity": {
+      "rates": 0.07,
+      "inflation": -0.25,
+      "supply_chain": -0.62
+    }
+  },
+  "Alphabet": {
+    "company_name": "Alphabet",
+    "sector": "Financials",
+    "fiscal_year": "FY2025",
+    "competitive_scores": {
+      "innovation": 8,
+      "market_position": 7,
+      "financial_health": 3,
+      "risk_profile": 2
+    },
+    "management_tone": "Cautious",
+    "management_tone_score": 8,
+    "wacc": 0.062,
+    "growth_rate": 0.045,
+    "fcf_base": 19836,
+    "analyst_verdict": "Maintain weighting on Alphabet given current sector dynamics.",
+    "sensitivity": {
+      "rates": -0.41,
+      "inflation": -0.29,
+      "supply_chain": -0.85
+    }
+  },
+  "Amazon": {
+    "company_name": "Amazon",
+    "sector": "Healthcare",
+    "fiscal_year": "FY2025",
+    "competitive_scores": {
+      "innovation": 6,
+      "market_position": 7,
+      "financial_health": 5,
+      "risk_profile": 5
+    },
+    "management_tone": "Defensive",
+    "management_tone_score": 9,
+    "wacc": 0.102,
+    "growth_rate": 0.021,
+    "fcf_base": 2632,
+    "analyst_verdict": "Maintain weighting on Amazon given current sector dynamics.",
+    "sensitivity": {
+      "rates": 0.1,
+      "inflation": -0.31,
+      "supply_chain": -0.39
+    }
+  },
+  "Meta": {
+    "company_name": "Meta",
+    "sector": "Healthcare",
+    "fiscal_year": "FY2025",
+    "competitive_scores": {
+      "innovation": 6,
+      "market_position": 5,
+      "financial_health": 10,
+      "risk_profile": 9
+    },
+    "management_tone": "Defensive",
+    "management_tone_score": 8,
+    "wacc": 0.114,
+    "growth_rate": 0.016,
+    "fcf_base": 8824,
+    "analyst_verdict": "Maintain weighting on Meta given current sector dynamics.",
+    "sensitivity": {
+      "rates": -0.13,
+      "inflation": -0.24,
+      "supply_chain": -0.24
+    }
+  },
+  "Tesla": {
+    "company_name": "Tesla",
+    "sector": "Energy",
+    "fiscal_year": "FY2025",
+    "competitive_scores": {
+      "innovation": 6,
+      "market_position": 9,
+      "financial_health": 6,
+      "risk_profile": 8
+    },
+    "management_tone": "Defensive",
+    "management_tone_score": 8,
+    "wacc": 0.085,
+    "growth_rate": 0.043,
+    "fcf_base": 6701,
+    "analyst_verdict": "Maintain weighting on Tesla given current sector dynamics.",
+    "sensitivity": {
+      "rates": 0.03,
+      "inflation": -0.7,
+      "supply_chain": -0.68
+    }
+  },
+  "JPMorgan": {
+    "company_name": "JPMorgan",
+    "sector": "Energy",
+    "fiscal_year": "FY2025",
+    "competitive_scores": {
+      "innovation": 10,
+      "market_position": 6,
+      "financial_health": 3,
+      "risk_profile": 7
+    },
+    "management_tone": "Optimistic",
+    "management_tone_score": 9,
+    "wacc": 0.111,
+    "growth_rate": 0.039,
+    "fcf_base": 16925,
+    "analyst_verdict": "Maintain weighting on JPMorgan given current sector dynamics.",
+    "sensitivity": {
+      "rates": 0.14,
+      "inflation": -0.47,
+      "supply_chain": -0.58
+    }
+  },
+  "Johnson&Johnson": {
+    "company_name": "Johnson&Johnson",
+    "sector": "Healthcare",
+    "fiscal_year": "FY2025",
+    "competitive_scores": {
+      "innovation": 10,
+      "market_position": 10,
+      "financial_health": 8,
+      "risk_profile": 6
+    },
+    "management_tone": "Defensive",
+    "management_tone_score": 8,
+    "wacc": 0.093,
+    "growth_rate": 0.046,
+    "fcf_base": 15228,
+    "analyst_verdict": "Maintain weighting on Johnson&Johnson given current sector dynamics.",
+    "sensitivity": {
+      "rates": -0.42,
+      "inflation": -0.25,
+      "supply_chain": -0.19
+    }
+  },
+  "Walmart": {
+    "company_name": "Walmart",
+    "sector": "Energy",
+    "fiscal_year": "FY2025",
+    "competitive_scores": {
+      "innovation": 5,
+      "market_position": 6,
+      "financial_health": 9,
+      "risk_profile": 2
+    },
+    "management_tone": "Cautious",
+    "management_tone_score": 7,
+    "wacc": 0.068,
+    "growth_rate": 0.049,
+    "fcf_base": 8406,
+    "analyst_verdict": "Maintain weighting on Walmart given current sector dynamics.",
+    "sensitivity": {
+      "rates": -0.05,
+      "inflation": -0.33,
+      "supply_chain": -0.64
+    }
+  },
+  "Procter&Gamble": {
+    "company_name": "Procter&Gamble",
+    "sector": "Financials",
+    "fiscal_year": "FY2025",
+    "competitive_scores": {
+      "innovation": 9,
+      "market_position": 6,
+      "financial_health": 9,
+      "risk_profile": 3
+    },
+    "management_tone": "Optimistic",
+    "management_tone_score": 5,
+    "wacc": 0.063,
+    "growth_rate": 0.027,
+    "fcf_base": 9060,
+    "analyst_verdict": "Maintain weighting on Procter&Gamble given current sector dynamics.",
+    "sensitivity": {
+      "rates": -0.18,
+      "inflation": -0.6,
+      "supply_chain": -0.36
+    }
+  },
+  "ExxonMobil": {
+    "company_name": "ExxonMobil",
+    "sector": "Energy",
+    "fiscal_year": "FY2025",
+    "competitive_scores": {
+      "innovation": 10,
+      "market_position": 7,
+      "financial_health": 10,
+      "risk_profile": 7
+    },
+    "management_tone": "Defensive",
+    "management_tone_score": 9,
+    "wacc": 0.103,
+    "growth_rate": 0.077,
+    "fcf_base": 8346,
+    "analyst_verdict": "Maintain weighting on ExxonMobil given current sector dynamics.",
+    "sensitivity": {
+      "rates": 0.16,
+      "inflation": -0.19,
+      "supply_chain": -0.2
+    }
+  },
+  "HomeDepot": {
+    "company_name": "HomeDepot",
+    "sector": "Energy",
+    "fiscal_year": "FY2025",
+    "competitive_scores": {
+      "innovation": 8,
+      "market_position": 10,
+      "financial_health": 3,
+      "risk_profile": 3
+    },
+    "management_tone": "Optimistic",
+    "management_tone_score": 5,
+    "wacc": 0.106,
+    "growth_rate": 0.06,
+    "fcf_base": 1078,
+    "analyst_verdict": "Maintain weighting on HomeDepot given current sector dynamics.",
+    "sensitivity": {
+      "rates": 0.07,
+      "inflation": -0.58,
+      "supply_chain": -0.02
+    }
+  },
+  "Mastercard": {
+    "company_name": "Mastercard",
+    "sector": "Financials",
+    "fiscal_year": "FY2025",
+    "competitive_scores": {
+      "innovation": 6,
+      "market_position": 10,
+      "financial_health": 5,
+      "risk_profile": 6
+    },
+    "management_tone": "Cautious",
+    "management_tone_score": 7,
+    "wacc": 0.119,
+    "growth_rate": 0.041,
+    "fcf_base": 9731,
+    "analyst_verdict": "Maintain weighting on Mastercard given current sector dynamics.",
+    "sensitivity": {
+      "rates": -0.06,
+      "inflation": -0.38,
+      "supply_chain": -0.7
+    }
+  },
+  "Chevron": {
+    "company_name": "Chevron",
+    "sector": "Financials",
+    "fiscal_year": "FY2025",
+    "competitive_scores": {
+      "innovation": 8,
+      "market_position": 6,
+      "financial_health": 8,
+      "risk_profile": 3
+    },
+    "management_tone": "Optimistic",
+    "management_tone_score": 8,
+    "wacc": 0.115,
+    "growth_rate": 0.045,
+    "fcf_base": 7380,
+    "analyst_verdict": "Maintain weighting on Chevron given current sector dynamics.",
+    "sensitivity": {
+      "rates": 0.03,
+      "inflation": -0.15,
+      "supply_chain": -0.64
+    }
+  },
+  "Merck": {
+    "company_name": "Merck",
+    "sector": "Financials",
+    "fiscal_year": "FY2025",
+    "competitive_scores": {
+      "innovation": 8,
+      "market_position": 10,
+      "financial_health": 9,
+      "risk_profile": 6
+    },
+    "management_tone": "Cautious",
+    "management_tone_score": 6,
+    "wacc": 0.084,
+    "growth_rate": 0.079,
+    "fcf_base": 4378,
+    "analyst_verdict": "Maintain weighting on Merck given current sector dynamics.",
+    "sensitivity": {
+      "rates": 0.11,
+      "inflation": -0.58,
+      "supply_chain": -0.31
+    }
+  },
+  "EliLilly": {
+    "company_name": "EliLilly",
+    "sector": "Energy",
+    "fiscal_year": "FY2025",
+    "competitive_scores": {
+      "innovation": 8,
+      "market_position": 9,
+      "financial_health": 3,
+      "risk_profile": 2
+    },
+    "management_tone": "Cautious",
+    "management_tone_score": 7,
+    "wacc": 0.087,
+    "growth_rate": 0.054,
+    "fcf_base": 12653,
+    "analyst_verdict": "Maintain weighting on EliLilly given current sector dynamics.",
+    "sensitivity": {
+      "rates": -0.22,
+      "inflation": -0.11,
+      "supply_chain": -0.42
+    }
+  },
+  "Broadcom": {
+    "company_name": "Broadcom",
+    "sector": "Healthcare",
+    "fiscal_year": "FY2025",
+    "competitive_scores": {
+      "innovation": 7,
+      "market_position": 6,
+      "financial_health": 10,
+      "risk_profile": 7
+    },
+    "management_tone": "Defensive",
+    "management_tone_score": 5,
+    "wacc": 0.088,
+    "growth_rate": 0.046,
+    "fcf_base": 15672,
+    "analyst_verdict": "Maintain weighting on Broadcom given current sector dynamics.",
+    "sensitivity": {
+      "rates": -0.46,
+      "inflation": -0.44,
+      "supply_chain": -0.64
+    }
+  },
+  "Adobe": {
+    "company_name": "Adobe",
+    "sector": "Consumer/Retail",
+    "fiscal_year": "FY2025",
+    "competitive_scores": {
+      "innovation": 5,
+      "market_position": 10,
+      "financial_health": 5,
+      "risk_profile": 8
+    },
+    "management_tone": "Cautious",
+    "management_tone_score": 8,
+    "wacc": 0.09,
+    "growth_rate": 0.063,
+    "fcf_base": 3767,
+    "analyst_verdict": "Maintain weighting on Adobe given current sector dynamics.",
+    "sensitivity": {
+      "rates": -0.13,
+      "inflation": -0.53,
+      "supply_chain": -0.74
+    }
+  },
+  "Cisco": {
+    "company_name": "Cisco",
+    "sector": "Energy",
+    "fiscal_year": "FY2025",
+    "competitive_scores": {
+      "innovation": 5,
+      "market_position": 9,
+      "financial_health": 4,
+      "risk_profile": 7
+    },
+    "management_tone": "Defensive",
+    "management_tone_score": 6,
+    "wacc": 0.093,
+    "growth_rate": 0.066,
+    "fcf_base": 4316,
+    "analyst_verdict": "Maintain weighting on Cisco given current sector dynamics.",
+    "sensitivity": {
+      "rates": -0.32,
+      "inflation": -0.52,
+      "supply_chain": -0.52
+    }
+  },
+  "Salesforce": {
+    "company_name": "Salesforce",
+    "sector": "Technology",
+    "fiscal_year": "FY2025",
+    "competitive_scores": {
+      "innovation": 8,
+      "market_position": 6,
+      "financial_health": 4,
+      "risk_profile": 4
+    },
+    "management_tone": "Optimistic",
+    "management_tone_score": 5,
+    "wacc": 0.089,
+    "growth_rate": 0.076,
+    "fcf_base": 4558,
+    "analyst_verdict": "Maintain weighting on Salesforce given current sector dynamics.",
+    "sensitivity": {
+      "rates": -0.45,
+      "inflation": -0.27,
+      "supply_chain": -0.22
+    }
+  },
+  "Netflix": {
+    "company_name": "Netflix",
+    "sector": "Financials",
+    "fiscal_year": "FY2025",
+    "competitive_scores": {
+      "innovation": 10,
+      "market_position": 7,
+      "financial_health": 7,
+      "risk_profile": 4
+    },
+    "management_tone": "Optimistic",
+    "management_tone_score": 6,
+    "wacc": 0.095,
+    "growth_rate": 0.053,
+    "fcf_base": 8214,
+    "analyst_verdict": "Maintain weighting on Netflix given current sector dynamics.",
+    "sensitivity": {
+      "rates": 0.03,
+      "inflation": -0.47,
+      "supply_chain": -0.73
+    }
+  },
+  "AMD": {
+    "company_name": "AMD",
+    "sector": "Healthcare",
+    "fiscal_year": "FY2025",
+    "competitive_scores": {
+      "innovation": 9,
+      "market_position": 8,
+      "financial_health": 4,
+      "risk_profile": 9
+    },
+    "management_tone": "Cautious",
+    "management_tone_score": 6,
+    "wacc": 0.068,
+    "growth_rate": 0.034,
+    "fcf_base": 10830,
+    "analyst_verdict": "Maintain weighting on AMD given current sector dynamics.",
+    "sensitivity": {
+      "rates": -0.14,
+      "inflation": -0.47,
+      "supply_chain": -0.81
+    }
+  },
+  "Disney": {
+    "company_name": "Disney",
+    "sector": "Financials",
+    "fiscal_year": "FY2025",
+    "competitive_scores": {
+      "innovation": 10,
+      "market_position": 8,
+      "financial_health": 5,
+      "risk_profile": 8
+    },
+    "management_tone": "Optimistic",
+    "management_tone_score": 5,
+    "wacc": 0.107,
+    "growth_rate": 0.044,
+    "fcf_base": 4240,
+    "analyst_verdict": "Maintain weighting on Disney given current sector dynamics.",
+    "sensitivity": {
+      "rates": -0.14,
+      "inflation": -0.16,
+      "supply_chain": -0.11
+    }
+  },
+  "Intel": {
+    "company_name": "Intel",
+    "sector": "Healthcare",
+    "fiscal_year": "FY2025",
+    "competitive_scores": {
+      "innovation": 4,
+      "market_position": 9,
+      "financial_health": 7,
+      "risk_profile": 9
+    },
+    "management_tone": "Defensive",
+    "management_tone_score": 7,
+    "wacc": 0.061,
+    "growth_rate": 0.043,
+    "fcf_base": 7535,
+    "analyst_verdict": "Maintain weighting on Intel given current sector dynamics.",
+    "sensitivity": {
+      "rates": -0.3,
+      "inflation": -0.58,
+      "supply_chain": -0.55
+    }
+  },
+  "Pfizer": {
+    "company_name": "Pfizer",
+    "sector": "Consumer/Retail",
+    "fiscal_year": "FY2025",
+    "competitive_scores": {
+      "innovation": 4,
+      "market_position": 8,
+      "financial_health": 9,
+      "risk_profile": 3
+    },
+    "management_tone": "Optimistic",
+    "management_tone_score": 8,
+    "wacc": 0.075,
+    "growth_rate": 0.054,
+    "fcf_base": 13566,
+    "analyst_verdict": "Maintain weighting on Pfizer given current sector dynamics.",
+    "sensitivity": {
+      "rates": -0.07,
+      "inflation": -0.71,
+      "supply_chain": -0.39
+    }
+  },
+  "CocaCola": {
+    "company_name": "CocaCola",
+    "sector": "Consumer/Retail",
+    "fiscal_year": "FY2025",
+    "competitive_scores": {
+      "innovation": 8,
+      "market_position": 9,
+      "financial_health": 5,
+      "risk_profile": 2
+    },
+    "management_tone": "Defensive",
+    "management_tone_score": 6,
+    "wacc": 0.088,
+    "growth_rate": 0.062,
+    "fcf_base": 1847,
+    "analyst_verdict": "Maintain weighting on CocaCola given current sector dynamics.",
+    "sensitivity": {
+      "rates": -0.41,
+      "inflation": -0.3,
+      "supply_chain": -0.27
+    }
+  },
+  "PepsiCo": {
+    "company_name": "PepsiCo",
+    "sector": "Technology",
+    "fiscal_year": "FY2025",
+    "competitive_scores": {
+      "innovation": 5,
+      "market_position": 5,
+      "financial_health": 3,
+      "risk_profile": 8
+    },
+    "management_tone": "Defensive",
+    "management_tone_score": 6,
+    "wacc": 0.1,
+    "growth_rate": 0.057,
+    "fcf_base": 14530,
+    "analyst_verdict": "Maintain weighting on PepsiCo given current sector dynamics.",
+    "sensitivity": {
+      "rates": 0.03,
+      "inflation": -0.46,
+      "supply_chain": -0.18
+    }
+  },
+  "Abbott": {
+    "company_name": "Abbott",
+    "sector": "Technology",
+    "fiscal_year": "FY2025",
+    "competitive_scores": {
+      "innovation": 10,
+      "market_position": 10,
+      "financial_health": 4,
+      "risk_profile": 3
+    },
+    "management_tone": "Defensive",
+    "management_tone_score": 8,
+    "wacc": 0.074,
+    "growth_rate": 0.027,
+    "fcf_base": 19276,
+    "analyst_verdict": "Maintain weighting on Abbott given current sector dynamics.",
+    "sensitivity": {
+      "rates": -0.26,
+      "inflation": -0.74,
+      "supply_chain": -0.15
+    }
+  },
+  "Danaher": {
+    "company_name": "Danaher",
+    "sector": "Consumer/Retail",
+    "fiscal_year": "FY2025",
+    "competitive_scores": {
+      "innovation": 6,
+      "market_position": 10,
+      "financial_health": 8,
+      "risk_profile": 6
+    },
+    "management_tone": "Defensive",
+    "management_tone_score": 8,
+    "wacc": 0.116,
+    "growth_rate": 0.036,
+    "fcf_base": 5286,
+    "analyst_verdict": "Maintain weighting on Danaher given current sector dynamics.",
+    "sensitivity": {
+      "rates": -0.03,
+      "inflation": -0.31,
+      "supply_chain": -0.18
+    }
+  },
+  "ThermoFisher": {
+    "company_name": "ThermoFisher",
+    "sector": "Financials",
+    "fiscal_year": "FY2025",
+    "competitive_scores": {
+      "innovation": 6,
+      "market_position": 10,
+      "financial_health": 3,
+      "risk_profile": 5
+    },
+    "management_tone": "Cautious",
+    "management_tone_score": 6,
+    "wacc": 0.089,
+    "growth_rate": 0.061,
+    "fcf_base": 4645,
+    "analyst_verdict": "Maintain weighting on ThermoFisher given current sector dynamics.",
+    "sensitivity": {
+      "rates": -0.06,
+      "inflation": -0.27,
+      "supply_chain": -0.79
+    }
+  }
+}
