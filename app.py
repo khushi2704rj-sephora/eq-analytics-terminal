@@ -842,7 +842,7 @@ with tabs[4]:
                 This tab compares companies within the same industry to find out which ones are <b>outperforming their peers</b>.<br><br>
                 • Select an industry (e.g., Technology) to see all analyzed companies in that sector<br>
                 • The system automatically computes sector-wide averages for key metrics<br>
-                • A 🟢 dot means the company <b>beats</b> the average; a 🔴 dot means it <b>lags behind</b><br><br>
+                • The <b>Quantitative Sector Matrix</b> visually highlights relative strength using gradient heatmaps<br><br>
                 <span style="color: #fbbf24;">→ Upload reports for 2+ companies in Tab 1 to see meaningful comparisons.</span>
             </div>
         </div>
@@ -850,7 +850,7 @@ with tabs[4]:
     else:
         st.markdown('<div class="t-panel">', unsafe_allow_html=True)
         st.markdown('<div class="t-panel-header">INDUSTRY CROSS-SECTION BENCHMARKING</div>', unsafe_allow_html=True)
-        st.info("Select an industry to algorithmically benchmark all ingested companies against their sector averages. A 🟢 indicator signifies an Outperform against the sector mean.")
+        st.info("Select an industry to algorithmically benchmark all ingested companies against their sector averages. The Quantitative Sector Matrix uses color gradients to highlight outperformance (darker green) versus underperformance.")
         
         # Get unique sectors
         sectors = set()
@@ -919,24 +919,22 @@ with tabs[4]:
                 
                 df_data.append({
                     "Asset Ticker": k,
-                    "Innovation (Higher=🟢)": f"{inn} {'🟢' if inn >= avg_inn else '🔴'}",
-                    "Financial Health (Higher=🟢)": f"{fin} {'🟢' if fin >= avg_fin else '🔴'}",
-                    "Risk Profile (Lower=🟢)": f"{risk} {'🟢' if risk <= avg_risk else '🔴'}",
-                    "Mgmt Tone (Higher=🟢)": f"{mgmt} {'🟢' if mgmt >= avg_mgmt else '🔴'}"
+                    "Innovation": inn,
+                    "Financial Health": fin,
+                    "Risk Profile": risk,
+                    "Mgmt Tone": mgmt
                 })
             
-            df = pd.DataFrame(df_data)
-            # Custom styling for dataframe
-            html_table = df.to_html(classes='table table-dark', index=False, escape=False)
-            st.markdown(f'''
-            <style>
-                .table-dark {{width: 100%; color: #d1d5db; border-collapse: collapse; font-family: "JetBrains Mono", monospace; font-size: 12px;}}
-                .table-dark th {{background: #1f2937; padding: 12px; text-align: left; color: #9ca3af; border-bottom: 2px solid #374151;}}
-                .table-dark td {{padding: 12px; border-bottom: 1px solid #1f2937;}}
-                .table-dark tr:hover {{background: #1a1a1a;}}
-            </style>
-            {html_table}
-            ''', unsafe_allow_html=True)
+            df = pd.DataFrame(df_data).set_index("Asset Ticker")
+            
+            st.markdown('<div style="font-size: 11px; color: #9ca3af; margin-bottom: 8px;">QUANTITATIVE SECTOR MATRIX</div>', unsafe_allow_html=True)
+            
+            # Professional Screener Aesthetic using Pandas Styling
+            styled_df = df.style.background_gradient(cmap='Greens', subset=['Innovation', 'Financial Health', 'Mgmt Tone'], vmin=1, vmax=10)\
+                                .background_gradient(cmap='Reds', subset=['Risk Profile'], vmin=1, vmax=10)\
+                                .format(precision=1)
+            
+            st.dataframe(styled_df, use_container_width=True, height=250)
             
         else:
             st.warning("No companies found in this sector yet.")
