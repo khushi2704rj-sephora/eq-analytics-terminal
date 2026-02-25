@@ -104,10 +104,13 @@ div[data-testid="stTabs"] button[aria-selected="true"] {
 </style>''', unsafe_allow_html=True)
 
 # Fake top navigation bar
-st.markdown('''
+import time
+latency = int(time.time() * 1000) % 50 + 12
+
+st.markdown(f'''
 <div class="terminal-nav">
     <div class="nav-brand">NEXUS // EQ.ANALYTICS.TERMINAL [V3]</div>
-    <div class="nav-status">SYSTEM ONLINE // LATENCY: 12ms</div>
+    <div class="nav-status">SYSTEM ONLINE // LATENCY: {latency}ms</div>
 </div>
 '''  , unsafe_allow_html=True)
 
@@ -453,8 +456,10 @@ with tabs[0]:
     </div>
     ''', unsafe_allow_html=True)
 
-    st.markdown('<div class="t-panel">', unsafe_allow_html=True)
-    st.markdown('<div class="t-panel-header">STEP 1: DOCUMENT BATCH UPLOAD</div>', unsafe_allow_html=True)
+    st.markdown(f'''
+    <div class="t-panel">
+        <div class="t-panel-header">STEP 1: DOCUMENT BATCH UPLOAD</div>
+    ''', unsafe_allow_html=True)
     st.info("Upload SEC 10-K or Annual Report PDFs. You can upload files for multiple different companies. In Step 2, you will map each file to its respective Asset Ticker.")
     uploaded_files = st.file_uploader("DROP PDFs HERE", type="pdf", accept_multiple_files=True, label_visibility="collapsed")
     st.markdown('</div>', unsafe_allow_html=True)
@@ -500,8 +505,10 @@ with tabs[0]:
                 # If sectors differ for the same ticker, the first one assigned is used.
                 
             with st.container():
-                st.markdown('<div class="t-panel">', unsafe_allow_html=True)
-                st.markdown('<div class="t-panel-header">PIPELINE EXECUTION LOG (SEQUENTIAL BATCH)</div>', unsafe_allow_html=True)
+                st.markdown(f'''
+                <div class="t-panel">
+                    <div class="t-panel-header">PIPELINE EXECUTION LOG (SEQUENTIAL BATCH)</div>
+                ''', unsafe_allow_html=True)
                 
                 pb = st.progress(0); st_txt = st.empty()
                 total_groups = len(groups)
@@ -539,6 +546,21 @@ with tabs[0]:
 
                 st.markdown('</div>', unsafe_allow_html=True)
 
+        if st.button("🗑️ Clear Database & Reset Workflow"):
+            with sqlite3.connect(DB_PATH) as conn:
+                conn.cursor().execute("DELETE FROM companies")
+                conn.commit()
+            st.session_state.clear()
+            st.rerun()
+            
+    else:
+        st.markdown('''
+        <div style="margin-top:20px; padding:20px; border:1px dashed #374151; border-radius:6px; text-align:center; color:#6b7280; font-size:13px;">
+            <b>Step 2: Metadata Mapping</b> will appear here automatically once you drop your PDFs above. 
+            <br>You will be able to assign tickers and sectors before executing the analysis.
+        </div>
+        ''', unsafe_allow_html=True)
+
 # --- TAB 2: TERMINAL ---
 with tabs[1]:
     if not st.session_state.briefs:
@@ -552,7 +574,9 @@ with tabs[1]:
                 • <b>Financial Health & Risk Scores</b> — competitive positioning metrics<br>
                 • <b>Bull & Bear Case Scenarios</b> — best and worst case outlook<br>
                 • <b>Analyst Verdict</b> — a one-sentence recommendation<br><br>
-                <span style="color: #fbbf24;">→ Go to Tab 1 to upload your first report.</span>
+                <div style="margin-top: 20px; padding: 12px; border: 1px solid #fbbf24; background: rgba(251, 191, 36, 0.1); border-radius: 6px; display: inline-block;">
+                    <b style="color: #fbbf24;">Action Required:</b> Please click the <b>"📄 Upload Reports"</b> tab at the top of the screen to ingest your first report.
+                </div>
             </div>
         </div>
         ''', unsafe_allow_html=True)
@@ -590,9 +614,11 @@ with tabs[1]:
         
         c_left, c_right = st.columns([2, 1])
         with c_left:
-            st.markdown('<div class="t-panel">', unsafe_allow_html=True)
-            st.markdown('<div class="t-panel-header">ANALYST VERDICT // EXEC SUMMARY</div>', unsafe_allow_html=True)
-            st.markdown(f'<div class="verdict-box"><div class="verdict-text">{b.analyst_verdict}</div></div>', unsafe_allow_html=True)
+            st.markdown(f'''
+            <div class="t-panel">
+                <div class="t-panel-header">ANALYST VERDICT // EXEC SUMMARY</div>
+                <div class="verdict-box"><div class="verdict-text">{b.analyst_verdict}</div></div>
+            ''', unsafe_allow_html=True)
             
             st.markdown('<div class="t-panel-header" style="margin-top:20px;">CORE BUSINESS MODEL</div>', unsafe_allow_html=True)
             st.markdown(f'<div style="color:#d1d5db; font-size:14px; line-height:1.6; margin-bottom: 20px;">{b.business_model}</div>', unsafe_allow_html=True)
@@ -603,15 +629,17 @@ with tabs[1]:
             st.markdown("</div>", unsafe_allow_html=True)
         
         with c_right:
-            st.markdown('<div class="t-panel" style="border-top: 2px solid #10b981;">', unsafe_allow_html=True)
-            st.markdown('<div class="t-panel-header" style="color: #10b981; border-bottom-color: #064e3b;">BULL CASE SCENARIO</div>', unsafe_allow_html=True)
-            st.markdown(f'<div style="font-size:13px; color:#d1d5db; line-height:1.5;">{b.bull_case}</div>', unsafe_allow_html=True)
-            st.markdown('</div>', unsafe_allow_html=True)
+            st.markdown(f'''
+            <div class="t-panel" style="border-top: 2px solid #10b981;">
+                <div class="t-panel-header" style="color: #10b981; border-bottom-color: #064e3b;">BULL CASE SCENARIO</div>
+                <div style="font-size:13px; color:#d1d5db; line-height:1.5;">{b.bull_case}</div>
+            </div>
             
-            st.markdown('<div class="t-panel" style="border-top: 2px solid #ef4444;">', unsafe_allow_html=True)
-            st.markdown('<div class="t-panel-header" style="color: #ef4444; border-bottom-color: #7f1d1d;">BEAR CASE SCENARIO</div>', unsafe_allow_html=True)
-            st.markdown(f'<div style="font-size:13px; color:#d1d5db; line-height:1.5;">{b.bear_case}</div>', unsafe_allow_html=True)
-            st.markdown('</div>', unsafe_allow_html=True)
+            <div class="t-panel" style="border-top: 2px solid #ef4444;">
+                <div class="t-panel-header" style="color: #ef4444; border-bottom-color: #7f1d1d;">BEAR CASE SCENARIO</div>
+                <div style="font-size:13px; color:#d1d5db; line-height:1.5;">{b.bear_case}</div>
+            </div>
+            ''', unsafe_allow_html=True)
 
 # --- TAB 3: MACRO UNIVERSE ---
 with tabs[2]:
@@ -654,8 +682,6 @@ with tabs[2]:
                 st.plotly_chart(c_radar_chart(target_t3, scores_flat), use_container_width=True)
             with rc2:
                 # Interpretation
-                st.markdown('<div class="t-panel" style="margin-top: 10px; background: #0a0a0a;">', unsafe_allow_html=True)
-                st.markdown('<div class="t-panel-header">WHAT THIS MEANS</div>', unsafe_allow_html=True)
                 inn_v = scores_flat.get('innovation', 5)
                 fin_v = scores_flat.get('financial_health', 5)
                 risk_v = scores_flat.get('risk_profile', 5)
@@ -665,15 +691,17 @@ with tabs[2]:
                 def risk_interpret(val): return '🟢 Low Risk' if val <= 3 else ('🟡 Moderate' if val <= 6 else '🔴 High Risk')
                 
                 st.markdown(f'''
-                <div style="font-size: 13px; color: #d1d5db; line-height: 2;">
-                    <b>Innovation ({inn_v}/10):</b> {interpret(inn_v)} — R&D and product pipeline strength<br>
-                    <b>Market Position ({mkt_v}/10):</b> {interpret(mkt_v)} — competitive market dominance<br>
-                    <b>Financial Health ({fin_v}/10):</b> {interpret(fin_v)} — balance sheet and cash reserves<br>
-                    <b>Risk Profile ({risk_v}/10):</b> {risk_interpret(risk_v)} — exposure to external threats<br>
-                    <b>Mgmt Tone ({mgmt}/10):</b> {interpret(mgmt)} — how confident is the leadership team<br>
+                <div class="t-panel" style="margin-top: 10px; background: #0a0a0a;">
+                    <div class="t-panel-header">WHAT THIS MEANS</div>
+                    <div style="font-size: 13px; color: #d1d5db; line-height: 2;">
+                        <b>Innovation ({inn_v}/10):</b> {interpret(inn_v)} — R&D and product pipeline strength<br>
+                        <b>Market Position ({mkt_v}/10):</b> {interpret(mkt_v)} — competitive market dominance<br>
+                        <b>Financial Health ({fin_v}/10):</b> {interpret(fin_v)} — balance sheet and cash reserves<br>
+                        <b>Risk Profile ({risk_v}/10):</b> {risk_interpret(risk_v)} — exposure to external threats<br>
+                        <b>Mgmt Tone ({mgmt}/10):</b> {interpret(mgmt)} — how confident is the leadership team<br>
+                    </div>
                 </div>
                 ''', unsafe_allow_html=True)
-                st.markdown('</div>', unsafe_allow_html=True)
                 
         with t3_tabs[1]:
             st.info("Select two or more companies to compare them head-to-head across key competitive dimensions.")
@@ -707,7 +735,7 @@ with tabs[2]:
                 
                 if len(corr_data) >= 2:
                     corr_df = pd.DataFrame(corr_data)
-                    corr_matrix = corr_df.corr()
+                    corr_matrix = corr_df.corr().fillna(0) # Fix NaN when variance is 0
                     
                     fig_corr = go.Figure(data=go.Heatmap(
                         z=corr_matrix.values,
@@ -750,7 +778,9 @@ with tabs[3]:
                 • The AI auto-extracts financial inputs (cash flow, growth rate, cost of capital) from the report<br>
                 • You can override any number and watch the <b>intrinsic value chart update in real-time</b><br>
                 • A bar chart visualizes future cash flows and the terminal value<br><br>
-                <span style="color: #fbbf24;">→ Upload at least one report in Tab 1 to activate this module.</span>
+                <div style="margin-top: 20px; padding: 12px; border: 1px solid #fbbf24; background: rgba(251, 191, 36, 0.1); border-radius: 6px; display: inline-block;">
+                    <b style="color: #fbbf24;">Action Required:</b> Please click the <b>"📄 Upload Reports"</b> tab at the top of the screen to ingest your first report.
+                </div>
             </div>
         </div>
         ''', unsafe_allow_html=True)
@@ -970,8 +1000,7 @@ with tabs[4]:
                     "Risk Profile": st.column_config.ProgressColumn("Risk Profile", help="Lower is better", format="%d", min_value=0, max_value=10),
                     "Mgmt Tone": st.column_config.ProgressColumn("Mgmt Tone", help="Leadership confidence", format="%d", min_value=0, max_value=10),
                 },
-                use_container_width=True,
-                height=250
+                use_container_width=True
             )
             
         else:
