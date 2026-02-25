@@ -17,6 +17,12 @@
     <a href="https://github.com/khushi2704rj-sephora/eq-analytics-terminal"><img src="https://img.shields.io/badge/LangChain-1C3C3C?style=for-the-badge&logo=langchain&logoColor=white" alt="LangChain"></a>
     <a href="https://github.com/khushi2704rj-sephora/eq-analytics-terminal"><img src="https://img.shields.io/badge/Plotly-3F4F75?style=for-the-badge&logo=plotly&logoColor=white" alt="Plotly"></a>
   </p>
+  
+  <p align="center">
+    <a href="https://eq-analytics-terminal-ydszosnnq52xexcpanx8dz.streamlit.app/">
+      <img src="https://img.shields.io/badge/Live_Demo-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" alt="Live Demo">
+    </a>
+  </p>
 </div>
 
 ---
