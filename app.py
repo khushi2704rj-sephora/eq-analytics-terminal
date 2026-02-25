@@ -413,7 +413,8 @@ with tabs[0]:
     <div class="t-panel" style="border-left: 3px solid #3b82f6;">
         <div class="t-panel-header" style="color: #3b82f6; border-bottom-color: #1e3a5f;">WELCOME — HOW THIS TOOL WORKS</div>
         <div style="color: #d1d5db; font-size: 14px; line-height: 1.8;">
-            This tool uses <b>Artificial Intelligence</b> to read company financial reports (PDFs) and automatically generate professional investment analysis — no finance expertise required.<br><br>
+            This tool uses a <b>Retrieval-Augmented Generation (RAG) architecture</b> to ingest unstructured financial filings and automatically generate structured, professional-style investment analysis.<br>
+            <span style="color: #9ca3af; font-size: 12px; margin-top: 4px; display: inline-block;"><b>Why it matters:</b> This accelerates the fundamental analyst's workflow, ensures consistent metric extraction across companies, and provides quantitative baselines for cross-industry comparison and valuation modeling.</span><br><br>
             <div style="display: flex; gap: 16px; flex-wrap: wrap;">
                 <div style="flex:1; min-width: 140px; background:#0a0a0a; border:1px solid #1f2937; border-radius:6px; padding:12px; text-align:center;">
                     <div style="font-size: 28px;">①</div>
@@ -436,6 +437,22 @@ with tabs[0]:
     </div>
     ''', unsafe_allow_html=True)
 
+    with st.expander("⚙️ UNDER THE HOOD (TECHNICAL ARCHITECTURE)"):
+        st.markdown('''
+        <div style="font-size: 13px; color: #9ca3af; line-height: 1.6;">
+            <b>Frontend:</b> Python + Streamlit with custom HTML/CSS overlays.<br>
+            <b>Data Pipeline:</b> Unstructured PDFs are parsed via <code>PyPDF2</code>, chunked using <code>RecursiveCharacterTextSplitter</code>, and embedded into a high-density <code>FAISS</code> vector space using HuggingFace <code>all-MiniLM-L6-v2</code>.<br>
+            <b>Intelligence Layer:</b> Queries are augmented with vector retrieval and passed to <code>Llama-3.1-8B-Instruct</code>. To prevent hallucination, the model output is strictly constrained to a <code>Pydantic</code> JSON schema ensuring standardized scoring and extraction.<br>
+            <b>Persistence:</b> Generated structured profiles are saved to a local <code>SQLite (nexus.db)</code> relational database, serving as the structured foundation for the classical statistical methods (Monte Carlo & Pearson Correlation) used in Tabs 3 & 4.
+        </div>
+        ''', unsafe_allow_html=True)
+        
+    st.markdown('''
+    <div style="margin-top: 10px; margin-bottom: 20px; font-size: 11px; color: #6b7280; text-align: center; border: 1px dashed #374151; padding: 10px; border-radius: 4px;">
+        <b>⚠️ PROFESSIONAL DISCLAIMER:</b> This demonstrator tool assists with the exploratory analysis of corporate filings using Generative AI. Outputs are probabilistic, may contain factual errors (hallucinations), and must be independently verified against source reports. The intrinsic value models and market simulations provided are for academic/illustrative purposes only and do not constitute professional investment advice.
+    </div>
+    ''', unsafe_allow_html=True)
+
     st.markdown('<div class="t-panel">', unsafe_allow_html=True)
     st.markdown('<div class="t-panel-header">STEP 1: DOCUMENT BATCH UPLOAD</div>', unsafe_allow_html=True)
     st.info("Upload SEC 10-K or Annual Report PDFs. You can upload files for multiple different companies. In Step 2, you will map each file to its respective Asset Ticker.")
@@ -443,8 +460,9 @@ with tabs[0]:
     st.markdown('</div>', unsafe_allow_html=True)
     
     if uploaded_files:
-        st.markdown('<div class="t-panel">', unsafe_allow_html=True)
-        st.markdown('<div class="t-panel-header">STEP 2: BULK METADATA MAPPING</div>', unsafe_allow_html=True)
+        st.markdown('<div class="t-panel" style="border-top: 2px solid #fbbf24;">', unsafe_allow_html=True)
+        st.markdown('<div class="t-panel-header" style="color:#fbbf24;">STEP 2: BULK METADATA MAPPING</div>', unsafe_allow_html=True)
+        st.info("Files detected! Please assign a Ticker Name and Sector to each file. When finished, click the large 'EXECUTE PIPELINE' button below to start the analysis.")
         
         st.markdown('''
         <div style="display:flex; font-size: 10px; color:#6b7280; margin-bottom: 8px;">
