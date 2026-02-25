@@ -104,10 +104,10 @@ div[data-testid="stTabs"] button[aria-selected="true"] {
 # Fake top navigation bar
 st.markdown('''
 <div class="terminal-nav">
-    <div class="nav-brand">NEXUS // EQ.ANALYTICS.TERMINAL [V2]</div>
+    <div class="nav-brand">NEXUS // EQ.ANALYTICS.TERMINAL [V3]</div>
     <div class="nav-status">SYSTEM ONLINE // LATENCY: 12ms</div>
 </div>
-''', unsafe_allow_html=True)
+'''  , unsafe_allow_html=True)
 
 # ─────────────────────────────────────────────
 # ENVIRONMENT & STATE
@@ -319,10 +319,38 @@ def c_macro_scatter(db, tgt_company, x_metric, y_metric):
 # ─────────────────────────────────────────────
 # FRONTEND LAYOUT
 # ─────────────────────────────────────────────
-tabs = st.tabs(["[1] DATA_INGEST", "[2] EQ_TERMINAL", "[3] MACRO_UNIVERSE", "[4] VALUATION_DCF", "[5] INDUSTRY_BENCHMARK"])
+tabs = st.tabs(["📄 Upload Reports", "📊 AI Analysis", "🌍 Market Comparison", "💰 Valuation Model", "🏆 Industry Ranking"])
 
 # --- TAB 1: INGESTION ---
 with tabs[0]:
+    # Welcome / How It Works Panel
+    st.markdown('''
+    <div class="t-panel" style="border-left: 3px solid #3b82f6;">
+        <div class="t-panel-header" style="color: #3b82f6; border-bottom-color: #1e3a5f;">WELCOME — HOW THIS TOOL WORKS</div>
+        <div style="color: #d1d5db; font-size: 14px; line-height: 1.8;">
+            This tool uses <b>Artificial Intelligence</b> to read company financial reports (PDFs) and automatically generate professional investment analysis — no finance expertise required.<br><br>
+            <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                <div style="flex:1; min-width: 140px; background:#0a0a0a; border:1px solid #1f2937; border-radius:6px; padding:12px; text-align:center;">
+                    <div style="font-size: 28px;">①</div>
+                    <div style="font-size: 11px; color: #9ca3af; margin-top: 6px;"><b>UPLOAD</b><br>Drop company PDF reports below</div>
+                </div>
+                <div style="flex:1; min-width: 140px; background:#0a0a0a; border:1px solid #1f2937; border-radius:6px; padding:12px; text-align:center;">
+                    <div style="font-size: 28px;">②</div>
+                    <div style="font-size: 11px; color: #9ca3af; margin-top: 6px;"><b>TAG</b><br>Name each file with a ticker & industry</div>
+                </div>
+                <div style="flex:1; min-width: 140px; background:#0a0a0a; border:1px solid #1f2937; border-radius:6px; padding:12px; text-align:center;">
+                    <div style="font-size: 28px;">③</div>
+                    <div style="font-size: 11px; color: #9ca3af; margin-top: 6px;"><b>ANALYZE</b><br>AI reads the reports & generates insights</div>
+                </div>
+                <div style="flex:1; min-width: 140px; background:#0a0a0a; border:1px solid #1f2937; border-radius:6px; padding:12px; text-align:center;">
+                    <div style="font-size: 28px;">④</div>
+                    <div style="font-size: 11px; color: #9ca3af; margin-top: 6px;"><b>EXPLORE</b><br>Switch to the other tabs to view results</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    ''', unsafe_allow_html=True)
+
     st.markdown('<div class="t-panel">', unsafe_allow_html=True)
     st.markdown('<div class="t-panel-header">STEP 1: DOCUMENT BATCH UPLOAD</div>', unsafe_allow_html=True)
     st.info("Upload SEC 10-K or Annual Report PDFs. You can upload files for multiple different companies. In Step 2, you will map each file to its respective Asset Ticker.")
@@ -408,7 +436,20 @@ with tabs[0]:
 # --- TAB 2: TERMINAL ---
 with tabs[1]:
     if not st.session_state.briefs:
-        st.markdown('<div class="t-panel" style="text-align:center; padding: 100px 0; color: #4b5563;">AWAITING ASSET INGESTION. PROCEED TO TAB [1].</div>', unsafe_allow_html=True)
+        st.markdown('''
+        <div class="t-panel" style="text-align:center; padding: 60px 40px; color: #6b7280;">
+            <div style="font-size: 40px; margin-bottom: 16px;">📊</div>
+            <div style="font-size: 16px; color: #9ca3af; font-weight: 600; margin-bottom: 12px;">AI-Generated Analyst Brief</div>
+            <div style="font-size: 13px; line-height: 1.6; max-width: 500px; margin: 0 auto;">
+                Once you upload a company's annual report in Tab 1, this screen will display an auto-generated investment analysis including:<br><br>
+                • <b>Management Conviction Score</b> — how optimistic is the C-suite?<br>
+                • <b>Financial Health & Risk Scores</b> — competitive positioning metrics<br>
+                • <b>Bull & Bear Case Scenarios</b> — best and worst case outlook<br>
+                • <b>Analyst Verdict</b> — a one-sentence recommendation<br><br>
+                <span style="color: #fbbf24;">→ Go to Tab 1 to upload your first report.</span>
+            </div>
+        </div>
+        ''', unsafe_allow_html=True)
     else:
         st.markdown('<div style="display:flex; justify-content:flex-end; margin-bottom: 10px;">', unsafe_allow_html=True)
         target = st.selectbox("ACTIVE ASSET", list(st.session_state.briefs.keys()), key="t2_target", label_visibility="collapsed")
@@ -469,7 +510,19 @@ with tabs[1]:
 # --- TAB 3: MACRO UNIVERSE ---
 with tabs[2]:
     if not st.session_state.macro_db:
-        st.markdown('<div class="t-panel" style="text-align:center; padding: 100px 0; color: #4b5563;">MACRO DATABASE OFFLINE.</div>', unsafe_allow_html=True)
+        st.markdown('''
+        <div class="t-panel" style="text-align:center; padding: 60px 40px; color: #6b7280;">
+            <div style="font-size: 40px; margin-bottom: 16px;">🌍</div>
+            <div style="font-size: 16px; color: #9ca3af; font-weight: 600; margin-bottom: 12px;">Market Stress Test Simulator</div>
+            <div style="font-size: 13px; line-height: 1.6; max-width: 500px; margin: 0 auto;">
+                This tab lets you simulate how real-world economic events (like interest rate hikes or inflation spikes) would impact the companies you've analyzed.<br><br>
+                • A scatter plot will map all companies by <b>Innovation vs. Risk</b><br>
+                • Interactive sliders let you model "what if" macro scenarios<br>
+                • The estimated <b>Market Cap Variance</b> updates live<br><br>
+                <span style="color: #fbbf24;">→ Upload at least one report in Tab 1 to activate this module.</span>
+            </div>
+        </div>
+        ''', unsafe_allow_html=True)
     else:
         mc1, mc2 = st.columns([1, 4])
         
@@ -509,7 +562,19 @@ with tabs[2]:
 # --- TAB 4: DCF SIMULATOR ---
 with tabs[3]:
     if not st.session_state.briefs:
-        st.markdown('<div class="t-panel" style="text-align:center; padding: 100px 0; color: #4b5563;">AWAITING ASSET INGESTION.</div>', unsafe_allow_html=True)
+        st.markdown('''
+        <div class="t-panel" style="text-align:center; padding: 60px 40px; color: #6b7280;">
+            <div style="font-size: 40px; margin-bottom: 16px;">💰</div>
+            <div style="font-size: 16px; color: #9ca3af; font-weight: 600; margin-bottom: 12px;">Intrinsic Value Calculator (DCF Model)</div>
+            <div style="font-size: 13px; line-height: 1.6; max-width: 500px; margin: 0 auto;">
+                This tab calculates how much a company is truly worth using a <b>Discounted Cash Flow</b> model — one of the most popular methods used by Wall Street analysts.<br><br>
+                • The AI auto-extracts financial inputs (cash flow, growth rate, cost of capital) from the report<br>
+                • You can override any number and watch the <b>intrinsic value chart update in real-time</b><br>
+                • A bar chart visualizes future cash flows and the terminal value<br><br>
+                <span style="color: #fbbf24;">→ Upload at least one report in Tab 1 to activate this module.</span>
+            </div>
+        </div>
+        ''', unsafe_allow_html=True)
     else:
         st.markdown('<div style="display:flex; justify-content:flex-end; margin-bottom: 10px;">', unsafe_allow_html=True)
         target_dcf = st.selectbox("ACTIVE ASSET", list(st.session_state.briefs.keys()), key="t4_target", label_visibility="collapsed")
@@ -546,7 +611,19 @@ with tabs[3]:
 # --- TAB 5: INDUSTRY BENCHMARK ---
 with tabs[4]:
     if not st.session_state.macro_db:
-        st.markdown('<div class="t-panel" style="text-align:center; padding: 100px 0; color: #4b5563;">MACRO DATABASE OFFLINE.</div>', unsafe_allow_html=True)
+        st.markdown('''
+        <div class="t-panel" style="text-align:center; padding: 60px 40px; color: #6b7280;">
+            <div style="font-size: 40px; margin-bottom: 16px;">🏆</div>
+            <div style="font-size: 16px; color: #9ca3af; font-weight: 600; margin-bottom: 12px;">Cross-Industry Benchmark Rankings</div>
+            <div style="font-size: 13px; line-height: 1.6; max-width: 500px; margin: 0 auto;">
+                This tab compares companies within the same industry to find out which ones are <b>outperforming their peers</b>.<br><br>
+                • Select an industry (e.g., Technology) to see all analyzed companies in that sector<br>
+                • The system automatically computes sector-wide averages for key metrics<br>
+                • A 🟢 dot means the company <b>beats</b> the average; a 🔴 dot means it <b>lags behind</b><br><br>
+                <span style="color: #fbbf24;">→ Upload reports for 2+ companies in Tab 1 to see meaningful comparisons.</span>
+            </div>
+        </div>
+        ''', unsafe_allow_html=True)
     else:
         st.markdown('<div class="t-panel">', unsafe_allow_html=True)
         st.markdown('<div class="t-panel-header">INDUSTRY CROSS-SECTION BENCHMARKING</div>', unsafe_allow_html=True)
