@@ -6,7 +6,7 @@ import pandas as pd
 import numpy as np
 import sqlite3
 from huggingface_hub import InferenceClient
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, field_validator, Field
 from typing import List
 from PyPDF2 import PdfReader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
