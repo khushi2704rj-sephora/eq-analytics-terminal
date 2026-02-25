@@ -3,6 +3,8 @@ import plotly.graph_objects as go
 import plotly.express as px
 import json, os, re, time
 import pandas as pd
+import numpy as np
+import sqlite3
 from huggingface_hub import InferenceClient
 from pydantic import BaseModel, field_validator
 from typing import List
@@ -113,9 +115,91 @@ st.markdown('''
 # ENVIRONMENT & STATE
 # ─────────────────────────────────────────────
 TOKEN = os.environ.get('HF_TOKEN', '')
+DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'nexus.db')
+
+def init_db():
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    c.execute('''CREATE TABLE IF NOT EXISTS companies (
+        ticker TEXT PRIMARY KEY,
+        sector TEXT,
+        analyst_verdict TEXT,
+        business_model TEXT,
+        management_tone TEXT,
+        management_tone_score REAL,
+        innovation REAL,
+        market_position REAL,
+        financial_health REAL,
+        risk_profile REAL,
+        wacc REAL,
+        growth_rate REAL,
+        fcf_base REAL,
+        bull_case TEXT,
+        bear_case TEXT,
+        financial_highlights TEXT,
+        risk_factors TEXT,
+        full_json TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )''')
+    conn.commit()
+    conn.close()
+
+def persist_to_db(ticker, data_dict):
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    scores = data_dict.get('competitive_scores', {})
+    if not isinstance(scores, dict):
+        scores = scores if isinstance(scores, dict) else {}
+    c.execute('''INSERT OR REPLACE INTO companies 
+        (ticker, sector, analyst_verdict, business_model, management_tone, management_tone_score,
+         innovation, market_position, financial_health, risk_profile,
+         wacc, growth_rate, fcf_base, bull_case, bear_case, financial_highlights, risk_factors, full_json)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+        (ticker, data_dict.get('sector', 'Unknown'),
+         data_dict.get('analyst_verdict', ''), data_dict.get('business_model', ''),
+         data_dict.get('management_tone', ''), data_dict.get('management_tone_score', 5),
+         scores.get('innovation', 5), scores.get('market_position', 5),
+         scores.get('financial_health', 5), scores.get('risk_profile', 5),
+         data_dict.get('wacc', 0.08), data_dict.get('growth_rate', 0.03),
+         data_dict.get('fcf_base', 1000),
+         data_dict.get('bull_case', ''), data_dict.get('bear_case', ''),
+         json.dumps(data_dict.get('financial_highlights', [])),
+         json.dumps([r if isinstance(r, str) else r for r in data_dict.get('risk_factors', [])]),
+         json.dumps(data_dict, default=str)))
+    conn.commit()
+    conn.close()
+
+def load_from_db():
+    if not os.path.exists(DB_PATH):
+        return {}
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    try:
+        c.execute('SELECT ticker, full_json FROM companies')
+        rows = c.fetchall()
+        db = {}
+        for ticker, full_json in rows:
+            try:
+                db[ticker] = json.loads(full_json)
+            except:
+                pass
+        return db
+    except:
+        return {}
+    finally:
+        conn.close()
+
+init_db()
+
 if 'briefs' not in st.session_state: st.session_state.briefs={}
 if 'contexts' not in st.session_state: st.session_state.contexts={}
 if 'macro_db' not in st.session_state: st.session_state.macro_db={}
+
+# Load from SQLite on first run (structured data pipeline)
+if not st.session_state.macro_db:
+    db_data = load_from_db()
+    if db_data:
+        st.session_state.macro_db.update(db_data)
 
 # Load simulated universe once
 if not st.session_state.macro_db and os.path.exists('macro_universe.json'):
@@ -424,11 +508,14 @@ with tabs[0]:
                         b_dict = b.model_dump()
                         st.session_state.macro_db[ticker_name] = b_dict
                         st.session_state.macro_db[ticker_name]['sensitivity'] = {'rates': -0.2, 'inflation': -0.4, 'supply_chain': -0.1}
-                        upd(1.0, "PROFILE GENERATED.")
+                        # Persist to SQLite (Structured Data Pipeline)
+                        persist_to_db(ticker_name, st.session_state.macro_db[ticker_name])
+                        upd(1.0, "PROFILE GENERATED & PERSISTED TO SQL.")
                     else:
                         st.error(f"❌ PIPELINE FAILED FOR [{ticker_name}]: The LLM could not generate a valid profile.")
                         
-                st.success(f"BULK INGESTION COMPLETE FOR {total_groups} ASSETS. SWITCH TO TAB [2] OR [5].")
+                st.success(f"BULK INGESTION COMPLETE FOR {total_groups} ASSETS. Data persisted to nexus.db. SWITCH TO TAB [2] OR [5].")
+                st.markdown(f'<div style="font-size: 11px; color: #6b7280; font-family: monospace; margin-top: 4px;">📁 SQL Database: {DB_PATH}</div>', unsafe_allow_html=True)
                 time.sleep(2.5)
                 st_txt.empty(); pb.empty()
 
@@ -576,6 +663,54 @@ with tabs[2]:
             st.info("This chart compares all analyzed companies across 4 key dimensions. Taller bars = stronger performance (except Risk, where lower is better).")
             st.plotly_chart(c_comparison_bars(st.session_state.macro_db), use_container_width=True)
             st.markdown('</div>', unsafe_allow_html=True)
+        
+        # CLASSICAL ANALYTICS: Pearson Correlation Heatmap
+        if len(st.session_state.macro_db) >= 2:
+            st.markdown('<div class="t-panel">', unsafe_allow_html=True)
+            st.markdown('<div class="t-panel-header">CLASSICAL ANALYTICS: PEARSON CORRELATION MATRIX</div>', unsafe_allow_html=True)
+            st.info("This is a statistical correlation heatmap (not AI-generated). It uses the Pearson coefficient to measure linear relationships between competitive metrics across all analyzed companies. Values close to +1 indicate strong positive correlation; values close to -1 indicate inverse correlation.")
+            
+            corr_data = []
+            for k, v in st.session_state.macro_db.items():
+                scores = v.get('competitive_scores', {}) if isinstance(v, dict) else {}
+                if isinstance(scores, dict):
+                    corr_data.append({
+                        'Innovation': scores.get('innovation', 5),
+                        'Market Position': scores.get('market_position', 5),
+                        'Financial Health': scores.get('financial_health', 5),
+                        'Risk Profile': scores.get('risk_profile', 5),
+                        'Mgmt Tone': v.get('management_tone_score', 5) if isinstance(v, dict) else 5
+                    })
+            
+            if len(corr_data) >= 2:
+                corr_df = pd.DataFrame(corr_data)
+                corr_matrix = corr_df.corr()
+                
+                fig_corr = go.Figure(data=go.Heatmap(
+                    z=corr_matrix.values,
+                    x=corr_matrix.columns.tolist(),
+                    y=corr_matrix.columns.tolist(),
+                    colorscale=[[0, '#ef4444'], [0.5, '#111827'], [1, '#10b981']],
+                    zmin=-1, zmax=1,
+                    text=np.round(corr_matrix.values, 2),
+                    texttemplate='%{text}',
+                    textfont=dict(size=14, color='#e5e7eb'),
+                    hovertemplate='%{x} vs %{y}: %{z:.2f}<extra></extra>'
+                ))
+                fig_corr.update_layout(**BASE_CHART, height=400, margin=dict(l=0, r=0, t=20, b=0),
+                                        xaxis=dict(side='bottom'), yaxis=dict(autorange='reversed'))
+                st.plotly_chart(fig_corr, use_container_width=True)
+                
+                # Interpretation
+                st.markdown('''
+                <div style="font-size: 12px; color: #9ca3af; line-height: 1.6; padding: 8px; background: #0a0a0a; border: 1px solid #1f2937; border-radius: 4px;">
+                    <b style="color: #fbbf24;">How to read this:</b> Each cell shows the Pearson correlation coefficient (-1 to +1) between two metrics.
+                    <b style="color: #10b981;">Green = positively correlated</b> (when one goes up, the other tends to go up).
+                    <b style="color: #ef4444;">Red = negatively correlated</b> (when one goes up, the other tends to go down).
+                    This is a classical statistical method, not AI-generated.
+                </div>
+                ''', unsafe_allow_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)
 
 # --- TAB 4: DCF SIMULATOR ---
 with tabs[3]:
@@ -634,6 +769,67 @@ with tabs[3]:
             </div>
             ''', unsafe_allow_html=True)
             st.markdown('</div>', unsafe_allow_html=True)
+        
+        # CLASSICAL ANALYTICS: Monte Carlo Simulation
+        st.markdown('<div class="t-panel">', unsafe_allow_html=True)
+        st.markdown('<div class="t-panel-header">CLASSICAL ANALYTICS: MONTE CARLO SIMULATION (1,000 TRIALS)</div>', unsafe_allow_html=True)
+        st.info("This is a classical statistical method, not AI. It runs 1,000 randomized simulations of the DCF model by varying the WACC and Growth Rate within ±20% of your current inputs. The resulting distribution shows the range of possible valuations and the probability of each outcome.")
+        
+        np.random.seed(42)
+        n_sims = 1000
+        wacc_range = np.random.normal(wacc, wacc * 0.15, n_sims)
+        wacc_range = np.clip(wacc_range, 0.01, 0.30)
+        g_range = np.random.normal(g, abs(g) * 0.20 + 0.005, n_sims)
+        g_range = np.clip(g_range, -0.05, 0.10)
+        
+        mc_results = []
+        for w_i, g_i in zip(wacc_range, g_range):
+            if w_i > g_i:
+                pv_i, _ = simulate_dcf(fcf, w_i, g_i, years)
+                mc_results.append(pv_i)
+        
+        mc_results = np.array(mc_results)
+        mc_results = mc_results[mc_results > 0]  # filter invalid
+        
+        if len(mc_results) > 10:
+            p5 = np.percentile(mc_results, 5)
+            p50 = np.percentile(mc_results, 50)
+            p95 = np.percentile(mc_results, 95)
+            
+            fig_mc = go.Figure()
+            fig_mc.add_trace(go.Histogram(x=mc_results, nbinsx=50, marker_color='#3b82f6', opacity=0.7, name='Simulated Valuations'))
+            fig_mc.add_vline(x=p50, line_dash='dash', line_color='#fbbf24', annotation_text=f'Median: ${p50:,.0f}M', annotation_font_color='#fbbf24')
+            fig_mc.add_vline(x=p5, line_dash='dot', line_color='#ef4444', annotation_text=f'5th %: ${p5:,.0f}M', annotation_font_color='#ef4444')
+            fig_mc.add_vline(x=p95, line_dash='dot', line_color='#10b981', annotation_text=f'95th %: ${p95:,.0f}M', annotation_font_color='#10b981')
+            fig_mc.update_layout(**BASE_CHART, height=350, margin=dict(l=0, r=0, t=20, b=0),
+                                xaxis=dict(title='Estimated Valuation ($M)', gridcolor='#1f2937'),
+                                yaxis=dict(title='Frequency', gridcolor='#1f2937'),
+                                showlegend=False)
+            st.plotly_chart(fig_mc, use_container_width=True)
+            
+            st.markdown(f'''
+            <div style="display: flex; gap: 16px; margin-top: 8px;">
+                <div style="flex:1; background: #0a0a0a; border: 1px solid #7f1d1d; border-radius: 6px; padding: 12px; text-align: center;">
+                    <div style="font-size: 10px; color: #ef4444;">BEARISH CASE (5th PERCENTILE)</div>
+                    <div style="font-size: 22px; color: #ef4444; font-family: 'JetBrains Mono', monospace; font-weight: bold;">${p5:,.0f}M</div>
+                </div>
+                <div style="flex:1; background: #0a0a0a; border: 1px solid #92400e; border-radius: 6px; padding: 12px; text-align: center;">
+                    <div style="font-size: 10px; color: #fbbf24;">MEDIAN VALUATION</div>
+                    <div style="font-size: 22px; color: #fbbf24; font-family: 'JetBrains Mono', monospace; font-weight: bold;">${p50:,.0f}M</div>
+                </div>
+                <div style="flex:1; background: #0a0a0a; border: 1px solid #064e3b; border-radius: 6px; padding: 12px; text-align: center;">
+                    <div style="font-size: 10px; color: #10b981;">BULLISH CASE (95th PERCENTILE)</div>
+                    <div style="font-size: 22px; color: #10b981; font-family: 'JetBrains Mono', monospace; font-weight: bold;">${p95:,.0f}M</div>
+                </div>
+            </div>
+            <div style="font-size: 12px; color: #9ca3af; margin-top: 12px; padding: 8px; background: #0a0a0a; border: 1px solid #1f2937; border-radius: 4px;">
+                <b style="color: #fbbf24;">What this means:</b> Out of 1,000 randomized scenarios, {target_dcf}'s valuation falls between 
+                <b style="color: #ef4444;">${p5:,.0f}M</b> (pessimistic) and <b style="color: #10b981;">${p95:,.0f}M</b> (optimistic) with 90% confidence.
+                The median estimate is <b style="color: #fbbf24;">${p50:,.0f}M</b>. This is a classical Monte Carlo simulation, not AI-generated.
+            </div>
+            ''', unsafe_allow_html=True)
+        
+        st.markdown('</div>', unsafe_allow_html=True)
 
 # --- TAB 5: INDUSTRY BENCHMARK ---
 with tabs[4]:
