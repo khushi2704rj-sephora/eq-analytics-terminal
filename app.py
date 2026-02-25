@@ -929,12 +929,18 @@ with tabs[4]:
             
             st.markdown('<div style="font-size: 11px; color: #9ca3af; margin-bottom: 8px;">QUANTITATIVE SECTOR MATRIX</div>', unsafe_allow_html=True)
             
-            # Professional Screener Aesthetic using Pandas Styling
-            styled_df = df.style.background_gradient(cmap='Greens', subset=['Innovation', 'Financial Health', 'Mgmt Tone'], vmin=1, vmax=10)\
-                                .background_gradient(cmap='Reds', subset=['Risk Profile'], vmin=1, vmax=10)\
-                                .format(precision=1)
-            
-            st.dataframe(styled_df, use_container_width=True, height=250)
+            # Professional Screener Aesthetic using Native Streamlit Configurations (zero matplotlib dependency)
+            st.dataframe(
+                df,
+                column_config={
+                    "Innovation": st.column_config.ProgressColumn("Innovation", help="R&D Pipeline Score", format="%d", min_value=0, max_value=10),
+                    "Financial Health": st.column_config.ProgressColumn("Financial Health", help="Balance Sheet Strength", format="%d", min_value=0, max_value=10),
+                    "Risk Profile": st.column_config.ProgressColumn("Risk Profile", help="Lower is better", format="%d", min_value=0, max_value=10),
+                    "Mgmt Tone": st.column_config.ProgressColumn("Mgmt Tone", help="Leadership confidence", format="%d", min_value=0, max_value=10),
+                },
+                use_container_width=True,
+                height=250
+            )
             
         else:
             st.warning("No companies found in this sector yet.")
