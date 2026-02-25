@@ -171,17 +171,36 @@ class AnalystBrief(BaseModel):
 def load_vs():
     return HuggingFaceEmbeddings(model_name='sentence-transformers/all-MiniLM-L6-v2')
 
-def ingest_pdf(uploaded_files, company_name):
+def ingest_pdf(uploaded_files, company_name, prog_func):
     emb = load_vs()
     text = ""
-    for file in uploaded_files:
-        reader = PdfReader(file)
-        for i, page in enumerate(reader.pages):
-            text += f"\n\n--- PAGE ---\n\n{page.extract_text()}"
+    total_files = len(uploaded_files)
     
+    prog_func(0.1, f"Initializing Deep Scan on {total_files} documents...")
+    
+    for f_idx, file in enumerate(uploaded_files):
+        reader = PdfReader(file)
+        total_pages = len(reader.pages)
+        for i, page in enumerate(reader.pages):
+            # Enforce 1.5M Char Limit to prevent local OOM
+            if len(text) > 1500000:
+                prog_func(0.4, f"WARNING: Context limit reached (1.5M chars). Truncating remaining pages.")
+                break
+                
+            text += f"\n\n--- PAGE {i} ---\n\n{page.extract_text()}"
+            
+            # Granular Progress Math (scales from 10% to 40% of overall bar)
+            base_prog = 0.1
+            file_progress = (f_idx / total_files) * 0.3
+            page_progress = (i / total_pages) * (0.3 / total_files)
+            current_prog = base_prog + file_progress + page_progress
+            prog_func(current_prog, f"Extracting File {f_idx+1}/{total_files} | Page {i}/{total_pages} ...")
+            
+    prog_func(0.4, "Text chunking (1000 char windows)...")
     sp = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=150)
     docs = sp.create_documents([text], metadatas=[{'company': company_name}])
     
+    prog_func(0.5, f"Vectorizing {len(docs)} text chunks into FAISS memory...")
     return FAISS.from_documents(docs, emb)
 
 def retr(vs, co, q, k=5):
@@ -208,9 +227,9 @@ def prompt(cn, sector, ctx):
     return p
 
 def run_llm(co, sector, vs, prog):
-    prog(0.3, f'Retrieving {co} financial context...')
+    prog(0.6, f'Retrieving top-k semantic context for {co}...')
     ctx = retr(vs, co, 'business model revenue segments strategy risks financial performance metrics')
-    prog(0.6, 'Synthesizing with Llama-3.1-8B...')
+    prog(0.7, 'Synthesizing with Llama-3.1-8B...')
     
     cl = InferenceClient(provider='novita', api_key=TOKEN)
     for _ in range(3):
@@ -297,38 +316,49 @@ tabs = st.tabs(["[1] DATA_INGEST", "[2] EQ_TERMINAL", "[3] MACRO_UNIVERSE", "[4]
 
 # --- TAB 1: INGESTION ---
 with tabs[0]:
-    st.markdown('<div class="t-panel">', unsafe_allow_html=True)
-    st.markdown('<div class="t-panel-header">DOCUMENT INDEXING ENGINE V3.0 (MULTI-FILE)</div>', unsafe_allow_html=True)
+    c1, c2 = st.columns([1, 1])
     
-    c1, c2 = st.columns([2, 1])
     with c1:
-        uploaded_files = st.file_uploader("DROP SEC 10-K OR ANNUAL REPORT PDFs", type="pdf", accept_multiple_files=True, label_visibility="collapsed")
+        st.markdown('<div class="t-panel">', unsafe_allow_html=True)
+        st.markdown('<div class="t-panel-header">STEP 1: DOCUMENT BATCH UPLOAD</div>', unsafe_allow_html=True)
+        st.info("Upload 1-3 SEC 10-K or Annual Report PDFs for the SAME company. The engine will merge them into a single intelligence profile.")
+        uploaded_files = st.file_uploader("DROP PDFs HERE", type="pdf", accept_multiple_files=True, label_visibility="collapsed")
+        st.markdown('</div>', unsafe_allow_html=True)
+        
     with c2:
-        custom_name = st.text_input("ASSET TICKER", placeholder="e.g. AAPL", label_visibility="collapsed")
+        st.markdown('<div class="t-panel">', unsafe_allow_html=True)
+        st.markdown('<div class="t-panel-header">STEP 2: METADATA CONFIGURATION</div>', unsafe_allow_html=True)
+        st.markdown('<div style="font-size: 10px; color: #6b7280; margin-bottom: 4px;">TARGET ASSET TICKER (Required)</div>', unsafe_allow_html=True)
+        custom_name = st.text_input("TICKER", placeholder="e.g. AAPL", label_visibility="collapsed")
+        
+        st.markdown('<div style="font-size: 10px; color: #6b7280; margin: 12px 0 4px 0;">INDUSTRY CATEGORIZATION (For Benchmark Overlays)</div>', unsafe_allow_html=True)
         sector_input = st.selectbox("SECTOR", ["Technology", "Healthcare", "Financials", "Consumer", "Energy", "Industrials", "Real Estate", "Materials"], label_visibility="collapsed")
+        
+        st.markdown("<hr style='border-color: #1f2937; margin: 20px 0;'>", unsafe_allow_html=True)
         process_btn = st.button("▶ EXECUTE PIPELINE")
+        st.markdown('</div>', unsafe_allow_html=True)
         
     if process_btn and uploaded_files and custom_name:
         with st.container():
+            st.markdown('<div class="t-panel">', unsafe_allow_html=True)
+            st.markdown('<div class="t-panel-header">PIPELINE EXECUTION LOG</div>', unsafe_allow_html=True)
             pb = st.progress(0); st_txt = st.empty()
-            def upd(v, m): pb.progress(v); st_txt.markdown(f"`[{v*100:.0f}%] {m}`")
+            def upd(v, m): pb.progress(v); st_txt.markdown(f"<span style='color:#10b981; font-family:monospace;'>`[{v*100:02.0f}%]` {m}</span>", unsafe_allow_html=True)
             
-            upd(0.1, "Vectorizing context (1024 dims)...")
-            vs = ingest_pdf(uploaded_files, custom_name)
+            vs = ingest_pdf(uploaded_files, custom_name, upd)
             st.session_state[f"vs_{custom_name}"] = vs
             
             b, ctx = run_llm(custom_name, sector_input, vs, upd)
             if b:
                 st.session_state.briefs[custom_name] = b
-                # Crucial bug fix: force dump to dict so .get() works reliably during scatter plot loop
                 b_dict = b.model_dump()
                 st.session_state.macro_db[custom_name] = b_dict
                 st.session_state.macro_db[custom_name]['sensitivity'] = {'rates': -0.2, 'inflation': -0.4, 'supply_chain': -0.1}
                 upd(1.0, "TERMINAL SYNCED.")
-                st.success("ASSET REGISTERED. SWITCH TO TAB [2].")
-                time.sleep(1)
+                st.success(f"[{custom_name}] ASSET REGISTERED. SWITCH TO TAB [2].")
+                time.sleep(1.5)
                 st_txt.empty(); pb.empty()
-    st.markdown('</div>', unsafe_allow_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)
 
 # --- TAB 2: TERMINAL ---
 with tabs[1]:
