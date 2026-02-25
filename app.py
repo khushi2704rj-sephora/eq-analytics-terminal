@@ -240,13 +240,13 @@ class AnalystBrief(BaseModel):
     strategic_priorities: List[StrategicPriority]
     competitive_scores: CompetitiveScore
     management_tone: str
-    management_tone_score: int
-    bull_case: str
+    management_tone_score: float = Field(description="Score from 1 to 10 evaluating tone (1 = highly pessimistic, 10 = highly confident).")
+    bull_case: str = Field(description="2-3 sentence optimistic scenario.")
     bear_case: str
     analyst_verdict: str
-    wacc: float = 0.08
-    growth_rate: float = 0.03
-    fcf_base: float = 5000.0
+    wacc: float = Field(description="Weighted Average Cost of Capital (WACC) as a decimal (e.g. 0.08). MUST be unique to this company based on risk profile.")
+    growth_rate: float = Field(description="Terminal growth rate as a decimal (e.g. 0.025). MUST be unique based on company maturity.")
+    fcf_base: float = Field(description="Base Free Cash Flow in MILLIONS USD. MUST extract or estimate exactly for this specific company. Do NOT default to 5000.")
 
 # ─────────────────────────────────────────────
 # BACKEND: INGESTION & LLM
@@ -759,16 +759,16 @@ with tabs[3]:
             st.info("The Baseline Variables below were dynamically extracted by the LLM from the 10-K. Override them to model intrinsic value changes.")
             
             st.markdown('<div style="font-size: 10px; color: #6b7280; margin-bottom: 4px; margin-top: 12px;">DISCOUNT RATE (WACC)</div>', unsafe_allow_html=True)
-            wacc = st.number_input("WACC", min_value=0.01, max_value=0.30, value=b.wacc, step=0.005, format="%.3f", label_visibility="collapsed", help="Weighted Average Cost of Capital. Determines the discount applied to future cash flows.")
+            wacc = st.number_input("WACC", min_value=0.01, max_value=0.30, value=float(b.wacc), step=0.005, format="%.3f", label_visibility="collapsed", key=f"wacc_{target_dcf}", help="Weighted Average Cost of Capital. Determines the discount applied to future cash flows.")
             
             st.markdown('<div style="font-size: 10px; color: #6b7280; margin: 16px 0 4px 0;">TERMINAL GROWTH RATE</div>', unsafe_allow_html=True)
-            g = st.number_input("Growth", min_value=-0.05, max_value=0.10, value=b.growth_rate, step=0.005, format="%.3f", label_visibility="collapsed", help="The expected perpetual growth rate of the asset after the projection horizon.")
+            g = st.number_input("Growth", min_value=-0.05, max_value=0.10, value=float(b.growth_rate), step=0.005, format="%.3f", label_visibility="collapsed", key=f"g_{target_dcf}", help="The expected perpetual growth rate of the asset after the projection horizon.")
             
             st.markdown('<div style="font-size: 10px; color: #6b7280; margin: 16px 0 4px 0;">BASE FCF (MILLIONS)</div>', unsafe_allow_html=True)
-            fcf = st.number_input("FCF", value=float(b.fcf_base), step=100.0, label_visibility="collapsed", help="Trailing Twelve Months (TTM) Free Cash Flow baseline.")
+            fcf = st.number_input("FCF", value=float(b.fcf_base), step=100.0, label_visibility="collapsed", key=f"fcf_{target_dcf}", help="Trailing Twelve Months (TTM) Free Cash Flow baseline.")
             
             st.markdown('<div style="font-size: 10px; color: #6b7280; margin: 16px 0 4px 0;">PROJECTION HORIZON (YRS)</div>', unsafe_allow_html=True)
-            years = st.slider("Years", 3, 10, 5, label_visibility="collapsed")
+            years = st.slider("Years", 3, 10, 5, label_visibility="collapsed", key=f"yrs_{target_dcf}")
             st.markdown('</div>', unsafe_allow_html=True)
             
         with dc2:
@@ -819,31 +819,37 @@ with tabs[3]:
             fig_mc.add_vline(x=p50, line_dash='dash', line_color='#fbbf24', annotation_text=f'Median: ${p50:,.0f}M', annotation_font_color='#fbbf24')
             fig_mc.add_vline(x=p5, line_dash='dot', line_color='#ef4444', annotation_text=f'5th %: ${p5:,.0f}M', annotation_font_color='#ef4444')
             fig_mc.add_vline(x=p95, line_dash='dot', line_color='#10b981', annotation_text=f'95th %: ${p95:,.0f}M', annotation_font_color='#10b981')
-            fig_mc.update_layout(**BASE_CHART, height=350, margin=dict(l=0, r=0, t=20, b=0),
+            fig_mc.update_layout(**BASE_CHART, height=350, margin=dict(l=10, r=10, t=30, b=10),
                                 xaxis=dict(title='Estimated Valuation ($M)', gridcolor='#1f2937'),
                                 yaxis=dict(title='Frequency', gridcolor='#1f2937'),
                                 showlegend=False)
-            st.plotly_chart(fig_mc, use_container_width=True)
             
+            mc1, mc2 = st.columns([2, 1])
+            with mc1:
+                st.plotly_chart(fig_mc, use_container_width=True)
+            with mc2:
+                st.markdown(f'''
+                <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                    <div style="background: #0a0a0a; border: 1px solid #7f1d1d; border-radius: 6px; padding: 16px; text-align: center;">
+                        <div style="font-size: 11px; color: #ef4444; font-weight: bold; letter-spacing: 0.5px;">BEARISH SKEW (5th %ile)</div>
+                        <div style="font-size: 26px; color: #ef4444; font-family: 'JetBrains Mono', monospace; font-weight: bold;">${p5:,.0f}M</div>
+                    </div>
+                    <div style="background: #0a0a0a; border: 1px solid #92400e; border-radius: 6px; padding: 16px; text-align: center;">
+                        <div style="font-size: 11px; color: #fbbf24; font-weight: bold; letter-spacing: 0.5px;">MEDIAN EXPECTATION</div>
+                        <div style="font-size: 26px; color: #fbbf24; font-family: 'JetBrains Mono', monospace; font-weight: bold;">${p50:,.0f}M</div>
+                    </div>
+                    <div style="background: #0a0a0a; border: 1px solid #064e3b; border-radius: 6px; padding: 16px; text-align: center;">
+                        <div style="font-size: 11px; color: #10b981; font-weight: bold; letter-spacing: 0.5px;">BULLISH SKEW (95th %ile)</div>
+                        <div style="font-size: 26px; color: #10b981; font-family: 'JetBrains Mono', monospace; font-weight: bold;">${p95:,.0f}M</div>
+                    </div>
+                </div>
+                ''', unsafe_allow_html=True)
+                
             st.markdown(f'''
-            <div style="display: flex; gap: 16px; margin-top: 8px;">
-                <div style="flex:1; background: #0a0a0a; border: 1px solid #7f1d1d; border-radius: 6px; padding: 12px; text-align: center;">
-                    <div style="font-size: 10px; color: #ef4444;">BEARISH CASE (5th PERCENTILE)</div>
-                    <div style="font-size: 22px; color: #ef4444; font-family: 'JetBrains Mono', monospace; font-weight: bold;">${p5:,.0f}M</div>
-                </div>
-                <div style="flex:1; background: #0a0a0a; border: 1px solid #92400e; border-radius: 6px; padding: 12px; text-align: center;">
-                    <div style="font-size: 10px; color: #fbbf24;">MEDIAN VALUATION</div>
-                    <div style="font-size: 22px; color: #fbbf24; font-family: 'JetBrains Mono', monospace; font-weight: bold;">${p50:,.0f}M</div>
-                </div>
-                <div style="flex:1; background: #0a0a0a; border: 1px solid #064e3b; border-radius: 6px; padding: 12px; text-align: center;">
-                    <div style="font-size: 10px; color: #10b981;">BULLISH CASE (95th PERCENTILE)</div>
-                    <div style="font-size: 22px; color: #10b981; font-family: 'JetBrains Mono', monospace; font-weight: bold;">${p95:,.0f}M</div>
-                </div>
-            </div>
-            <div style="font-size: 12px; color: #9ca3af; margin-top: 12px; padding: 8px; background: #0a0a0a; border: 1px solid #1f2937; border-radius: 4px;">
+            <div style="font-size: 12px; color: #9ca3af; margin-top: 16px; padding: 12px; background: #0a0a0a; border: 1px solid #1f2937; border-radius: 4px;">
                 <b style="color: #fbbf24;">What this means:</b> Out of 1,000 randomized scenarios, {target_dcf}'s valuation falls between 
                 <b style="color: #ef4444;">${p5:,.0f}M</b> (pessimistic) and <b style="color: #10b981;">${p95:,.0f}M</b> (optimistic) with 90% confidence.
-                The median estimate is <b style="color: #fbbf24;">${p50:,.0f}M</b>. This is a classical Monte Carlo simulation, not AI-generated.
+                The median estimate is <b style="color: #fbbf24;">${p50:,.0f}M</b>. This validates the point estimate against parameter uncertainty.
             </div>
             ''', unsafe_allow_html=True)
         
