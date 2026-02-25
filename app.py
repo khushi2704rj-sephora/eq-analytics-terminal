@@ -171,12 +171,13 @@ class AnalystBrief(BaseModel):
 def load_vs():
     return HuggingFaceEmbeddings(model_name='sentence-transformers/all-MiniLM-L6-v2')
 
-def ingest_pdf(uploaded_file, company_name):
+def ingest_pdf(uploaded_files, company_name):
     emb = load_vs()
-    reader = PdfReader(uploaded_file)
     text = ""
-    for i, page in enumerate(reader.pages):
-        text += f"\n\n--- PAGE {i+1} ---\n\n{page.extract_text()}"
+    for file in uploaded_files:
+        reader = PdfReader(file)
+        for i, page in enumerate(reader.pages):
+            text += f"\n\n--- PAGE ---\n\n{page.extract_text()}"
     
     sp = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=150)
     docs = sp.create_documents([text], metadatas=[{'company': company_name}])
@@ -187,11 +188,11 @@ def retr(vs, co, q, k=5):
     res = vs.similarity_search(q, k=k)
     return '\n\n'.join([x.page_content for x in res])
 
-def prompt(cn, ctx):
+def prompt(cn, sector, ctx):
     p = 'You are a Senior Equity Research Analyst for a top-tier investment bank.\n'
     p += f'Analyze {cn}. Return ONLY valid JSON matching this schema exactly.\n'
     p += '{\n'
-    p += f'  "company_name":"{cn}","fiscal_year":"Latest","sector":"Technology",\n'
+    p += f'  "company_name":"{cn}","fiscal_year":"Latest","sector":"{sector}",\n'
     p += '  "business_model":"Detailed 3 sentence breakdown",\n'
     p += '  "key_segments":["segment 1","segment 2","segment 3"],\n'
     p += '  "financial_highlights":["Detail 1","Detail 2"],\n'
@@ -206,7 +207,7 @@ def prompt(cn, ctx):
     p += f'=== CONTEXT ===\n{ctx[:4000]}\n'
     return p
 
-def run_llm(co, vs, prog):
+def run_llm(co, sector, vs, prog):
     prog(0.3, f'Retrieving {co} financial context...')
     ctx = retr(vs, co, 'business model revenue segments strategy risks financial performance metrics')
     prog(0.6, 'Synthesizing with Llama-3.1-8B...')
@@ -214,7 +215,7 @@ def run_llm(co, vs, prog):
     cl = InferenceClient(provider='novita', api_key=TOKEN)
     for _ in range(3):
         try:
-            r = cl.chat.completions.create(model='meta-llama/Llama-3.1-8B-Instruct', messages=[{'role':'user','content':prompt(co, ctx)}], max_tokens=2500, temperature=0.1)
+            r = cl.chat.completions.create(model='meta-llama/Llama-3.1-8B-Instruct', messages=[{'role':'user','content':prompt(co, sector, ctx)}], max_tokens=2500, temperature=0.1)
             raw = r.choices[0].message.content.strip()
             raw = re.sub(r'^```json\s*', '', raw); raw = re.sub(r'^```\s*', '', raw); raw = re.sub(r'\s*```$', '', raw)
             m = re.search(r'\{.*\}', raw, re.DOTALL)
@@ -292,30 +293,31 @@ def c_macro_scatter(db, tgt_company, x_metric, y_metric):
 # ─────────────────────────────────────────────
 # FRONTEND LAYOUT
 # ─────────────────────────────────────────────
-tabs = st.tabs(["[1] DATA_INGEST", "[2] EQ_TERMINAL", "[3] MACRO_UNIVERSE", "[4] VALUATION_DCF"])
+tabs = st.tabs(["[1] DATA_INGEST", "[2] EQ_TERMINAL", "[3] MACRO_UNIVERSE", "[4] VALUATION_DCF", "[5] INDUSTRY_BENCHMARK"])
 
 # --- TAB 1: INGESTION ---
 with tabs[0]:
     st.markdown('<div class="t-panel">', unsafe_allow_html=True)
-    st.markdown('<div class="t-panel-header">DOCUMENT INDEXING ENGINE V2.0</div>', unsafe_allow_html=True)
+    st.markdown('<div class="t-panel-header">DOCUMENT INDEXING ENGINE V3.0 (MULTI-FILE)</div>', unsafe_allow_html=True)
     
     c1, c2 = st.columns([2, 1])
     with c1:
-        uploaded_file = st.file_uploader("DROP SEC 10-K OR ANNUAL REPORT PDF", type="pdf", label_visibility="collapsed")
+        uploaded_files = st.file_uploader("DROP SEC 10-K OR ANNUAL REPORT PDFs", type="pdf", accept_multiple_files=True, label_visibility="collapsed")
     with c2:
         custom_name = st.text_input("ASSET TICKER", placeholder="e.g. AAPL", label_visibility="collapsed")
+        sector_input = st.selectbox("SECTOR", ["Technology", "Healthcare", "Financials", "Consumer", "Energy", "Industrials", "Real Estate", "Materials"], label_visibility="collapsed")
         process_btn = st.button("▶ EXECUTE PIPELINE")
         
-    if process_btn and uploaded_file and custom_name:
+    if process_btn and uploaded_files and custom_name:
         with st.container():
             pb = st.progress(0); st_txt = st.empty()
             def upd(v, m): pb.progress(v); st_txt.markdown(f"`[{v*100:.0f}%] {m}`")
             
             upd(0.1, "Vectorizing context (1024 dims)...")
-            vs = ingest_pdf(uploaded_file, custom_name)
+            vs = ingest_pdf(uploaded_files, custom_name)
             st.session_state[f"vs_{custom_name}"] = vs
             
-            b, ctx = run_llm(custom_name, vs, upd)
+            b, ctx = run_llm(custom_name, sector_input, vs, upd)
             if b:
                 st.session_state.briefs[custom_name] = b
                 # Crucial bug fix: force dump to dict so .get() works reliably during scatter plot loop
@@ -462,3 +464,101 @@ with tabs[3]:
             tv = pv - sum(vals)
             st.plotly_chart(c_dcf_sim(vals, tv, pv), use_container_width=True)
             st.markdown('</div>', unsafe_allow_html=True)
+
+# --- TAB 5: INDUSTRY BENCHMARK ---
+with tabs[4]:
+    if not st.session_state.macro_db:
+        st.markdown('<div class="t-panel" style="text-align:center; padding: 100px 0; color: #4b5563;">MACRO DATABASE OFFLINE.</div>', unsafe_allow_html=True)
+    else:
+        st.markdown('<div class="t-panel">', unsafe_allow_html=True)
+        st.markdown('<div class="t-panel-header">INDUSTRY CROSS-SECTION BENCHMARKING</div>', unsafe_allow_html=True)
+        
+        # Get unique sectors
+        sectors = set()
+        for v in st.session_state.macro_db.values():
+            sect = v.get('sector', 'Unknown') if isinstance(v, dict) else getattr(v, 'sector', 'Unknown')
+            sectors.add(sect)
+            
+        c1, c2 = st.columns([1, 4])
+        with c1:
+            st.markdown('<div style="font-size: 10px; color: #6b7280; margin-bottom: 8px;">TARGET INDUSTRY</div>', unsafe_allow_html=True)
+            target_sector = st.selectbox("Sector", sorted(list(sectors)), label_visibility="collapsed", key="t5_sector")
+            
+        # Filter DB by sector
+        sector_db = {k: v for k, v in st.session_state.macro_db.items() if (v.get('sector', 'Unknown') if isinstance(v, dict) else getattr(v, 'sector', 'Unknown')) == target_sector}
+        
+        if sector_db:
+            # Calculate Averages safely
+            def get_s(comp_data, metric_name):
+                scores = comp_data.get('competitive_scores', {})
+                metric_key = metric_name.lower().replace(' ', '_')
+                if hasattr(scores, 'model_dump'):
+                    return getattr(scores, metric_key, 0)
+                elif isinstance(scores, dict):
+                    return scores.get(metric_key, 0)
+                return 0
+            def get_m(comp_data):
+                m = comp_data.get('management_tone_score', 0) if isinstance(comp_data, dict) else getattr(comp_data, 'management_tone_score', 0)
+                return m
+
+            avg_inn = sum([get_s(v, 'innovation') for v in sector_db.values()]) / len(sector_db)
+            avg_risk = sum([get_s(v, 'risk_profile') for v in sector_db.values()]) / len(sector_db)
+            avg_fin = sum([get_s(v, 'financial_health') for v in sector_db.values()]) / len(sector_db)
+            avg_mgmt = sum([get_m(v) for v in sector_db.values()]) / len(sector_db)
+            
+            with c2:
+                st.markdown('<div class="metric-grid">', unsafe_allow_html=True)
+                html = f'''
+                <div class="m-card bull">
+                    <div class="m-title">IND: INNO AVG</div>
+                    <div class="m-val">{avg_inn:.1f}<span style="font-size:14px;color:#6b7280">/10</span></div>
+                </div>
+                <div class="m-card">
+                    <div class="m-title">IND: FIN HEALTH AVG</div>
+                    <div class="m-val">{avg_fin:.1f}<span style="font-size:14px;color:#6b7280">/10</span></div>
+                </div>
+                <div class="m-card bear">
+                    <div class="m-title">IND: RISK AVG</div>
+                    <div class="m-val">{avg_risk:.1f}<span style="font-size:14px;color:#6b7280">/10</span></div>
+                </div>
+                <div class="m-card">
+                    <div class="m-title">IND: MGMT TONE AVG</div>
+                    <div class="m-val">{avg_mgmt:.1f}<span style="font-size:14px;color:#6b7280">/10</span></div>
+                </div>
+                '''
+                st.markdown(html + '</div>', unsafe_allow_html=True)
+                
+            st.markdown("<hr style='border-color: #1f2937; margin: 20px 0;'>", unsafe_allow_html=True)
+            
+            # Build DataFrame
+            df_data = []
+            for k, v in sector_db.items():
+                inn = get_s(v, 'innovation')
+                fin = get_s(v, 'financial_health')
+                risk = get_s(v, 'risk_profile')
+                mgmt = get_m(v)
+                
+                df_data.append({
+                    "Ticker": k,
+                    "Innovation": f"{inn} {'🟢' if inn >= avg_inn else '🔴'}",
+                    "Financial Health": f"{fin} {'🟢' if fin >= avg_fin else '🔴'}",
+                    "Risk Profile (Lower is Better)": f"{risk} {'🟢' if risk <= avg_risk else '🔴'}",
+                    "Mgmt Tone": f"{mgmt} {'🟢' if mgmt >= avg_mgmt else '🔴'}"
+                })
+            
+            df = pd.DataFrame(df_data)
+            # Custom styling for dataframe
+            html_table = df.to_html(classes='table table-dark', index=False, escape=False)
+            st.markdown(f'''
+            <style>
+                .table-dark {{width: 100%; color: #d1d5db; border-collapse: collapse; font-family: "JetBrains Mono", monospace; font-size: 12px;}}
+                .table-dark th {{background: #1f2937; padding: 12px; text-align: left; color: #9ca3af; border-bottom: 2px solid #374151;}}
+                .table-dark td {{padding: 12px; border-bottom: 1px solid #1f2937;}}
+                .table-dark tr:hover {{background: #1a1a1a;}}
+            </style>
+            {html_table}
+            ''', unsafe_allow_html=True)
+            
+        else:
+            st.warning("No companies found in this sector yet.")
+        st.markdown('</div>', unsafe_allow_html=True)
