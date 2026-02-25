@@ -268,53 +268,54 @@ def simulate_dcf(fcf, wacc, g, years=5):
 # ─────────────────────────────────────────────
 BASE_CHART = dict(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font=dict(color='#9ca3af', family='"JetBrains Mono", monospace'))
 
-def c_dcf_sim(vals, tv, pv):
+def c_dcf_sim(vals, tv, pv, years):
     fig = go.Figure()
-    fig.add_trace(go.Bar(x=[f'Y{i}' for i in range(1,6)], y=vals, name='Discounted FCF', marker_color='#3b82f6'))
-    fig.add_trace(go.Bar(x=['Terminal Value'], y=[tv], name='TV (Present)', marker_color='#8b5cf6'))
-    fig.update_layout(**BASE_CHART, title=dict(text=f"VALUATION: ${pv:,.0f}M", font=dict(color='#fbbf24', size=16)), height=350, 
-                      margin=dict(l=0, r=0, t=40, b=0), yaxis=dict(gridcolor='#1f2937', zerolinecolor='#374151'), xaxis=dict(gridcolor='#1f2937'))
+    fig.add_trace(go.Bar(x=[f'Year {i}' for i in range(1, years+1)], y=vals, name='Projected Cash Flow', marker_color='#3b82f6', text=[f'${v:,.0f}M' for v in vals], textposition='outside', textfont=dict(color='#9ca3af', size=10)))
+    fig.add_trace(go.Bar(x=['Terminal Value'], y=[tv], name='Terminal Value (Present)', marker_color='#8b5cf6', text=[f'${tv:,.0f}M'], textposition='outside', textfont=dict(color='#9ca3af', size=10)))
+    fig.update_layout(**BASE_CHART, title=dict(text=f"TOTAL ESTIMATED VALUE: ${pv:,.0f}M", font=dict(color='#fbbf24', size=16)), height=400, 
+                      margin=dict(l=0, r=0, t=50, b=0), yaxis=dict(gridcolor='#1f2937', zerolinecolor='#374151'), xaxis=dict(gridcolor='#1f2937'),
+                      barmode='group')
     return fig
 
-def c_macro_scatter(db, tgt_company, x_metric, y_metric):
-    # FIXED: The competitive_scores was sometimes a dict (from mock json) and sometimes a Pydantic object (if generated). Handled safely.
-    def get_score(comp_data, metric_name):
-        scores = comp_data.get('competitive_scores', {})
-        metric_key = metric_name.lower().replace(' ', '_')
-        if hasattr(scores, 'model_dump'): # It's a populated AnalystBrief
-            return getattr(scores, metric_key, random.randint(3,10))
-        elif isinstance(scores, dict): # It's from the raw JSON
-            return scores.get(metric_key, random.randint(3,10))
-        return random.randint(3,10)
-
-    df_data = []
-    for k, v in db.items():
-        # Handle dict or AnalystBrief conversion safely for Pandas
-        sector = v.get('sector', 'Unknown') if isinstance(v, dict) else getattr(v, 'sector', 'Unknown')
-        
-        df_data.append({
-            'Company': k, 
-            'Sector': sector, 
-            x_metric: get_score(v, x_metric),
-            y_metric: get_score(v, y_metric),
-            'Target': k == tgt_company
-        })
-        
-    df = pd.DataFrame(df_data)
+def c_radar_chart(company_name, scores_dict):
+    categories = ['Innovation', 'Market Position', 'Financial Health', 'Risk Profile', 'Mgmt Tone']
+    vals = [scores_dict.get('innovation', 5), scores_dict.get('market_position', 5), scores_dict.get('financial_health', 5), scores_dict.get('risk_profile', 5), scores_dict.get('management_tone_score', 5)]
+    vals += vals[:1]  # close the polygon
+    cats = categories + categories[:1]
     
-    fig = px.scatter(df, x=x_metric, y=y_metric, color='Sector', size_max=20, hover_name='Company',
-                     color_discrete_sequence=['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'])
-    
-    tgt = df[df['Target']]
-    if not tgt.empty:
-        fig.add_trace(go.Scatter(x=tgt[x_metric], y=tgt[y_metric], mode='markers', 
-                                 marker=dict(size=18, color='rgba(0,0,0,0)', line=dict(color='#fbbf24', width=3)),
-                                 name=f"&gt;&gt; {tgt_company} &lt;&lt;", showlegend=True))
-        
-    fig.update_layout(**BASE_CHART, title=dict(text=f"MACRO CROSS-SECTION: {x_metric.upper()} v {y_metric.upper()}", font=dict(size=14, color='#e5e7eb')), 
-                      height=500, xaxis=dict(gridcolor='#1f2937'), yaxis=dict(gridcolor='#1f2937'), 
-                      legend=dict(bgcolor='rgba(0,0,0,0)', font=dict(size=10)))
+    fig = go.Figure()
+    fig.add_trace(go.Scatterpolar(r=vals, theta=cats, fill='toself', name=company_name,
+                                   fillcolor='rgba(59, 130, 246, 0.2)', line=dict(color='#3b82f6', width=2)))
+    fig.update_layout(**BASE_CHART, polar=dict(radialaxis=dict(visible=True, range=[0, 10], gridcolor='#1f2937', tickfont=dict(size=10, color='#6b7280')),
+                                                angularaxis=dict(gridcolor='#1f2937', tickfont=dict(size=11, color='#d1d5db'))),
+                      title=dict(text=f"{company_name}: COMPETITIVE PROFILE", font=dict(color='#e5e7eb', size=14)),
+                      height=420, margin=dict(l=40, r=40, t=60, b=40), showlegend=False)
     return fig
+
+def c_comparison_bars(db):
+    companies = list(db.keys())
+    metrics = ['Innovation', 'Financial Health', 'Risk Profile', 'Market Position']
+    colors = ['#3b82f6', '#10b981', '#ef4444', '#8b5cf6']
+    
+    fig = go.Figure()
+    for i, metric in enumerate(metrics):
+        metric_key = metric.lower().replace(' ', '_')
+        vals = []
+        for co in companies:
+            v = db[co]
+            scores = v.get('competitive_scores', {}) if isinstance(v, dict) else {}
+            if isinstance(scores, dict):
+                vals.append(scores.get(metric_key, 5))
+            else:
+                vals.append(getattr(scores, metric_key, 5))
+        fig.add_trace(go.Bar(name=metric, x=companies, y=vals, marker_color=colors[i]))
+        
+    fig.update_layout(**BASE_CHART, barmode='group', title=dict(text="HEAD-TO-HEAD: COMPANY COMPARISON", font=dict(color='#e5e7eb', size=14)),
+                      height=400, margin=dict(l=0, r=0, t=50, b=0), yaxis=dict(gridcolor='#1f2937', range=[0, 10], title='Score (out of 10)'),
+                      xaxis=dict(gridcolor='#1f2937'), legend=dict(bgcolor='rgba(0,0,0,0)', font=dict(size=11)))
+    return fig
+
+
 
 # ─────────────────────────────────────────────
 # FRONTEND LAYOUT
@@ -524,39 +525,56 @@ with tabs[2]:
         </div>
         ''', unsafe_allow_html=True)
     else:
-        mc1, mc2 = st.columns([1, 4])
+        st.markdown('<div class="t-panel">', unsafe_allow_html=True)
+        st.markdown('<div class="t-panel-header">COMPANY COMPETITIVE PROFILE</div>', unsafe_allow_html=True)
+        st.info("Select a company to see its strengths and weaknesses visualized as a radar chart. If you have analyzed 2+ companies, a side-by-side comparison chart will also appear below.")
         
-        with mc1:
-            st.markdown('<div class="t-panel">', unsafe_allow_html=True)
-            st.markdown('<div class="t-panel-header">MACRO SHOCK SIMULATOR</div>', unsafe_allow_html=True)
-            st.info("Simulate top-down macroeconomic volatility. Adjust the Interest Rate and Inflation sliders to estimate the responsive Market Cap variance of the target asset based on its LLM-extracted sector sensitivity.")
-            st.markdown('<div style="font-size: 10px; color: #6b7280; margin-bottom: 8px; margin-top: 12px;">TARGET ASSET</div>', unsafe_allow_html=True)
-            target_t3 = st.selectbox("Highlight", list(st.session_state.macro_db.keys()), key="t3_target", label_visibility="collapsed")
+        target_t3 = st.selectbox("Select Company", list(st.session_state.macro_db.keys()), key="t3_target")
+        
+        # Build scores dict for the selected company
+        v_data = st.session_state.macro_db[target_t3]
+        scores = v_data.get('competitive_scores', {}) if isinstance(v_data, dict) else {}
+        mgmt = v_data.get('management_tone_score', 5) if isinstance(v_data, dict) else 5
+        
+        if isinstance(scores, dict):
+            scores_flat = {**scores, 'management_tone_score': mgmt}
+        else:
+            scores_flat = {'innovation': 5, 'market_position': 5, 'financial_health': 5, 'risk_profile': 5, 'management_tone_score': mgmt}
+        
+        rc1, rc2 = st.columns([1, 1])
+        with rc1:
+            st.plotly_chart(c_radar_chart(target_t3, scores_flat), use_container_width=True)
+        with rc2:
+            # Interpretation
+            st.markdown('<div class="t-panel" style="margin-top: 10px;">', unsafe_allow_html=True)
+            st.markdown('<div class="t-panel-header">WHAT THIS MEANS</div>', unsafe_allow_html=True)
+            inn_v = scores_flat.get('innovation', 5)
+            fin_v = scores_flat.get('financial_health', 5)
+            risk_v = scores_flat.get('risk_profile', 5)
+            mkt_v = scores_flat.get('market_position', 5)
             
-            st.markdown('<div style="font-size: 10px; color: #6b7280; margin: 16px 0 8px 0;">INTEREST RATE DELTA (BPS)</div>', unsafe_allow_html=True)
-            rates = st.slider("Interest Rate Delta (bps)", -100, 200, 0, step=25, label_visibility="collapsed", help="Basis points change in the Federal Funds Rate. Positive values simulate tightening; negative simulate easing.")
+            def interpret(val): return '🟢 Strong' if val >= 7 else ('🟡 Average' if val >= 4 else '🔴 Weak')
+            def risk_interpret(val): return '🟢 Low Risk' if val <= 3 else ('🟡 Moderate' if val <= 6 else '🔴 High Risk')
             
-            st.markdown('<div style="font-size: 10px; color: #6b7280; margin: 16px 0 8px 0;">INFLATION SPIKE (%)</div>', unsafe_allow_html=True)
-            inf = st.slider("Inflation Spike (%)", 0.0, 10.0, 0.0, label_visibility="collapsed", help="Simulate a sudden percentage spike in core CPI inflation, impacting supply chain and consumer sensitivity.")
-            
-            st.markdown("<hr style='border-color: #1f2937; margin: 20px 0;'>", unsafe_allow_html=True)
-            
-            impact = 0
-            if target_t3 in st.session_state.macro_db:
-                v_data = st.session_state.macro_db[target_t3]
-                sens = v_data.get('sensitivity', {}) if isinstance(v_data, dict) else getattr(v_data, 'sensitivity', {'rates': 0, 'inflation': 0})
-                impact = (rates/100 * sens.get('rates', 0)) + (inf * sens.get('inflation', 0))
-            
-            color = "#ef4444" if impact < 0 else "#10b981"
-            st.markdown('<div class="t-panel-header" style="color: #9ca3af; border: none; padding: 0;">EST. SHOCK IMPACT</div>', unsafe_allow_html=True)
-            st.markdown(f"<div style='font-size: 28px; color: {color}; font-family: \"JetBrains Mono\", monospace; font-weight: bold;'>{impact:.2f}%</div>", unsafe_allow_html=True)
-            st.markdown('<div style="font-size: 10px; color: #6b7280;">MARKET CAP VARIANCE</div>', unsafe_allow_html=True)
+            st.markdown(f'''
+            <div style="font-size: 13px; color: #d1d5db; line-height: 2;">
+                <b>Innovation ({inn_v}/10):</b> {interpret(inn_v)} — R&D and product pipeline strength<br>
+                <b>Market Position ({mkt_v}/10):</b> {interpret(mkt_v)} — competitive market dominance<br>
+                <b>Financial Health ({fin_v}/10):</b> {interpret(fin_v)} — balance sheet and cash reserves<br>
+                <b>Risk Profile ({risk_v}/10):</b> {risk_interpret(risk_v)} — exposure to external threats<br>
+                <b>Mgmt Tone ({mgmt}/10):</b> {interpret(mgmt)} — how confident is the leadership team<br>
+            </div>
+            ''', unsafe_allow_html=True)
             st.markdown('</div>', unsafe_allow_html=True)
-
-        with mc2:
+        
+        st.markdown('</div>', unsafe_allow_html=True)
+        
+        # Comparison Chart (only if 2+ companies)
+        if len(st.session_state.macro_db) >= 2:
             st.markdown('<div class="t-panel">', unsafe_allow_html=True)
-            st.info("Universe Cross-Section: Visualizing standard deviation of Risk vs. Innovation across the ingested macroeconomic database.")
-            st.plotly_chart(c_macro_scatter(st.session_state.macro_db, target_t3, 'Innovation', 'Risk Profile'), use_container_width=True)
+            st.markdown('<div class="t-panel-header">SIDE-BY-SIDE COMPANY COMPARISON</div>', unsafe_allow_html=True)
+            st.info("This chart compares all analyzed companies across 4 key dimensions. Taller bars = stronger performance (except Risk, where lower is better).")
+            st.plotly_chart(c_comparison_bars(st.session_state.macro_db), use_container_width=True)
             st.markdown('</div>', unsafe_allow_html=True)
 
 # --- TAB 4: DCF SIMULATOR ---
@@ -605,7 +623,16 @@ with tabs[3]:
             st.markdown('<div class="t-panel-header">INTRINSIC VALUE MODELER</div>', unsafe_allow_html=True)
             pv, vals = simulate_dcf(fcf, wacc, g, years)
             tv = pv - sum(vals)
-            st.plotly_chart(c_dcf_sim(vals, tv, pv), use_container_width=True)
+            st.plotly_chart(c_dcf_sim(vals, tv, pv, years), use_container_width=True)
+            
+            # Plain English Interpretation
+            st.markdown(f'''
+            <div style="font-size: 13px; color: #d1d5db; line-height: 1.8; padding: 12px; background: #0a0a0a; border: 1px solid #1f2937; border-radius: 4px; margin-top: 8px;">
+                <b style="color: #fbbf24;">What this means:</b> Based on the current inputs, the AI estimates that <b>{target_dcf}</b> is worth approximately <b style="color: #10b981;">${pv:,.0f}M</b>. 
+                This is calculated by projecting {years} years of future cash flows (blue bars) and adding the present value of all cash flows beyond that horizon (purple bar = Terminal Value). 
+                Try adjusting the sliders on the left to see how different assumptions change the valuation.
+            </div>
+            ''', unsafe_allow_html=True)
             st.markdown('</div>', unsafe_allow_html=True)
 
 # --- TAB 5: INDUSTRY BENCHMARK ---
