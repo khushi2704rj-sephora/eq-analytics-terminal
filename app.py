@@ -232,17 +232,24 @@ def run_llm(co, sector, vs, prog):
     prog(0.7, 'Synthesizing with Llama-3.1-8B...')
     
     cl = InferenceClient(provider='novita', api_key=TOKEN)
-    for _ in range(3):
+    last_err = ""
+    for attempt in range(3):
         try:
             r = cl.chat.completions.create(model='meta-llama/Llama-3.1-8B-Instruct', messages=[{'role':'user','content':prompt(co, sector, ctx)}], max_tokens=2500, temperature=0.1)
             raw = r.choices[0].message.content.strip()
             raw = re.sub(r'^```json\s*', '', raw); raw = re.sub(r'^```\s*', '', raw); raw = re.sub(r'\s*```$', '', raw)
             m = re.search(r'\{.*\}', raw, re.DOTALL)
+            if not m:
+                raise ValueError("No valid JSON block detected from LLM.")
             b = AnalystBrief(**json.loads(m.group()))
             prog(0.9, 'Validated Schema.')
             return b, ctx
         except Exception as e:
-            continue
+            last_err = str(e)
+            prog(0.7, f'Synthesizing... Retry {attempt+1}/3 failed ({last_err[:30]}...)')
+            time.sleep(2)
+            
+    st.error(f"LLM Generation Failed consistently. Last Error: {last_err}")
     return None, None
 
 def simulate_dcf(fcf, wacc, g, years=5):
@@ -358,6 +365,8 @@ with tabs[0]:
                 st.success(f"[{custom_name}] ASSET REGISTERED. SWITCH TO TAB [2].")
                 time.sleep(1.5)
                 st_txt.empty(); pb.empty()
+            else:
+                st.error("❌ PIPELINE FAILED: The LLM could not generate a valid profile. You likely uploaded conflicting files for multiple companies, breaking the strict schema requirement.")
             st.markdown('</div>', unsafe_allow_html=True)
 
 # --- TAB 2: TERMINAL ---
