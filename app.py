@@ -631,104 +631,112 @@ with tabs[2]:
         ''', unsafe_allow_html=True)
     else:
         st.markdown('<div class="t-panel">', unsafe_allow_html=True)
-        st.markdown('<div class="t-panel-header">COMPANY COMPETITIVE PROFILE</div>', unsafe_allow_html=True)
-        st.info("Select a company to see its strengths and weaknesses visualized as a radar chart. If you have analyzed 2+ companies, a side-by-side comparison chart will also appear below.")
+        st.markdown('<div class="t-panel-header">MARKET COMPARISON MODULE</div>', unsafe_allow_html=True)
         
-        target_t3 = st.selectbox("Select Company", list(st.session_state.macro_db.keys()), key="t3_target")
+        t3_tabs = st.tabs(["🎯 Individual Profile", "⚖️ Head-to-Head Comparison", "🔗 Correlation Matrix"])
         
-        # Build scores dict for the selected company
-        v_data = st.session_state.macro_db[target_t3]
-        scores = v_data.get('competitive_scores', {}) if isinstance(v_data, dict) else {}
-        mgmt = v_data.get('management_tone_score', 5) if isinstance(v_data, dict) else 5
-        
-        if isinstance(scores, dict):
-            scores_flat = {**scores, 'management_tone_score': mgmt}
-        else:
-            scores_flat = {'innovation': 5, 'market_position': 5, 'financial_health': 5, 'risk_profile': 5, 'management_tone_score': mgmt}
-        
-        rc1, rc2 = st.columns([1, 1])
-        with rc1:
-            st.plotly_chart(c_radar_chart(target_t3, scores_flat), use_container_width=True)
-        with rc2:
-            # Interpretation
-            st.markdown('<div class="t-panel" style="margin-top: 10px;">', unsafe_allow_html=True)
-            st.markdown('<div class="t-panel-header">WHAT THIS MEANS</div>', unsafe_allow_html=True)
-            inn_v = scores_flat.get('innovation', 5)
-            fin_v = scores_flat.get('financial_health', 5)
-            risk_v = scores_flat.get('risk_profile', 5)
-            mkt_v = scores_flat.get('market_position', 5)
+        with t3_tabs[0]:
+            st.info("Select a company to see its strengths and weaknesses visualized as a radar chart.")
+            target_t3 = st.selectbox("Select Target Company", list(st.session_state.macro_db.keys()), key="t3_target_single")
             
-            def interpret(val): return '🟢 Strong' if val >= 7 else ('🟡 Average' if val >= 4 else '🔴 Weak')
-            def risk_interpret(val): return '🟢 Low Risk' if val <= 3 else ('🟡 Moderate' if val <= 6 else '🔴 High Risk')
+            # Build scores dict for the selected company
+            v_data = st.session_state.macro_db[target_t3]
+            scores = v_data.get('competitive_scores', {}) if isinstance(v_data, dict) else {}
+            mgmt = v_data.get('management_tone_score', 5) if isinstance(v_data, dict) else 5
             
-            st.markdown(f'''
-            <div style="font-size: 13px; color: #d1d5db; line-height: 2;">
-                <b>Innovation ({inn_v}/10):</b> {interpret(inn_v)} — R&D and product pipeline strength<br>
-                <b>Market Position ({mkt_v}/10):</b> {interpret(mkt_v)} — competitive market dominance<br>
-                <b>Financial Health ({fin_v}/10):</b> {interpret(fin_v)} — balance sheet and cash reserves<br>
-                <b>Risk Profile ({risk_v}/10):</b> {risk_interpret(risk_v)} — exposure to external threats<br>
-                <b>Mgmt Tone ({mgmt}/10):</b> {interpret(mgmt)} — how confident is the leadership team<br>
-            </div>
-            ''', unsafe_allow_html=True)
-            st.markdown('</div>', unsafe_allow_html=True)
-        
-        st.markdown('</div>', unsafe_allow_html=True)
-        
-        # Comparison Chart (only if 2+ companies)
-        if len(st.session_state.macro_db) >= 2:
-            st.markdown('<div class="t-panel">', unsafe_allow_html=True)
-            st.markdown('<div class="t-panel-header">SIDE-BY-SIDE COMPANY COMPARISON</div>', unsafe_allow_html=True)
-            st.info("This chart compares all analyzed companies across 4 key dimensions. Taller bars = stronger performance (except Risk, where lower is better).")
-            st.plotly_chart(c_comparison_bars(st.session_state.macro_db), use_container_width=True)
-            st.markdown('</div>', unsafe_allow_html=True)
-        
-        # CLASSICAL ANALYTICS: Pearson Correlation Heatmap
-        if len(st.session_state.macro_db) >= 2:
-            st.markdown('<div class="t-panel">', unsafe_allow_html=True)
-            st.markdown('<div class="t-panel-header">CLASSICAL ANALYTICS: PEARSON CORRELATION MATRIX</div>', unsafe_allow_html=True)
-            st.info("This is a statistical correlation heatmap (not AI-generated). It uses the Pearson coefficient to measure linear relationships between competitive metrics across all analyzed companies. Values close to +1 indicate strong positive correlation; values close to -1 indicate inverse correlation.")
+            if isinstance(scores, dict):
+                scores_flat = {**scores, 'management_tone_score': mgmt}
+            else:
+                scores_flat = {'innovation': 5, 'market_position': 5, 'financial_health': 5, 'risk_profile': 5, 'management_tone_score': mgmt}
             
-            corr_data = []
-            for k, v in st.session_state.macro_db.items():
-                scores = v.get('competitive_scores', {}) if isinstance(v, dict) else {}
-                if isinstance(scores, dict):
-                    corr_data.append({
-                        'Innovation': scores.get('innovation', 5),
-                        'Market Position': scores.get('market_position', 5),
-                        'Financial Health': scores.get('financial_health', 5),
-                        'Risk Profile': scores.get('risk_profile', 5),
-                        'Mgmt Tone': v.get('management_tone_score', 5) if isinstance(v, dict) else 5
-                    })
-            
-            if len(corr_data) >= 2:
-                corr_df = pd.DataFrame(corr_data)
-                corr_matrix = corr_df.corr()
-                
-                fig_corr = go.Figure(data=go.Heatmap(
-                    z=corr_matrix.values,
-                    x=corr_matrix.columns.tolist(),
-                    y=corr_matrix.columns.tolist(),
-                    colorscale=[[0, '#ef4444'], [0.5, '#111827'], [1, '#10b981']],
-                    zmin=-1, zmax=1,
-                    text=np.round(corr_matrix.values, 2),
-                    texttemplate='%{text}',
-                    textfont=dict(size=14, color='#e5e7eb'),
-                    hovertemplate='%{x} vs %{y}: %{z:.2f}<extra></extra>'
-                ))
-                fig_corr.update_layout(**BASE_CHART, height=400, margin=dict(l=0, r=0, t=20, b=0),
-                                        xaxis=dict(side='bottom'), yaxis=dict(autorange='reversed'))
-                st.plotly_chart(fig_corr, use_container_width=True)
-                
+            rc1, rc2 = st.columns([1, 1])
+            with rc1:
+                st.plotly_chart(c_radar_chart(target_t3, scores_flat), use_container_width=True)
+            with rc2:
                 # Interpretation
-                st.markdown('''
-                <div style="font-size: 12px; color: #9ca3af; line-height: 1.6; padding: 8px; background: #0a0a0a; border: 1px solid #1f2937; border-radius: 4px;">
-                    <b style="color: #fbbf24;">How to read this:</b> Each cell shows the Pearson correlation coefficient (-1 to +1) between two metrics.
-                    <b style="color: #10b981;">Green = positively correlated</b> (when one goes up, the other tends to go up).
-                    <b style="color: #ef4444;">Red = negatively correlated</b> (when one goes up, the other tends to go down).
-                    This is a classical statistical method, not AI-generated.
+                st.markdown('<div class="t-panel" style="margin-top: 10px; background: #0a0a0a;">', unsafe_allow_html=True)
+                st.markdown('<div class="t-panel-header">WHAT THIS MEANS</div>', unsafe_allow_html=True)
+                inn_v = scores_flat.get('innovation', 5)
+                fin_v = scores_flat.get('financial_health', 5)
+                risk_v = scores_flat.get('risk_profile', 5)
+                mkt_v = scores_flat.get('market_position', 5)
+                
+                def interpret(val): return '🟢 Strong' if val >= 7 else ('🟡 Average' if val >= 4 else '🔴 Weak')
+                def risk_interpret(val): return '🟢 Low Risk' if val <= 3 else ('🟡 Moderate' if val <= 6 else '🔴 High Risk')
+                
+                st.markdown(f'''
+                <div style="font-size: 13px; color: #d1d5db; line-height: 2;">
+                    <b>Innovation ({inn_v}/10):</b> {interpret(inn_v)} — R&D and product pipeline strength<br>
+                    <b>Market Position ({mkt_v}/10):</b> {interpret(mkt_v)} — competitive market dominance<br>
+                    <b>Financial Health ({fin_v}/10):</b> {interpret(fin_v)} — balance sheet and cash reserves<br>
+                    <b>Risk Profile ({risk_v}/10):</b> {risk_interpret(risk_v)} — exposure to external threats<br>
+                    <b>Mgmt Tone ({mgmt}/10):</b> {interpret(mgmt)} — how confident is the leadership team<br>
                 </div>
                 ''', unsafe_allow_html=True)
-            st.markdown('</div>', unsafe_allow_html=True)
+                st.markdown('</div>', unsafe_allow_html=True)
+                
+        with t3_tabs[1]:
+            st.info("Select two or more companies to compare them head-to-head across key competitive dimensions.")
+            if len(st.session_state.macro_db) >= 2:
+                # Default to first two companies in DB
+                default_targets = list(st.session_state.macro_db.keys())[:2]
+                compare_targets = st.multiselect("Select Assets to Compare", list(st.session_state.macro_db.keys()), default=default_targets, key="t3_compare_multi")
+                
+                if len(compare_targets) >= 2:
+                    filtered_db = {k: st.session_state.macro_db[k] for k in compare_targets}
+                    st.plotly_chart(c_comparison_bars(filtered_db), use_container_width=True)
+                else:
+                    st.warning("⚠️ Please select at least 2 companies from the dropdown above to generate the comparison chart.")
+            else:
+                st.warning("⚠️ You need to upload and ingest at least 2 companies in Tab 1 to unlock Head-to-Head Comparison.")
+                
+        with t3_tabs[2]:
+            st.info("CLASSICAL ANALYTICS: This is a statistical correlation heatmap (not AI-generated). It uses the Pearson coefficient to measure linear relationships between metrics across all analyzed companies.")
+            if len(st.session_state.macro_db) >= 2:
+                corr_data = []
+                for k, v in st.session_state.macro_db.items():
+                    scores = v.get('competitive_scores', {}) if isinstance(v, dict) else {}
+                    if isinstance(scores, dict):
+                        corr_data.append({
+                            'Innovation': scores.get('innovation', 5),
+                            'Market Position': scores.get('market_position', 5),
+                            'Financial Health': scores.get('financial_health', 5),
+                            'Risk Profile': scores.get('risk_profile', 5),
+                            'Mgmt Tone': v.get('management_tone_score', 5) if isinstance(v, dict) else 5
+                        })
+                
+                if len(corr_data) >= 2:
+                    corr_df = pd.DataFrame(corr_data)
+                    corr_matrix = corr_df.corr()
+                    
+                    fig_corr = go.Figure(data=go.Heatmap(
+                        z=corr_matrix.values,
+                        x=corr_matrix.columns.tolist(),
+                        y=corr_matrix.columns.tolist(),
+                        colorscale=[[0, '#ef4444'], [0.5, '#111827'], [1, '#10b981']],
+                        zmin=-1, zmax=1,
+                        text=np.round(corr_matrix.values, 2),
+                        texttemplate='%{text}',
+                        textfont=dict(size=14, color='#e5e7eb'),
+                        hovertemplate='%{x} vs %{y}: %{z:.2f}<extra></extra>'
+                    ))
+                    fig_corr.update_layout(**BASE_CHART, height=400, margin=dict(l=0, r=0, t=20, b=0),
+                                            xaxis=dict(side='bottom'), yaxis=dict(autorange='reversed'))
+                    st.plotly_chart(fig_corr, use_container_width=True)
+                    
+                    # Interpretation
+                    st.markdown('''
+                    <div style="font-size: 12px; color: #9ca3af; line-height: 1.6; padding: 12px; background: #0a0a0a; border: 1px solid #1f2937; border-radius: 4px; margin-top: 10px;">
+                        <b style="color: #fbbf24;">How to read this:</b> Each cell shows the Pearson correlation coefficient (-1 to +1) between two metrics.
+                        <b style="color: #10b981;">Green = positively correlated</b> (when one goes up, the other tends to go up).
+                        <b style="color: #ef4444;">Red = negatively correlated</b> (when one goes up, the other tends to go down).
+                        This is a classical statistical method computed across your entire custom cohort, not an AI generation.
+                    </div>
+                    ''', unsafe_allow_html=True)
+            else:
+                st.warning("⚠️ You need to upload and ingest at least 2 companies in Tab 1 to generate the Correlation Matrix.")
+                
+        st.markdown('</div>', unsafe_allow_html=True)
 
 # --- TAB 4: DCF SIMULATOR ---
 with tabs[3]:
