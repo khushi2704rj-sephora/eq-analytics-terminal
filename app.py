@@ -323,51 +323,87 @@ tabs = st.tabs(["[1] DATA_INGEST", "[2] EQ_TERMINAL", "[3] MACRO_UNIVERSE", "[4]
 
 # --- TAB 1: INGESTION ---
 with tabs[0]:
-    c1, c2 = st.columns([1, 1])
+    st.markdown('<div class="t-panel">', unsafe_allow_html=True)
+    st.markdown('<div class="t-panel-header">STEP 1: DOCUMENT BATCH UPLOAD</div>', unsafe_allow_html=True)
+    st.info("Upload SEC 10-K or Annual Report PDFs. You can upload files for multiple different companies. In Step 2, you will map each file to its respective Asset Ticker.")
+    uploaded_files = st.file_uploader("DROP PDFs HERE", type="pdf", accept_multiple_files=True, label_visibility="collapsed")
+    st.markdown('</div>', unsafe_allow_html=True)
     
-    with c1:
+    if uploaded_files:
         st.markdown('<div class="t-panel">', unsafe_allow_html=True)
-        st.markdown('<div class="t-panel-header">STEP 1: DOCUMENT BATCH UPLOAD</div>', unsafe_allow_html=True)
-        st.info("Upload 1-3 SEC 10-K or Annual Report PDFs for the SAME company. The engine will merge them into a single intelligence profile.")
-        uploaded_files = st.file_uploader("DROP PDFs HERE", type="pdf", accept_multiple_files=True, label_visibility="collapsed")
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.markdown('<div class="t-panel-header">STEP 2: BULK METADATA MAPPING</div>', unsafe_allow_html=True)
         
-    with c2:
-        st.markdown('<div class="t-panel">', unsafe_allow_html=True)
-        st.markdown('<div class="t-panel-header">STEP 2: METADATA CONFIGURATION</div>', unsafe_allow_html=True)
-        st.markdown('<div style="font-size: 10px; color: #6b7280; margin-bottom: 4px;">TARGET ASSET TICKER (Required)</div>', unsafe_allow_html=True)
-        custom_name = st.text_input("TICKER", placeholder="e.g. AAPL", label_visibility="collapsed")
+        st.markdown('''
+        <div style="display:flex; font-size: 10px; color:#6b7280; margin-bottom: 8px;">
+            <div style="flex:2;">DOCUMENT FILENAME</div>
+            <div style="flex:1;">TICKER (Required)</div>
+            <div style="flex:1;">SECTOR</div>
+        </div>
+        ''', unsafe_allow_html=True)
         
-        st.markdown('<div style="font-size: 10px; color: #6b7280; margin: 12px 0 4px 0;">INDUSTRY CATEGORIZATION (For Benchmark Overlays)</div>', unsafe_allow_html=True)
-        sector_input = st.selectbox("SECTOR", ["Technology", "Healthcare", "Financials", "Consumer", "Energy", "Industrials", "Real Estate", "Materials"], label_visibility="collapsed")
-        
+        file_configs = []
+        for i, file in enumerate(uploaded_files):
+            col1, col2, col3 = st.columns([2, 1, 1])
+            with col1:
+                st.markdown(f'<div style="font-size: 13px; color: #d1d5db; padding-top: 8px; font-family: \'JetBrains Mono\', monospace;">📄 {file.name[:40]}</div>', unsafe_allow_html=True)
+            with col2:
+                ticker = st.text_input("TICKER", key=f"t_{i}", placeholder="e.g. AAPL", label_visibility="collapsed")
+            with col3:
+                sector = st.selectbox("SECTOR", ["Technology", "Healthcare", "Financials", "Consumer", "Energy", "Industrials", "Real Estate", "Materials"], key=f"s_{i}", label_visibility="collapsed")
+            file_configs.append({'file': file, 'ticker': ticker.upper().strip() if ticker else "", 'sector': sector})
+            
         st.markdown("<hr style='border-color: #1f2937; margin: 20px 0;'>", unsafe_allow_html=True)
-        process_btn = st.button("▶ EXECUTE PIPELINE")
+        process_btn = st.button("▶ EXECUTE BULK PIPELINE")
         st.markdown('</div>', unsafe_allow_html=True)
         
-    if process_btn and uploaded_files and custom_name:
-        with st.container():
-            st.markdown('<div class="t-panel">', unsafe_allow_html=True)
-            st.markdown('<div class="t-panel-header">PIPELINE EXECUTION LOG</div>', unsafe_allow_html=True)
-            pb = st.progress(0); st_txt = st.empty()
-            def upd(v, m): pb.progress(v); st_txt.markdown(f"<span style='color:#10b981; font-family:monospace;'>`[{v*100:02.0f}%]` {m}</span>", unsafe_allow_html=True)
-            
-            vs = ingest_pdf(uploaded_files, custom_name, upd)
-            st.session_state[f"vs_{custom_name}"] = vs
-            
-            b, ctx = run_llm(custom_name, sector_input, vs, upd)
-            if b:
-                st.session_state.briefs[custom_name] = b
-                b_dict = b.model_dump()
-                st.session_state.macro_db[custom_name] = b_dict
-                st.session_state.macro_db[custom_name]['sensitivity'] = {'rates': -0.2, 'inflation': -0.4, 'supply_chain': -0.1}
-                upd(1.0, "TERMINAL SYNCED.")
-                st.success(f"[{custom_name}] ASSET REGISTERED. SWITCH TO TAB [2].")
-                time.sleep(1.5)
+        valid_configs = [c for c in file_configs if c['ticker']]
+        
+        if process_btn and valid_configs:
+            # Group files by ticker
+            groups = {}
+            for c in valid_configs:
+                t = c['ticker']
+                if t not in groups:
+                    groups[t] = {'sector': c['sector'], 'files': []}
+                groups[t]['files'].append(c['file'])
+                # If sectors differ for the same ticker, the first one assigned is used.
+                
+            with st.container():
+                st.markdown('<div class="t-panel">', unsafe_allow_html=True)
+                st.markdown('<div class="t-panel-header">PIPELINE EXECUTION LOG (SEQUENTIAL BATCH)</div>', unsafe_allow_html=True)
+                
+                pb = st.progress(0); st_txt = st.empty()
+                total_groups = len(groups)
+                
+                for idx, (ticker_name, data) in enumerate(groups.items()):
+                    group_files = data['files']
+                    group_sector = data['sector']
+                    
+                    def upd(v, m): 
+                        # Scale local progress (v) to overall progress across all companies in batch
+                        overall_v = (idx + v) / total_groups
+                        pb.progress(min(overall_v, 1.0))
+                        st_txt.markdown(f"<span style='color:#10b981; font-family:monospace;'>`[{overall_v*100:02.0f}%]` <b>[{ticker_name}]</b> {m}</span>", unsafe_allow_html=True)
+                    
+                    upd(0.05, f"Initializing pipeline for {ticker_name}...")
+                    vs = ingest_pdf(group_files, ticker_name, upd)
+                    st.session_state[f"vs_{ticker_name}"] = vs
+                    
+                    b, ctx = run_llm(ticker_name, group_sector, vs, upd)
+                    if b:
+                        st.session_state.briefs[ticker_name] = b
+                        b_dict = b.model_dump()
+                        st.session_state.macro_db[ticker_name] = b_dict
+                        st.session_state.macro_db[ticker_name]['sensitivity'] = {'rates': -0.2, 'inflation': -0.4, 'supply_chain': -0.1}
+                        upd(1.0, "PROFILE GENERATED.")
+                    else:
+                        st.error(f"❌ PIPELINE FAILED FOR [{ticker_name}]: The LLM could not generate a valid profile.")
+                        
+                st.success(f"BULK INGESTION COMPLETE FOR {total_groups} ASSETS. SWITCH TO TAB [2] OR [5].")
+                time.sleep(2.5)
                 st_txt.empty(); pb.empty()
-            else:
-                st.error("❌ PIPELINE FAILED: The LLM could not generate a valid profile. You likely uploaded conflicting files for multiple companies, breaking the strict schema requirement.")
-            st.markdown('</div>', unsafe_allow_html=True)
+
+                st.markdown('</div>', unsafe_allow_html=True)
 
 # --- TAB 2: TERMINAL ---
 with tabs[1]:
