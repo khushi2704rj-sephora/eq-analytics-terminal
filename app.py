@@ -476,14 +476,15 @@ with tabs[2]:
         with mc1:
             st.markdown('<div class="t-panel">', unsafe_allow_html=True)
             st.markdown('<div class="t-panel-header">MACRO SHOCK SIMULATOR</div>', unsafe_allow_html=True)
-            st.markdown('<div style="font-size: 10px; color: #6b7280; margin-bottom: 8px;">TARGET ASSET</div>', unsafe_allow_html=True)
+            st.info("Simulate top-down macroeconomic volatility. Adjust the Interest Rate and Inflation sliders to estimate the responsive Market Cap variance of the target asset based on its LLM-extracted sector sensitivity.")
+            st.markdown('<div style="font-size: 10px; color: #6b7280; margin-bottom: 8px; margin-top: 12px;">TARGET ASSET</div>', unsafe_allow_html=True)
             target_t3 = st.selectbox("Highlight", list(st.session_state.macro_db.keys()), key="t3_target", label_visibility="collapsed")
             
             st.markdown('<div style="font-size: 10px; color: #6b7280; margin: 16px 0 8px 0;">INTEREST RATE DELTA (BPS)</div>', unsafe_allow_html=True)
-            rates = st.slider("Interest Rate Delta (bps)", -100, 200, 0, step=25, label_visibility="collapsed")
+            rates = st.slider("Interest Rate Delta (bps)", -100, 200, 0, step=25, label_visibility="collapsed", help="Basis points change in the Federal Funds Rate. Positive values simulate tightening; negative simulate easing.")
             
             st.markdown('<div style="font-size: 10px; color: #6b7280; margin: 16px 0 8px 0;">INFLATION SPIKE (%)</div>', unsafe_allow_html=True)
-            inf = st.slider("Inflation Spike (%)", 0.0, 10.0, 0.0, label_visibility="collapsed")
+            inf = st.slider("Inflation Spike (%)", 0.0, 10.0, 0.0, label_visibility="collapsed", help="Simulate a sudden percentage spike in core CPI inflation, impacting supply chain and consumer sensitivity.")
             
             st.markdown("<hr style='border-color: #1f2937; margin: 20px 0;'>", unsafe_allow_html=True)
             
@@ -501,6 +502,7 @@ with tabs[2]:
 
         with mc2:
             st.markdown('<div class="t-panel">', unsafe_allow_html=True)
+            st.info("Universe Cross-Section: Visualizing standard deviation of Risk vs. Innovation across the ingested macroeconomic database.")
             st.plotly_chart(c_macro_scatter(st.session_state.macro_db, target_t3, 'Innovation', 'Risk Profile'), use_container_width=True)
             st.markdown('</div>', unsafe_allow_html=True)
 
@@ -518,15 +520,16 @@ with tabs[3]:
         with dc1:
             st.markdown('<div class="t-panel">', unsafe_allow_html=True)
             st.markdown('<div class="t-panel-header">DCF VARIABLES</div>', unsafe_allow_html=True)
+            st.info("The Baseline Variables below were dynamically extracted by the LLM from the 10-K. Override them to model intrinsic value changes.")
             
-            st.markdown('<div style="font-size: 10px; color: #6b7280; margin-bottom: 4px;">DISCOUNT RATE (WACC)</div>', unsafe_allow_html=True)
-            wacc = st.number_input("WACC", min_value=0.01, max_value=0.30, value=b.wacc, step=0.005, format="%.3f", label_visibility="collapsed")
+            st.markdown('<div style="font-size: 10px; color: #6b7280; margin-bottom: 4px; margin-top: 12px;">DISCOUNT RATE (WACC)</div>', unsafe_allow_html=True)
+            wacc = st.number_input("WACC", min_value=0.01, max_value=0.30, value=b.wacc, step=0.005, format="%.3f", label_visibility="collapsed", help="Weighted Average Cost of Capital. Determines the discount applied to future cash flows.")
             
             st.markdown('<div style="font-size: 10px; color: #6b7280; margin: 16px 0 4px 0;">TERMINAL GROWTH RATE</div>', unsafe_allow_html=True)
-            g = st.number_input("Growth", min_value=-0.05, max_value=0.10, value=b.growth_rate, step=0.005, format="%.3f", label_visibility="collapsed")
+            g = st.number_input("Growth", min_value=-0.05, max_value=0.10, value=b.growth_rate, step=0.005, format="%.3f", label_visibility="collapsed", help="The expected perpetual growth rate of the asset after the projection horizon.")
             
             st.markdown('<div style="font-size: 10px; color: #6b7280; margin: 16px 0 4px 0;">BASE FCF (MILLIONS)</div>', unsafe_allow_html=True)
-            fcf = st.number_input("FCF", value=float(b.fcf_base), step=100.0, label_visibility="collapsed")
+            fcf = st.number_input("FCF", value=float(b.fcf_base), step=100.0, label_visibility="collapsed", help="Trailing Twelve Months (TTM) Free Cash Flow baseline.")
             
             st.markdown('<div style="font-size: 10px; color: #6b7280; margin: 16px 0 4px 0;">PROJECTION HORIZON (YRS)</div>', unsafe_allow_html=True)
             years = st.slider("Years", 3, 10, 5, label_visibility="collapsed")
@@ -547,6 +550,7 @@ with tabs[4]:
     else:
         st.markdown('<div class="t-panel">', unsafe_allow_html=True)
         st.markdown('<div class="t-panel-header">INDUSTRY CROSS-SECTION BENCHMARKING</div>', unsafe_allow_html=True)
+        st.info("Select an industry to algorithmically benchmark all ingested companies against their sector averages. A 🟢 indicator signifies an Outperform against the sector mean.")
         
         # Get unique sectors
         sectors = set()
@@ -556,7 +560,7 @@ with tabs[4]:
             
         c1, c2 = st.columns([1, 4])
         with c1:
-            st.markdown('<div style="font-size: 10px; color: #6b7280; margin-bottom: 8px;">TARGET INDUSTRY</div>', unsafe_allow_html=True)
+            st.markdown('<div style="font-size: 10px; color: #6b7280; margin-bottom: 8px; margin-top: 12px;">TARGET INDUSTRY</div>', unsafe_allow_html=True)
             target_sector = st.selectbox("Sector", sorted(list(sectors)), label_visibility="collapsed", key="t5_sector")
             
         # Filter DB by sector
@@ -614,11 +618,11 @@ with tabs[4]:
                 mgmt = get_m(v)
                 
                 df_data.append({
-                    "Ticker": k,
-                    "Innovation": f"{inn} {'🟢' if inn >= avg_inn else '🔴'}",
-                    "Financial Health": f"{fin} {'🟢' if fin >= avg_fin else '🔴'}",
-                    "Risk Profile (Lower is Better)": f"{risk} {'🟢' if risk <= avg_risk else '🔴'}",
-                    "Mgmt Tone": f"{mgmt} {'🟢' if mgmt >= avg_mgmt else '🔴'}"
+                    "Asset Ticker": k,
+                    "Innovation (Higher=🟢)": f"{inn} {'🟢' if inn >= avg_inn else '🔴'}",
+                    "Financial Health (Higher=🟢)": f"{fin} {'🟢' if fin >= avg_fin else '🔴'}",
+                    "Risk Profile (Lower=🟢)": f"{risk} {'🟢' if risk <= avg_risk else '🔴'}",
+                    "Mgmt Tone (Higher=🟢)": f"{mgmt} {'🟢' if mgmt >= avg_mgmt else '🔴'}"
                 })
             
             df = pd.DataFrame(df_data)
