@@ -103,14 +103,10 @@ div[data-testid="stTabs"] button[aria-selected="true"] {
 .stTextInput>div>div>input:focus, .stSelectbox>div>div>div:focus {border-color: #3b82f6 !important; box-shadow: none !important;}
 </style>''', unsafe_allow_html=True)
 
-# Fake top navigation bar
-import time
-latency = int(time.time() * 1000) % 50 + 12
-
-st.markdown(f'''
+st.markdown('''
 <div class="terminal-nav">
     <div class="nav-brand">NEXUS // EQ.ANALYTICS.TERMINAL [V3]</div>
-    <div class="nav-status">SYSTEM ONLINE // LATENCY: {latency}ms</div>
+    <div class="nav-status">SYSTEM ONLINE</div>
 </div>
 '''  , unsafe_allow_html=True)
 
@@ -658,8 +654,7 @@ with tabs[2]:
         </div>
         ''', unsafe_allow_html=True)
     else:
-        st.markdown('<div class="t-panel">', unsafe_allow_html=True)
-        st.markdown('<div class="t-panel-header">MARKET COMPARISON MODULE</div>', unsafe_allow_html=True)
+        st.markdown('<div class="t-panel-header" style="margin-bottom: 16px;">MARKET COMPARISON MODULE</div>', unsafe_allow_html=True)
         
         t3_tabs = st.tabs(["🎯 Individual Profile", "⚖️ Head-to-Head Comparison", "🔗 Correlation Matrix"])
         
@@ -764,8 +759,6 @@ with tabs[2]:
             else:
                 st.warning("⚠️ You need to upload and ingest at least 2 companies in Tab 1 to generate the Correlation Matrix.")
                 
-        st.markdown('</div>', unsafe_allow_html=True)
-
 # --- TAB 4: DCF SIMULATOR ---
 with tabs[3]:
     if not st.session_state.briefs:
@@ -910,8 +903,7 @@ with tabs[4]:
         </div>
         ''', unsafe_allow_html=True)
     else:
-        st.markdown('<div class="t-panel">', unsafe_allow_html=True)
-        st.markdown('<div class="t-panel-header">INDUSTRY CROSS-SECTION BENCHMARKING</div>', unsafe_allow_html=True)
+        st.markdown('<div class="t-panel-header" style="margin-bottom: 16px;">INDUSTRY BENCHMARK SUMMARY</div>', unsafe_allow_html=True)
         st.info("Select an industry to algorithmically benchmark all ingested companies against their sector averages. The Quantitative Sector Matrix uses color gradients to highlight outperformance (darker green) versus underperformance.")
         
         # Get unique sectors
@@ -1005,4 +997,3 @@ with tabs[4]:
             
         else:
             st.warning("No companies found in this sector yet.")
-        st.markdown('</div>', unsafe_allow_html=True)
