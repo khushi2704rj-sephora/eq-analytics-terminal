@@ -23,6 +23,12 @@
       <img src="https://img.shields.io/badge/Live_Demo-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" alt="Live Demo">
     </a>
   </p>
+
+  <p align="center">
+    <a href="https://eq-analytics-terminal-ydszosnnq52xexcpanx8dz.streamlit.app/">
+      <img src="demo.gif" alt="Nexus Terminal Demo Walkthrough" width="85%" style="border-radius: 12px; border: 1px solid #3b82f6; box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);">
+    </a>
+  </p>
 </div>
 
 ---
