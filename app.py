@@ -384,25 +384,37 @@ def fetch_live_data(ticker):
     except Exception:
         return None
 
+def _sanitize_text(text):
+    """Replace Unicode chars that fpdf/latin-1 can't encode."""
+    replacements = {
+        '\u2014': '--', '\u2013': '-', '\u2018': "'", '\u2019': "'",
+        '\u201c': '"', '\u201d': '"', '\u2022': '*', '\u2026': '...',
+        '\u00a0': ' ', '\u2019': "'", '\u00e9': 'e', '\u00e8': 'e',
+    }
+    for old, new in replacements.items():
+        text = text.replace(old, new)
+    # Fallback: strip any remaining non-latin-1 chars
+    return text.encode('latin-1', errors='replace').decode('latin-1')
+
 def generate_report_pdf(brief, ticker, pv=None):
     pdf = FPDF()
     pdf.add_page()
     pdf.set_font('Helvetica', 'B', 20)
-    pdf.cell(0, 12, f'NEXUS EQUITY TERMINAL — {ticker}', ln=True)
+    pdf.cell(0, 12, _sanitize_text(f'NEXUS EQUITY TERMINAL - {ticker}'), ln=True)
     pdf.set_font('Helvetica', '', 10)
-    pdf.cell(0, 8, f'Sector: {brief.sector} | Fiscal Year: {brief.fiscal_year}', ln=True)
+    pdf.cell(0, 8, _sanitize_text(f'Sector: {brief.sector} | Fiscal Year: {brief.fiscal_year}'), ln=True)
     pdf.ln(4)
     
     pdf.set_font('Helvetica', 'B', 13)
     pdf.cell(0, 8, 'ANALYST VERDICT', ln=True)
     pdf.set_font('Helvetica', '', 10)
-    pdf.multi_cell(0, 6, brief.analyst_verdict)
+    pdf.multi_cell(0, 6, _sanitize_text(brief.analyst_verdict))
     pdf.ln(3)
     
     pdf.set_font('Helvetica', 'B', 13)
     pdf.cell(0, 8, 'BUSINESS MODEL', ln=True)
     pdf.set_font('Helvetica', '', 10)
-    pdf.multi_cell(0, 6, brief.business_model)
+    pdf.multi_cell(0, 6, _sanitize_text(brief.business_model))
     pdf.ln(3)
     
     pdf.set_font('Helvetica', 'B', 13)
@@ -414,13 +426,13 @@ def generate_report_pdf(brief, ticker, pv=None):
     pdf.set_font('Helvetica', 'B', 13)
     pdf.cell(0, 8, 'BULL CASE', ln=True)
     pdf.set_font('Helvetica', '', 10)
-    pdf.multi_cell(0, 6, brief.bull_case)
+    pdf.multi_cell(0, 6, _sanitize_text(brief.bull_case))
     pdf.ln(2)
     
     pdf.set_font('Helvetica', 'B', 13)
     pdf.cell(0, 8, 'BEAR CASE', ln=True)
     pdf.set_font('Helvetica', '', 10)
-    pdf.multi_cell(0, 6, brief.bear_case)
+    pdf.multi_cell(0, 6, _sanitize_text(brief.bear_case))
     pdf.ln(3)
     
     if pv:
@@ -804,15 +816,18 @@ with tabs[1]:
                 ''', unsafe_allow_html=True)
         
         # PDF Export
-        dcf_pv, _ = simulate_dcf(float(b.fcf_base), float(b.wacc), float(b.growth_rate), 5)
-        pdf_bytes = generate_report_pdf(b, target, pv=dcf_pv)
-        st.download_button(
-            label="📥 Export Analysis Report (PDF)",
-            data=pdf_bytes,
-            file_name=f"nexus_report_{target}.pdf",
-            mime="application/pdf",
-            key=f"pdf_{target}"
-        )
+        try:
+            dcf_pv, _ = simulate_dcf(float(b.fcf_base), float(b.wacc), float(b.growth_rate), 5)
+            pdf_bytes = generate_report_pdf(b, target, pv=dcf_pv)
+            st.download_button(
+                label="📥 Export Analysis Report (PDF)",
+                data=pdf_bytes,
+                file_name=f"nexus_report_{target}.pdf",
+                mime="application/pdf",
+                key=f"pdf_{target}"
+            )
+        except Exception as e:
+            st.warning(f"PDF export temporarily unavailable: {str(e)[:60]}")
 
 # --- TAB 3: MACRO UNIVERSE ---
 with tabs[2]:
