@@ -5,6 +5,7 @@ import json, os, re, time
 import pandas as pd
 import numpy as np
 import sqlite3
+import yfinance as yf
 from huggingface_hub import InferenceClient
 from pydantic import BaseModel, field_validator, Field
 from typing import List
@@ -193,6 +194,7 @@ init_db()
 if 'briefs' not in st.session_state: st.session_state.briefs={}
 if 'contexts' not in st.session_state: st.session_state.contexts={}
 if 'macro_db' not in st.session_state: st.session_state.macro_db={}
+if 'source_pages' not in st.session_state: st.session_state.source_pages={}
 
 # Load from SQLite on first run (structured data pipeline)
 if not st.session_state.macro_db:
@@ -256,7 +258,7 @@ def load_vs():
 
 def ingest_pdf(uploaded_files, company_name, prog_func):
     emb = load_vs()
-    text = ""
+    all_chunks = []
     total_files = len(uploaded_files)
     
     prog_func(0.1, f"Initializing Deep Scan on {total_files} documents...")
@@ -265,30 +267,33 @@ def ingest_pdf(uploaded_files, company_name, prog_func):
         reader = PdfReader(file)
         total_pages = len(reader.pages)
         for i, page in enumerate(reader.pages):
-            # Enforce 1.5M Char Limit to prevent local OOM
-            if len(text) > 1500000:
+            page_text = page.extract_text() or ""
+            if sum(len(c) for c in all_chunks) > 1500000:
                 prog_func(0.4, f"WARNING: Context limit reached (1.5M chars). Truncating remaining pages.")
                 break
-                
-            text += f"\n\n--- PAGE {i} ---\n\n{page.extract_text()}"
+            all_chunks.append({'text': page_text, 'page': i + 1, 'file': file.name})
             
-            # Granular Progress Math (scales from 10% to 40% of overall bar)
             base_prog = 0.1
             file_progress = (f_idx / total_files) * 0.3
             page_progress = (i / total_pages) * (0.3 / total_files)
             current_prog = base_prog + file_progress + page_progress
-            prog_func(current_prog, f"Extracting File {f_idx+1}/{total_files} | Page {i}/{total_pages} ...")
+            prog_func(current_prog, f"Extracting File {f_idx+1}/{total_files} | Page {i+1}/{total_pages} ...")
             
     prog_func(0.4, "Text chunking (1000 char windows)...")
     sp = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=150)
-    docs = sp.create_documents([text], metadatas=[{'company': company_name}])
+    
+    docs = []
+    for chunk in all_chunks:
+        sub_docs = sp.create_documents([chunk['text']], metadatas=[{'company': company_name, 'page': chunk['page'], 'file': chunk['file']}])
+        docs.extend(sub_docs)
     
     prog_func(0.5, f"Vectorizing {len(docs)} text chunks into FAISS memory...")
     return FAISS.from_documents(docs, emb)
 
 def retr(vs, co, q, k=5):
     res = vs.similarity_search(q, k=k)
-    return '\n\n'.join([x.page_content for x in res])
+    pages = sorted(set(doc.metadata.get('page', '?') for doc in res))
+    return '\n\n'.join([x.page_content for x in res]), pages
 
 def prompt(cn, sector, ctx):
     p = 'You are a Senior Equity Research Analyst for a top-tier investment bank.\n'
@@ -311,7 +316,7 @@ def prompt(cn, sector, ctx):
 
 def run_llm(co, sector, vs, prog):
     prog(0.6, f'Retrieving top-k semantic context for {co}...')
-    ctx = retr(vs, co, 'business model revenue segments strategy risks financial performance metrics')
+    ctx, source_pages = retr(vs, co, 'business model revenue segments strategy risks financial performance metrics')
     prog(0.7, 'Synthesizing with Llama-3.1-8B...')
     
     cl = InferenceClient(provider='novita', api_key=TOKEN)
@@ -326,14 +331,14 @@ def run_llm(co, sector, vs, prog):
                 raise ValueError("No valid JSON block detected from LLM.")
             b = AnalystBrief(**json.loads(m.group()))
             prog(0.9, 'Validated Schema.')
-            return b, ctx
+            return b, ctx, source_pages
         except Exception as e:
             last_err = str(e)
             prog(0.7, f'Synthesizing... Retry {attempt+1}/3 failed ({last_err[:30]}...)')
             time.sleep(2)
             
     st.error(f"LLM Generation Failed consistently. Last Error: {last_err}")
-    return None, None
+    return None, None, []
 
 def simulate_dcf(fcf, wacc, g, years=5):
     vals, pv = [], 0
@@ -345,6 +350,91 @@ def simulate_dcf(fcf, wacc, g, years=5):
     tv = (fcf * ((1 + g) ** years) * (1 + g)) / (wacc - g) if wacc > g else 0
     pv_tv = tv / ((1 + wacc) ** years)
     return pv + pv_tv, vals
+
+def build_sensitivity_table(fcf, wacc_base, g_base, years=5):
+    wacc_steps = [round(wacc_base + delta, 4) for delta in [-0.02, -0.01, 0.0, 0.01, 0.02]]
+    g_steps = [round(g_base + delta, 4) for delta in [-0.01, -0.005, 0.0, 0.005, 0.01]]
+    rows = []
+    for w in wacc_steps:
+        row = {}
+        for g in g_steps:
+            if w > g and w > 0:
+                val, _ = simulate_dcf(fcf, w, g, years)
+                row[f"g={g:.1%}"] = val
+            else:
+                row[f"g={g:.1%}"] = None
+        rows.append(row)
+    df = pd.DataFrame(rows, index=[f"WACC={w:.1%}" for w in wacc_steps])
+    return df
+
+def fetch_live_data(ticker):
+    try:
+        tk = yf.Ticker(ticker)
+        info = tk.info
+        return {
+            'price': info.get('currentPrice') or info.get('regularMarketPrice', 'N/A'),
+            'market_cap': info.get('marketCap', 'N/A'),
+            'pe_ratio': info.get('trailingPE', 'N/A'),
+            'ev_ebitda': info.get('enterpriseToEbitda', 'N/A'),
+            'week52_high': info.get('fiftyTwoWeekHigh', 'N/A'),
+            'week52_low': info.get('fiftyTwoWeekLow', 'N/A'),
+            'dividend_yield': info.get('dividendYield', 'N/A'),
+            'beta': info.get('beta', 'N/A'),
+        }
+    except Exception:
+        return None
+
+def generate_report_pdf(brief, ticker, pv=None):
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font('Helvetica', 'B', 20)
+    pdf.cell(0, 12, f'NEXUS EQUITY TERMINAL — {ticker}', ln=True)
+    pdf.set_font('Helvetica', '', 10)
+    pdf.cell(0, 8, f'Sector: {brief.sector} | Fiscal Year: {brief.fiscal_year}', ln=True)
+    pdf.ln(4)
+    
+    pdf.set_font('Helvetica', 'B', 13)
+    pdf.cell(0, 8, 'ANALYST VERDICT', ln=True)
+    pdf.set_font('Helvetica', '', 10)
+    pdf.multi_cell(0, 6, brief.analyst_verdict)
+    pdf.ln(3)
+    
+    pdf.set_font('Helvetica', 'B', 13)
+    pdf.cell(0, 8, 'BUSINESS MODEL', ln=True)
+    pdf.set_font('Helvetica', '', 10)
+    pdf.multi_cell(0, 6, brief.business_model)
+    pdf.ln(3)
+    
+    pdf.set_font('Helvetica', 'B', 13)
+    pdf.cell(0, 8, 'COMPETITIVE SCORES', ln=True)
+    pdf.set_font('Helvetica', '', 10)
+    pdf.cell(0, 6, f'Innovation: {brief.competitive_scores.innovation}/10  |  Market Position: {brief.competitive_scores.market_position}/10  |  Financial Health: {brief.competitive_scores.financial_health}/10  |  Risk: {brief.competitive_scores.risk_profile}/10', ln=True)
+    pdf.ln(3)
+    
+    pdf.set_font('Helvetica', 'B', 13)
+    pdf.cell(0, 8, 'BULL CASE', ln=True)
+    pdf.set_font('Helvetica', '', 10)
+    pdf.multi_cell(0, 6, brief.bull_case)
+    pdf.ln(2)
+    
+    pdf.set_font('Helvetica', 'B', 13)
+    pdf.cell(0, 8, 'BEAR CASE', ln=True)
+    pdf.set_font('Helvetica', '', 10)
+    pdf.multi_cell(0, 6, brief.bear_case)
+    pdf.ln(3)
+    
+    if pv:
+        pdf.set_font('Helvetica', 'B', 13)
+        pdf.cell(0, 8, 'DCF VALUATION', ln=True)
+        pdf.set_font('Helvetica', '', 10)
+        pdf.cell(0, 6, f'WACC: {brief.wacc:.1%}  |  Growth: {brief.growth_rate:.1%}  |  Base FCF: ${brief.fcf_base:,.0f}M', ln=True)
+        pdf.cell(0, 6, f'Estimated Intrinsic Value: ${pv:,.0f}M', ln=True)
+    
+    pdf.ln(6)
+    pdf.set_font('Helvetica', 'I', 8)
+    pdf.multi_cell(0, 5, 'Disclaimer: This report was generated by an AI system using RAG + Llama-3.1. Outputs are probabilistic and must be independently verified. Not investment advice.')
+    
+    return pdf.output(dest='S').encode('latin-1')
 
 # ─────────────────────────────────────────────
 # PLOTTING FUNCTIONS
@@ -523,9 +613,10 @@ with tabs[0]:
                     vs = ingest_pdf(group_files, ticker_name, upd)
                     st.session_state[f"vs_{ticker_name}"] = vs
                     
-                    b, ctx = run_llm(ticker_name, group_sector, vs, upd)
+                    b, ctx, src_pages = run_llm(ticker_name, group_sector, vs, upd)
                     if b:
                         st.session_state.briefs[ticker_name] = b
+                        st.session_state.source_pages[ticker_name] = src_pages
                         b_dict = b.model_dump()
                         st.session_state.macro_db[ticker_name] = b_dict
                         st.session_state.macro_db[ticker_name]['sensitivity'] = {'rates': -0.2, 'inflation': -0.4, 'supply_chain': -0.1}
@@ -582,6 +673,48 @@ with tabs[1]:
         st.markdown('</div>', unsafe_allow_html=True)
         b = st.session_state.briefs[target]
         
+        # LIVE MARKET DATA (yfinance)
+        live = fetch_live_data(target)
+        if live:
+            def fmt_num(v, prefix='', suffix='', decimals=2):
+                if v == 'N/A' or v is None: return 'N/A'
+                if isinstance(v, (int, float)):
+                    if abs(v) >= 1e12: return f'{prefix}{v/1e12:.{decimals}f}T{suffix}'
+                    if abs(v) >= 1e9: return f'{prefix}{v/1e9:.{decimals}f}B{suffix}'
+                    if abs(v) >= 1e6: return f'{prefix}{v/1e6:.{decimals}f}M{suffix}'
+                    return f'{prefix}{v:,.{decimals}f}{suffix}'
+                return str(v)
+            
+            st.markdown(f'''
+            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px;">
+                <div style="flex:1; min-width:120px; background:#0a0a0a; border:1px solid #1f2937; border-radius:6px; padding:12px; text-align:center;">
+                    <div style="font-size:10px; color:#6b7280; letter-spacing:0.5px;">LIVE PRICE</div>
+                    <div style="font-size:20px; color:#10b981; font-family:'JetBrains Mono',monospace; font-weight:bold;">${fmt_num(live['price'], decimals=2)}</div>
+                </div>
+                <div style="flex:1; min-width:120px; background:#0a0a0a; border:1px solid #1f2937; border-radius:6px; padding:12px; text-align:center;">
+                    <div style="font-size:10px; color:#6b7280; letter-spacing:0.5px;">MARKET CAP</div>
+                    <div style="font-size:20px; color:#e5e7eb; font-family:'JetBrains Mono',monospace; font-weight:bold;">{fmt_num(live['market_cap'], prefix='$')}</div>
+                </div>
+                <div style="flex:1; min-width:120px; background:#0a0a0a; border:1px solid #1f2937; border-radius:6px; padding:12px; text-align:center;">
+                    <div style="font-size:10px; color:#6b7280; letter-spacing:0.5px;">P/E RATIO</div>
+                    <div style="font-size:20px; color:#e5e7eb; font-family:'JetBrains Mono',monospace; font-weight:bold;">{fmt_num(live['pe_ratio'], decimals=1) if live['pe_ratio'] != 'N/A' else 'N/A'}x</div>
+                </div>
+                <div style="flex:1; min-width:120px; background:#0a0a0a; border:1px solid #1f2937; border-radius:6px; padding:12px; text-align:center;">
+                    <div style="font-size:10px; color:#6b7280; letter-spacing:0.5px;">EV/EBITDA</div>
+                    <div style="font-size:20px; color:#e5e7eb; font-family:'JetBrains Mono',monospace; font-weight:bold;">{fmt_num(live['ev_ebitda'], decimals=1) if live['ev_ebitda'] != 'N/A' else 'N/A'}x</div>
+                </div>
+                <div style="flex:1; min-width:120px; background:#0a0a0a; border:1px solid #1f2937; border-radius:6px; padding:12px; text-align:center;">
+                    <div style="font-size:10px; color:#6b7280; letter-spacing:0.5px;">52W RANGE</div>
+                    <div style="font-size:14px; color:#9ca3af; font-family:'JetBrains Mono',monospace;">${fmt_num(live['week52_low'], decimals=0)} — ${fmt_num(live['week52_high'], decimals=0)}</div>
+                </div>
+                <div style="flex:1; min-width:120px; background:#0a0a0a; border:1px solid #1f2937; border-radius:6px; padding:12px; text-align:center;">
+                    <div style="font-size:10px; color:#6b7280; letter-spacing:0.5px;">BETA</div>
+                    <div style="font-size:20px; color:#fbbf24; font-family:'JetBrains Mono',monospace; font-weight:bold;">{fmt_num(live['beta'], decimals=2) if live['beta'] != 'N/A' else 'N/A'}</div>
+                </div>
+            </div>
+            <div style="font-size:10px; color:#374151; text-align:right; margin-bottom:12px;">Live data via Yahoo Finance. May be delayed.</div>
+            ''', unsafe_allow_html=True)
+        
         # Dense Metric Grid
         st.markdown('<div class="metric-grid">', unsafe_allow_html=True)
         html = f'''
@@ -636,6 +769,29 @@ with tabs[1]:
                 <div style="font-size:13px; color:#d1d5db; line-height:1.5;">{b.bear_case}</div>
             </div>
             ''', unsafe_allow_html=True)
+        
+        # Source Citations
+        src_pgs = st.session_state.source_pages.get(target, [])
+        if src_pgs:
+            with st.expander(f"📄 Source Citations — Pages referenced by the AI for {target}"):
+                st.markdown(f'''
+                <div style="font-size: 12px; color: #9ca3af; line-height: 1.8;">
+                    The AI retrieved content from the following PDF pages during analysis:<br>
+                    <b style="color: #3b82f6;">Pages: {', '.join(str(p) for p in src_pgs)}</b><br>
+                    <span style="color: #6b7280;">These pages contained the highest semantic similarity to the financial analysis queries. Citation does not guarantee factual accuracy — always verify against the source document.</span>
+                </div>
+                ''', unsafe_allow_html=True)
+        
+        # PDF Export
+        dcf_pv, _ = simulate_dcf(float(b.fcf_base), float(b.wacc), float(b.growth_rate), 5)
+        pdf_bytes = generate_report_pdf(b, target, pv=dcf_pv)
+        st.download_button(
+            label="📥 Export Analysis Report (PDF)",
+            data=pdf_bytes,
+            file_name=f"nexus_report_{target}.pdf",
+            mime="application/pdf",
+            key=f"pdf_{target}"
+        )
 
 # --- TAB 3: MACRO UNIVERSE ---
 with tabs[2]:
@@ -885,6 +1041,58 @@ with tabs[3]:
             ''', unsafe_allow_html=True)
         
         st.markdown('</div>', unsafe_allow_html=True)
+        
+        # SENSITIVITY ANALYSIS: WACC × Growth Rate Matrix
+        st.markdown('<div class="t-panel-header" style="margin-top: 20px; margin-bottom: 12px;">SENSITIVITY ANALYSIS: WACC × GROWTH RATE MATRIX</div>', unsafe_allow_html=True)
+        st.info("This classic equity research tool shows how the intrinsic value changes across different combinations of WACC (discount rate) and terminal growth rate. The highlighted cell is your current base case. Green = above base case; Red = below base case.")
+        
+        sens_df = build_sensitivity_table(fcf, wacc, g, years)
+        base_val = pv
+        
+        # Format for display
+        styled_data = []
+        for idx, row in sens_df.iterrows():
+            styled_row = {}
+            for col in sens_df.columns:
+                val = row[col]
+                if val is not None and not pd.isna(val):
+                    styled_row[col] = f"${val:,.0f}M"
+                else:
+                    styled_row[col] = "N/A"
+            styled_data.append(styled_row)
+        display_df = pd.DataFrame(styled_data, index=sens_df.index)
+        
+        # Build HTML table with conditional formatting
+        table_html = '<table style="width:100%; border-collapse:collapse; font-family:\'JetBrains Mono\',monospace; font-size:12px;">'
+        table_html += '<tr style="background:#0a0a0a;"><th style="padding:10px; border:1px solid #1f2937; color:#6b7280;">WACC \\ Growth</th>'
+        for col in display_df.columns:
+            table_html += f'<th style="padding:10px; border:1px solid #1f2937; color:#fbbf24; text-align:center;">{col}</th>'
+        table_html += '</tr>'
+        
+        for i, (idx, row) in enumerate(display_df.iterrows()):
+            table_html += f'<tr><td style="padding:10px; border:1px solid #1f2937; color:#3b82f6; font-weight:bold; background:#0a0a0a;">{idx}</td>'
+            for j, col in enumerate(display_df.columns):
+                raw_val = sens_df.iloc[i, j]
+                cell_val = row[col]
+                if raw_val is not None and not pd.isna(raw_val):
+                    if raw_val > base_val * 1.05:
+                        bg = 'rgba(16, 185, 129, 0.15)'; clr = '#10b981'
+                    elif raw_val < base_val * 0.95:
+                        bg = 'rgba(239, 68, 68, 0.15)'; clr = '#ef4444'
+                    else:
+                        bg = 'rgba(251, 191, 36, 0.15)'; clr = '#fbbf24'
+                else:
+                    bg = '#111'; clr = '#6b7280'
+                table_html += f'<td style="padding:10px; border:1px solid #1f2937; text-align:center; background:{bg}; color:{clr};">{cell_val}</td>'
+            table_html += '</tr>'
+        table_html += '</table>'
+        
+        st.markdown(table_html, unsafe_allow_html=True)
+        st.markdown('''
+        <div style="font-size: 11px; color: #6b7280; margin-top: 8px; text-align: center;">
+            <b style="color:#10b981;">■</b> Above base case &nbsp;&nbsp; <b style="color:#fbbf24;">■</b> Near base case (±5%) &nbsp;&nbsp; <b style="color:#ef4444;">■</b> Below base case
+        </div>
+        ''', unsafe_allow_html=True)
 
 # --- TAB 5: INDUSTRY BENCHMARK ---
 with tabs[4]:
