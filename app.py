@@ -541,6 +541,27 @@ with tabs[0]:
         <b>⚠️ PROFESSIONAL DISCLAIMER:</b> This demonstrator tool assists with the exploratory analysis of corporate filings using Generative AI. Outputs are probabilistic, may contain factual errors (hallucinations), and must be independently verified against source reports. The intrinsic value models and market simulations provided are for academic/illustrative purposes only and do not constitute professional investment advice.
     </div>
     ''', unsafe_allow_html=True)
+    
+    # DEMO MODE — One-Click Preloaded Data
+    if not st.session_state.briefs:
+        demo_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'demo_profiles.json')
+        if os.path.exists(demo_path):
+            st.markdown('''
+            <div style="background: linear-gradient(135deg, rgba(59,130,246,0.08), rgba(16,185,129,0.08)); border: 1px solid #1f2937; border-radius: 8px; padding: 20px; margin-bottom: 20px; text-align: center;">
+                <div style="font-size: 14px; color: #e5e7eb; font-weight: 600; margin-bottom: 6px;">🎯 DEMO MODE — No API Key Required</div>
+                <div style="font-size: 12px; color: #9ca3af;">Load pre-analyzed profiles for <b>Apple (AAPL)</b>, <b>Microsoft (MSFT)</b>, and <b>Tesla (TSLA)</b> to explore the full terminal instantly.</div>
+            </div>
+            ''', unsafe_allow_html=True)
+            if st.button("🎯 Load Demo Data (AAPL + MSFT + TSLA)", use_container_width=True, type="primary"):
+                with open(demo_path, 'r') as f:
+                    demo_data = json.load(f)
+                for ticker, data in demo_data.items():
+                    brief = AnalystBrief(**{k: v for k, v in data.items() if k != 'sensitivity'})
+                    st.session_state.briefs[ticker] = brief
+                    st.session_state.macro_db[ticker] = data
+                st.success("✅ Demo data loaded! Navigate to Tabs 2–5 to explore the full terminal.")
+                time.sleep(1.5)
+                st.rerun()
 
     st.markdown(f'''
     <div class="t-panel">

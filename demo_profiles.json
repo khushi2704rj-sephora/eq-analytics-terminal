@@ -1,0 +1,235 @@
+{
+    "AAPL": {
+        "company_name": "Apple Inc.",
+        "fiscal_year": "FY2024",
+        "sector": "Technology",
+        "business_model": "Apple Inc. designs, manufactures, and markets smartphones, personal computers, tablets, wearables, and accessories worldwide. The company generates revenue through hardware sales (iPhone, Mac, iPad, Wearables), digital services (App Store, Apple Music, iCloud, Apple TV+), and financial services (Apple Pay, Apple Card). Its ecosystem strategy creates high customer retention through deep hardware-software integration.",
+        "key_segments": [
+            "iPhone",
+            "Mac",
+            "iPad",
+            "Wearables & Accessories",
+            "Services"
+        ],
+        "financial_highlights": [
+            "Revenue of $383B in FY2024, driven by 14% services growth to $96B",
+            "Gross margin expanded to 46.2%, reflecting favorable product mix shift toward services",
+            "Free cash flow of $110B enabled $95B in share buybacks and $15B in dividends",
+            "Net cash position of $65B provides substantial financial flexibility"
+        ],
+        "top_risks": [
+            {
+                "risk": "China Revenue Dependency",
+                "description": "Greater China represents 19% of total revenue and faces geopolitical headwinds including potential tariffs and local competitor growth from Huawei",
+                "severity": "High",
+                "likelihood": 4,
+                "impact": 5
+            },
+            {
+                "risk": "Regulatory Antitrust Pressure",
+                "description": "EU Digital Markets Act and US DOJ lawsuit targeting App Store practices could force structural changes to the 30% commission model",
+                "severity": "High",
+                "likelihood": 4,
+                "impact": 4
+            },
+            {
+                "risk": "iPhone Upgrade Cycle Risk",
+                "description": "Lengthening upgrade cycles to 4+ years and smartphone market saturation could pressure hardware revenue growth",
+                "severity": "Medium",
+                "likelihood": 3,
+                "impact": 4
+            }
+        ],
+        "strategic_priorities": [
+            {
+                "priority": "Apple Intelligence AI Platform",
+                "detail": "Integrating on-device AI across all products to drive upgrade cycles and differentiate the ecosystem",
+                "time_horizon": "Short-term"
+            },
+            {
+                "priority": "Services Revenue Expansion",
+                "detail": "Growing high-margin services segment including advertising, fintech, and health subscriptions",
+                "time_horizon": "Medium-term"
+            },
+            {
+                "priority": "Vision Pro & Spatial Computing",
+                "detail": "Establishing market leadership in mixed reality computing as the next major platform shift",
+                "time_horizon": "Long-term"
+            }
+        ],
+        "competitive_scores": {
+            "innovation": 8,
+            "market_position": 9,
+            "financial_health": 9,
+            "risk_profile": 4
+        },
+        "management_tone": "Optimistic",
+        "management_tone_score": 8,
+        "bull_case": "Apple Intelligence drives a super-cycle iPhone upgrade wave while services revenue accelerates past $120B, expanding margins and validating the ecosystem thesis. Vision Pro finds enterprise PMF.",
+        "bear_case": "China revenue deteriorates under trade restrictions, App Store commissions are forced down by regulators, and consumers resist premium pricing in a weakening macro environment.",
+        "analyst_verdict": "BUY — Apple's fortress balance sheet, accelerating services mix, and AI-driven upgrade catalyst make it a core portfolio holding despite near-term China headwinds.",
+        "wacc": 0.085,
+        "growth_rate": 0.04,
+        "fcf_base": 110000,
+        "sensitivity": {
+            "rates": -0.15,
+            "inflation": -0.30,
+            "supply_chain": -0.45
+        }
+    },
+    "MSFT": {
+        "company_name": "Microsoft Corporation",
+        "fiscal_year": "FY2024",
+        "sector": "Technology",
+        "business_model": "Microsoft operates through three segments: Productivity & Business Processes (Office 365, LinkedIn, Dynamics), Intelligent Cloud (Azure, GitHub, server products), and More Personal Computing (Windows, Xbox, Surface, Search). Azure cloud infrastructure and AI services are the primary growth engine, powered by the strategic OpenAI partnership.",
+        "key_segments": [
+            "Azure & Cloud",
+            "Office 365 Commercial",
+            "LinkedIn",
+            "Windows OEM",
+            "Gaming/Xbox"
+        ],
+        "financial_highlights": [
+            "Revenue of $245B in FY2024, up 16% YoY, with Intelligent Cloud segment growing 22%",
+            "Azure revenue growth accelerated to 29%, driven by AI workload adoption",
+            "Operating margin of 44.6% reflects exceptional operating leverage in the cloud business",
+            "Free cash flow of $74B with net cash position enabling aggressive M&A and R&D investment"
+        ],
+        "top_risks": [
+            {
+                "risk": "Azure Competition Intensifying",
+                "description": "AWS and Google Cloud are closing the AI infrastructure gap, while Oracle and specialized cloud providers target specific workloads",
+                "severity": "Medium",
+                "likelihood": 4,
+                "impact": 4
+            },
+            {
+                "risk": "OpenAI Partnership Risk",
+                "description": "Dependence on OpenAI for frontier AI models creates concentration risk, especially if the partnership terms are renegotiated or OpenAI pursues independence",
+                "severity": "High",
+                "likelihood": 3,
+                "impact": 5
+            },
+            {
+                "risk": "Enterprise IT Spending Slowdown",
+                "description": "Macroeconomic uncertainty could delay enterprise digital transformation projects and cloud migration timelines",
+                "severity": "Medium",
+                "likelihood": 3,
+                "impact": 3
+            }
+        ],
+        "strategic_priorities": [
+            {
+                "priority": "Copilot Monetization",
+                "detail": "Embedding AI assistants across the entire Microsoft 365 suite to drive ARPU expansion at $30/user/month premium",
+                "time_horizon": "Short-term"
+            },
+            {
+                "priority": "Azure AI Infrastructure",
+                "detail": "Expanding GPU capacity and developing custom silicon to capture the growing AI training and inference workload market",
+                "time_horizon": "Medium-term"
+            },
+            {
+                "priority": "Autonomous AI Agents",
+                "detail": "Building an ecosystem of AI agents that automate enterprise workflows, creating a new revenue category",
+                "time_horizon": "Long-term"
+            }
+        ],
+        "competitive_scores": {
+            "innovation": 9,
+            "market_position": 9,
+            "financial_health": 9,
+            "risk_profile": 3
+        },
+        "management_tone": "Optimistic",
+        "management_tone_score": 9,
+        "bull_case": "Copilot adoption reaches 50%+ of Office 365 users, Azure AI revenue compounds at 35%+ annually, and Microsoft becomes the default enterprise AI platform, driving valuation to $4.5T.",
+        "bear_case": "OpenAI partnership fractures, Copilot sees low enterprise adoption due to ROI concerns, and Azure growth decelerates to sub-20% as cloud commoditization intensifies.",
+        "analyst_verdict": "STRONG BUY — Microsoft is the best-positioned company in enterprise AI with diversified revenue streams, strong margin expansion, and the most comprehensive AI product suite.",
+        "wacc": 0.082,
+        "growth_rate": 0.045,
+        "fcf_base": 74000,
+        "sensitivity": {
+            "rates": -0.10,
+            "inflation": -0.25,
+            "supply_chain": -0.20
+        }
+    },
+    "TSLA": {
+        "company_name": "Tesla, Inc.",
+        "fiscal_year": "FY2024",
+        "sector": "Automotive/Energy",
+        "business_model": "Tesla designs, develops, manufactures, and sells electric vehicles (Model 3, Y, S, X, Cybertruck), energy generation/storage solutions (Solar Roof, Powerwall, Megapack), and is developing autonomous driving technology (FSD) and humanoid robotics (Optimus). The company operates a vertically integrated model with direct-to-consumer sales and a growing high-margin services/software segment.",
+        "key_segments": [
+            "Automotive Sales",
+            "Energy Generation & Storage",
+            "Services & Other",
+            "Regulatory Credits"
+        ],
+        "financial_highlights": [
+            "Revenue of $97B in FY2024, with Energy segment growing 67% to $10.4B",
+            "Automotive gross margin compressed to 17.9% amid aggressive pricing strategy",
+            "Delivered 1.8M vehicles globally, maintaining market leader position in BEVs",
+            "Free cash flow of $4.4B, significantly lower than FY2022 peak of $7.6B due to capex for new factories and Cybertruck ramp"
+        ],
+        "top_risks": [
+            {
+                "risk": "Margin Compression",
+                "description": "Ongoing price cuts to maintain volume growth are eroding automotive margins, with competition from Chinese BEV makers like BYD intensifying globally",
+                "severity": "High",
+                "likelihood": 5,
+                "impact": 4
+            },
+            {
+                "risk": "FSD Regulatory Uncertainty",
+                "description": "Full Self-Driving technology faces significant regulatory hurdles and liability questions that could delay the high-margin robotaxi revenue model",
+                "severity": "High",
+                "likelihood": 4,
+                "impact": 5
+            },
+            {
+                "risk": "Key Person Risk",
+                "description": "Heavy dependence on Elon Musk's leadership, brand association, and capital allocation decisions creates unique governance risk",
+                "severity": "Medium",
+                "likelihood": 3,
+                "impact": 5
+            }
+        ],
+        "strategic_priorities": [
+            {
+                "priority": "Next-Gen Affordable EV",
+                "detail": "Launching a sub-$25K vehicle platform to dramatically expand the total addressable market",
+                "time_horizon": "Short-term"
+            },
+            {
+                "priority": "Robotaxi Network",
+                "detail": "Deploying autonomous ride-hailing service leveraging FSD technology for recurring high-margin revenue",
+                "time_horizon": "Medium-term"
+            },
+            {
+                "priority": "Optimus Humanoid Robot",
+                "detail": "Commercializing general-purpose humanoid robots for factory labor and household applications",
+                "time_horizon": "Long-term"
+            }
+        ],
+        "competitive_scores": {
+            "innovation": 9,
+            "market_position": 8,
+            "financial_health": 6,
+            "risk_profile": 7
+        },
+        "management_tone": "Optimistic",
+        "management_tone_score": 9,
+        "bull_case": "FSD achieves Level 4 autonomy and the robotaxi network launches successfully, transforming Tesla from a car company into a high-margin mobility platform worth $2T+.",
+        "bear_case": "EV competition commoditizes the market, margin compression continues, FSD remains stuck in supervised mode, and the valuation premium evaporates as growth decelerates.",
+        "analyst_verdict": "HOLD — Tesla's innovation pipeline is compelling but current valuation prices in flawless execution on FSD and robotaxi, leaving limited margin of safety.",
+        "wacc": 0.10,
+        "growth_rate": 0.06,
+        "fcf_base": 4400,
+        "sensitivity": {
+            "rates": 0.05,
+            "inflation": -0.50,
+            "supply_chain": -0.60
+        }
+    }
+}
