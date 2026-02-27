@@ -6,8 +6,6 @@
 
 <div align="center">
 
-  # ⚡ Nexus Equity Terminal
-  
   **Enterprise-Grade Equity Research M&A Dashboard powered by RAG, Llama-3.1, and Dynamic FAISS Indexing.**
 
   <p align="center">
