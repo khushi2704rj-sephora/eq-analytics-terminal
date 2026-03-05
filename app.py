@@ -14,12 +14,21 @@ import torch.nn as nn
 from fpdf import FPDF
 import base64
 import random
+import textwrap
+
+# Polyfill for st.html in older Streamlit versions
+# Strips ALL leading whitespace per line to prevent markdown code-block rendering
+def _st_html_polyfill(html_str):
+    cleaned = "\n".join(line.lstrip() for line in html_str.split("\n"))
+    st.markdown(cleaned, unsafe_allow_html=True)
+
+if not hasattr(st, "html"):
+    st.html = _st_html_polyfill
 
 # ─────────────────────────────────────────────
 # PAGE CONFIG & ULTRA-PREMIUM STYLING
 # ─────────────────────────────────────────────
 st.set_page_config(page_title='Nexus Equity Terminal | Capstone', page_icon='⚡', layout='wide', initial_sidebar_state='collapsed')
-
 st.html('''<style>
 /* ─────────────────────────────────────────────
  * ULTRA-PREMIUM CONSUMER UI V5 (CRED / SUI INSPIRED)
@@ -97,13 +106,56 @@ div[data-testid="stTabs"] button[aria-selected="true"] {
 }
 
 /* UI Typography Classes */
+@keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+}
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+@keyframes fadeUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
 .hero-title {
-    font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; color: #ffffff;
-    line-height: 1.1; letter-spacing: -1px; margin-bottom: 16px;
+    font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800;
+    line-height: 1.1; letter-spacing: -2px; margin-bottom: 24px;
+    background: linear-gradient(90deg, #ffffff 0%, #a1a1aa 20%, #10b981 50%, #a1a1aa 80%, #ffffff 100%);
+    background-size: 200% auto;
+    color: transparent; -webkit-background-clip: text; background-clip: text;
+    animation: shimmer 8s linear infinite, fadeUp 1s ease-out forwards;
 }
 .hero-subtitle {
-    font-size: 16px; color: #a1a1aa; line-height: 1.6; font-weight: 400; max-width: 600px; margin-bottom: 32px;
+    font-size: 18px; color: #a1a1aa; line-height: 1.6; font-weight: 400; max-width: 650px; margin-bottom: 40px;
+    animation: fadeUp 1s ease-out 0.2s forwards; opacity: 0;
 }
+
+/* Peak Interactive Feature Cards */
+.feature-card {
+    background: rgba(15, 15, 15, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 24px; padding: 32px 24px;
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: fadeUp 1s ease-out 0.4s forwards, float 6s ease-in-out infinite;
+    opacity: 0; cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+.feature-card:nth-child(2) { animation-delay: 0.5s, 0.5s; }
+.feature-card:nth-child(3) { animation-delay: 0.6s, 1s; }
+
+.feature-card:hover {
+    transform: translateY(-12px) scale(1.02);
+    border-color: rgba(16, 185, 129, 0.4);
+    box-shadow: 0 20px 40px rgba(16, 185, 129, 0.15), 0 0 20px inset rgba(16, 185, 129, 0.05);
+}
+.f-icon { font-size: 40px; margin-bottom: 16px; transition: transform 0.3s ease; }
+.feature-card:hover .f-icon { transform: scale(1.2) rotate(5deg); }
+.f-title { font-size: 14px; font-weight: 700; color: #ffffff; letter-spacing: 2px; margin-bottom: 12px; }
+.f-desc { font-size: 13px; color: #a1a1aa; line-height: 1.5; font-weight: 400; }
 
 /* Glass Metric Cards */
 .metric-grid {display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 24px;}
@@ -148,6 +200,29 @@ div[data-testid="stTabs"] button[aria-selected="true"] {
     box-shadow: 0 4px 12px rgba(255,255,255,0.1); text-transform: none !important; font-size: 14px !important;
 }
 .stButton>button:hover {background: #f4f4f5 !important; box-shadow: 0 8px 24px rgba(255,255,255,0.2) !important; transform: translateY(-1px);}
+
+div[data-baseweb="input"] {
+    background: rgba(15, 15, 15, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 16px !important;
+    transition: all 0.3s ease !important;
+}
+div[data-baseweb="input"]:focus-within {
+    border-color: #10b981 !important;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2), 0 0 20px rgba(16, 185, 129, 0.1) !important;
+}
+div[data-baseweb="input"] input {
+    color: #10b981 !important;
+    font-size: 20px !important;
+    font-family: "JetBrains Mono", monospace !important;
+    font-weight: 700 !important;
+    letter-spacing: 1px !important;
+    padding: 14px !important;
+}
+div[data-baseweb="input"] input::placeholder {
+    color: rgba(16, 185, 129, 0.3) !important;
+    font-weight: 400 !important;
+}
 
 .stTextInput>div>div>input, .stSelectbox>div>div>div {
     background: rgba(0,0,0,0.5) !important; color: #ffffff !important; 
@@ -919,7 +994,7 @@ with tabs[0]:
             
             def upd_live(v, m):
                 pb.progress(min(v, 1.0))
-                st_txt.html(f"<span style='color:#10b981; font-family:monospace;'>`[{v*100:02.0f}%]` <b>[{ticker_clean}]</b> {m}</span>")
+                st_txt.markdown(f"<span style='color:#10b981; font-family:monospace;'>[{v*100:02.0f}%] <b>[{ticker_clean}]</b> {m}</span>", unsafe_allow_html=True)
             
             result = run_llm_live(ticker_clean, upd_live)
             
