@@ -20,7 +20,7 @@ import random
 # ─────────────────────────────────────────────
 st.set_page_config(page_title='Nexus Equity Terminal | Capstone', page_icon='⚡', layout='wide', initial_sidebar_state='collapsed')
 
-st.markdown('''<style>
+st.html('''<style>
 /* ─────────────────────────────────────────────
  * ULTRA-PREMIUM CONSUMER UI V5 (CRED / SUI INSPIRED)
  * ───────────────────────────────────────────── */
@@ -168,14 +168,14 @@ div[data-testid="stTabs"] button[aria-selected="true"] {
 .f-icon {font-size: 32px; margin-bottom: 16px;}
 .f-title {font-size: 14px; font-weight: 600; color: #ffffff; letter-spacing: 1px; margin-bottom: 8px;}
 .f-desc {font-size: 13px; color: #71717a; line-height: 1.5;}
-</style>''', unsafe_allow_html=True)
+</style>''')
 
-st.markdown('''
+st.html('''
 <div class="terminal-nav">
     <div class="nav-brand">NEXUS // EQ.ANALYTICS.TERMINAL [V4]</div>
     <div class="nav-status">SYSTEM ONLINE</div>
 </div>
-'''  , unsafe_allow_html=True)
+'''  )
 
 # ─────────────────────────────────────────────
 # ENVIRONMENT & STATE
@@ -822,7 +822,7 @@ tabs = st.tabs(["🔍 Search & Analyze", "📊 AI Analysis", "🌍 Market Compar
 
 # --- TAB 1: SEARCH & ANALYZE ---
 with tabs[0]:
-    st.markdown('''
+    st.html('''
     <div style="padding: 60px 20px; text-align: center;">
         <div class="hero-title">Nexus AI Terminal</div>
         <div class="hero-subtitle" style="margin: 0 auto 40px auto;">
@@ -848,19 +848,19 @@ with tabs[0]:
             </div>
         </div>
     </div>
-    ''', unsafe_allow_html=True)
+    ''')
 
     # DEMO MODE — One-Click Preloaded Data
     if not st.session_state.briefs:
         demo_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'demo_profiles.json')
         if os.path.exists(demo_path):
-            st.markdown('''
+            st.html('''
             <div style="max-width: 600px; margin: 0 auto 40px auto; background: rgba(59,130,246,0.05); border: 1px solid rgba(59,130,246,0.2); border-radius: 100px; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between;">
                 <div style="font-size: 14px; color: #e5e7eb; font-weight: 500;">
                     <span style="color:#3b82f6; margin-right:8px;">🎯</span> 
                     <b>First time?</b> Load our pre-analyzed demo dataset.
                 </div>
-            ''', unsafe_allow_html=True)
+            ''')
             
             col_z, col_b, col_z2 = st.columns([1, 2, 1])
             with col_b:
@@ -874,16 +874,16 @@ with tabs[0]:
                     st.success("✅ Demo loaded! View Tabs 2–5.")
                     time.sleep(1)
                     st.rerun()
-            st.markdown('</div>', unsafe_allow_html=True)
+            st.html('</div>')
 
     # ── LIVE SEARCH BAR ──
-    st.markdown('''
+    st.html('''
     <div style="max-width: 800px; margin: 0 auto;">
         <div class="t-panel" style="padding: 32px; border-radius: 32px; background: rgba(16, 185, 129, 0.03); border-color: rgba(16, 185, 129, 0.1);">
             <div style="font-size: 13px; font-weight: 700; color: #10b981; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; text-align: center;">
                 Initiate Live Analysis
             </div>
-    ''', unsafe_allow_html=True)
+    ''')
     
     search_col1, search_col2 = st.columns([3, 1])
     with search_col1:
@@ -896,30 +896,30 @@ with tabs[0]:
     with search_col2:
         analyze_btn = st.button("Analyze", use_container_width=True, type="primary", key="analyze_live_btn")
     
-    st.markdown('''
+    st.html('''
         </div>
         <div style="text-align: center; font-size: 12px; color: #71717a; margin-top: 16px;">
             Supports all major global exchanges in real-time.
         </div>
     </div>
-    ''', unsafe_allow_html=True)
+    ''')
     
     # Process live search
     if analyze_btn and search_ticker:
         ticker_clean = search_ticker.upper().strip()
         
         with st.container():
-            st.markdown(f'''
+            st.html(f'''
             <div class="t-panel">
                 <div class="t-panel-header">PIPELINE EXECUTION LOG — {ticker_clean}</div>
-            ''', unsafe_allow_html=True)
+            ''')
             
             pb = st.progress(0)
             st_txt = st.empty()
             
             def upd_live(v, m):
                 pb.progress(min(v, 1.0))
-                st_txt.markdown(f"<span style='color:#10b981; font-family:monospace;'>`[{v*100:02.0f}%]` <b>[{ticker_clean}]</b> {m}</span>", unsafe_allow_html=True)
+                st_txt.html(f"<span style='color:#10b981; font-family:monospace;'>`[{v*100:02.0f}%]` <b>[{ticker_clean}]</b> {m}</span>")
             
             result = run_llm_live(ticker_clean, upd_live)
             
@@ -937,28 +937,28 @@ with tabs[0]:
                 pb.empty()
                 st_txt.empty()
             
-            st.markdown('</div>', unsafe_allow_html=True)
+            st.html('</div>')
     
     # Show currently loaded companies
     if st.session_state.briefs:
-        st.markdown('''
+        st.html('''
         <div class="t-panel" style="border-left: 3px solid #fbbf24;">
             <div class="t-panel-header" style="color: #fbbf24;">LOADED COMPANIES</div>
-        ''', unsafe_allow_html=True)
+        ''')
         
         loaded_tickers = list(st.session_state.briefs.keys())
         cols = st.columns(min(len(loaded_tickers), 6))
         for i, tk in enumerate(loaded_tickers):
             with cols[i % 6]:
                 b = st.session_state.briefs[tk]
-                st.markdown(f'''
+                st.html(f'''
                 <div style="background:#0a0a0a; border:1px solid #1f2937; border-radius:6px; padding:10px; text-align:center; margin-bottom:8px;">
                     <div style="font-size:16px; font-weight:bold; color:#e5e7eb; font-family:'JetBrains Mono',monospace;">{tk}</div>
                     <div style="font-size:11px; color:#6b7280;">{b.sector}</div>
                 </div>
-                ''', unsafe_allow_html=True)
+                ''')
         
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.html('</div>')
     
 
 
@@ -972,7 +972,7 @@ with tabs[0]:
 # --- TAB 2: TERMINAL ---
 with tabs[1]:
     if not st.session_state.briefs:
-        st.markdown('''
+        st.html('''
         <div style="text-align:center; padding: 100px 40px; margin-top: 40px; border-radius: 32px; background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.1);">
             <div style="font-size: 48px; margin-bottom: 24px; opacity: 0.8;">📊</div>
             <div style="font-size: 20px; color: #ffffff; font-weight: 700; margin-bottom: 16px; letter-spacing: -0.5px;">Awaiting AI Analysis</div>
@@ -980,11 +980,11 @@ with tabs[1]:
                 Return to the <b>Search</b> tab and enter a ticker symbol. The engine will automatically pull live data and generate a comprehensive institutional-grade brief here.
             </div>
         </div>
-        ''', unsafe_allow_html=True)
+        ''')
     else:
-        st.markdown('<div style="display:flex; justify-content:flex-end; margin-bottom: 24px;">', unsafe_allow_html=True)
+        st.html('<div style="display:flex; justify-content:flex-end; margin-bottom: 24px;">')
         target = st.selectbox("ACTIVE ASSET", list(st.session_state.briefs.keys()), key="t2_target", label_visibility="collapsed")
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.html('</div>')
         b = st.session_state.briefs[target]
         
         # LIVE MARKET DATA (yfinance)
@@ -999,7 +999,7 @@ with tabs[1]:
                     return f'{prefix}{v:,.{decimals}f}{suffix}'
                 return str(v)
             
-            st.markdown(f'''
+            st.html(f'''
             <div style="display:flex; gap:16px; flex-wrap:wrap; margin-bottom:24px;">
                 <div style="flex:1; min-width:140px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); border-radius:16px; padding:20px; text-align:center; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
                     <div style="font-size:11px; color:#71717a; font-weight:600; letter-spacing:1px; margin-bottom:8px;">LIVE PRICE</div>
@@ -1026,7 +1026,7 @@ with tabs[1]:
                     <div style="font-size:28px; color:#fbbf24; font-family:'Inter',sans-serif; font-weight:800; letter-spacing:-1px;">{fmt_num(live['beta'], decimals=2) if live['beta'] != 'N/A' else 'N/A'}</div>
                 </div>
             </div>
-            ''', unsafe_allow_html=True)
+            ''')
         
         # ── GRU DEEP LEARNING SIGNAL ──
         with st.spinner('🧠 Training GRU neural network...'):
@@ -1038,7 +1038,7 @@ with tabs[1]:
             sig_icon = '▲' if sig == 'BULLISH' else '▼' if sig == 'BEARISH' else '■'
             arrow = '+' if gru_data['pct_change'] > 0 else ''
             
-            st.markdown(f'''
+            st.html(f'''
             <div class="t-panel" style="margin-bottom: 24px; position:relative; overflow:hidden;">
                 <!-- Glowing accent line -->
                 <div style="position:absolute; top:0; left:0; right:0; height:4px; background: linear-gradient(90deg, transparent, {sig_color}, transparent);"></div>
@@ -1075,12 +1075,12 @@ with tabs[1]:
                     </div>
                 </div>
             </div>
-            ''', unsafe_allow_html=True)
+            ''')
             
             st.plotly_chart(c_gru_forecast_chart(gru_data), use_container_width=True)
             
             with st.expander("ℹ️ How the GRU Signal Works"):
-                st.markdown('''
+                st.html('''
                 <div style="font-size: 12px; color: #9ca3af; line-height: 1.8;">
                     <b style="color: #3b82f6;">Model Architecture:</b> Gated Recurrent Unit (GRU) — a type of recurrent neural network designed for sequential data. Uses 32 hidden units trained on 60-day sliding windows of historical daily closing prices.<br><br>
                     <b style="color: #3b82f6;">Training:</b> Fetches 1 year of daily price data via Yahoo Finance. The model is trained for 50 epochs with an 80/20 train/validation split using MSE loss and Adam optimizer.<br><br>
@@ -1091,10 +1091,10 @@ with tabs[1]:
                     <b style="color: #3b82f6;">Confidence Score:</b> Derived from inverse validation loss, capped between 60-95%. Higher scores indicate better model fit on held-out data.<br><br>
                     <span style="color: #6b7280;">⚠️ This is a demonstrator model for academic purposes. It does not constitute financial advice. Real trading signals require ensemble methods, external features, and rigorous backtesting.</span>
                 </div>
-                ''', unsafe_allow_html=True)
+                ''')
         
         # Dense Metric Grid
-        st.markdown('<div class="metric-grid">', unsafe_allow_html=True)
+        st.html('<div class="metric-grid">')
         html = f'''
         <div class="m-card bull" style="background:rgba(16,185,129,0.05);">
             <div class="m-title">MGMT CONVICTION</div>
@@ -1117,26 +1117,26 @@ with tabs[1]:
             <div class="m-sub">R&D Output Index</div>
         </div>
         '''
-        st.markdown(html + '</div>', unsafe_allow_html=True)
+        st.html(html + '</div>')
         
         c_left, c_right = st.columns([2, 1])
         with c_left:
-            st.markdown(f'''
+            st.html(f'''
             <div class="t-panel">
                 <div class="t-panel-header">ANALYST VERDICT // EXEC SUMMARY</div>
                 <div class="verdict-box"><div class="verdict-text">{b.analyst_verdict}</div></div>
-            ''', unsafe_allow_html=True)
+            ''')
             
-            st.markdown('<div class="t-panel-header" style="margin-top:32px;">CORE BUSINESS MODEL</div>', unsafe_allow_html=True)
-            st.markdown(f'<div style="color:#d4d4d8; font-size:15px; line-height:1.7; margin-bottom: 32px; font-weight: 300;">{b.business_model}</div>', unsafe_allow_html=True)
+            st.html('<div class="t-panel-header" style="margin-top:32px;">CORE BUSINESS MODEL</div>')
+            st.html(f'<div style="color:#d4d4d8; font-size:15px; line-height:1.7; margin-bottom: 32px; font-weight: 300;">{b.business_model}</div>')
             
-            st.markdown('<div class="t-panel-header">FINANCIAL HIGHLIGHTS</div>', unsafe_allow_html=True)
+            st.html('<div class="t-panel-header">FINANCIAL HIGHLIGHTS</div>')
             hls = ''.join([f'<li class="insight-item">{h}</li>' for h in b.financial_highlights])
-            st.markdown(f'<ul class="insight-list">{hls}</ul>', unsafe_allow_html=True)
-            st.markdown("</div>", unsafe_allow_html=True)
+            st.html(f'<ul class="insight-list">{hls}</ul>')
+            st.html("</div>")
         
         with c_right:
-            st.markdown(f'''
+            st.html(f'''
             <div class="t-panel" style="border-top: 4px solid #10b981; background: linear-gradient(180deg, rgba(16,185,129,0.05) 0%, rgba(15,15,15,0.6) 100%);">
                 <div class="t-panel-header" style="color: #10b981; border-bottom:none;">BULL CASE SCENARIO</div>
                 <div style="font-size:14px; color:#d4d4d8; line-height:1.6; font-weight:300;">{b.bull_case}</div>
@@ -1146,7 +1146,7 @@ with tabs[1]:
                 <div class="t-panel-header" style="color: #ef4444; border-bottom:none;">BEAR CASE SCENARIO</div>
                 <div style="font-size:14px; color:#d4d4d8; line-height:1.6; font-weight:300;">{b.bear_case}</div>
             </div>
-            ''', unsafe_allow_html=True)
+            ''')
         
 
         
@@ -1167,7 +1167,7 @@ with tabs[1]:
 # --- TAB 3: MACRO UNIVERSE ---
 with tabs[2]:
     if not st.session_state.macro_db:
-        st.markdown('''
+        st.html('''
         <div class="t-panel" style="text-align:center; padding: 60px 40px; color: #6b7280;">
             <div style="font-size: 40px; margin-bottom: 16px;">🌍</div>
             <div style="font-size: 16px; color: #9ca3af; font-weight: 600; margin-bottom: 12px;">Market Stress Test Simulator</div>
@@ -1179,9 +1179,9 @@ with tabs[2]:
                 <span style="color: #fbbf24;">→ Upload at least one report in Tab 1 to activate this module.</span>
             </div>
         </div>
-        ''', unsafe_allow_html=True)
+        ''')
     else:
-        st.markdown('<div class="t-panel-header" style="margin-bottom: 16px;">MARKET COMPARISON MODULE</div>', unsafe_allow_html=True)
+        st.html('<div class="t-panel-header" style="margin-bottom: 16px;">MARKET COMPARISON MODULE</div>')
         
         t3_tabs = st.tabs(["🎯 Individual Profile", "⚖️ Head-to-Head Comparison", "🔗 Correlation Matrix"])
         
@@ -1212,7 +1212,7 @@ with tabs[2]:
                 def interpret(val): return '🟢 Strong' if val >= 7 else ('🟡 Average' if val >= 4 else '🔴 Weak')
                 def risk_interpret(val): return '🟢 Low Risk' if val <= 3 else ('🟡 Moderate' if val <= 6 else '🔴 High Risk')
                 
-                st.markdown(f'''
+                st.html(f'''
                 <div class="t-panel" style="margin-top: 10px; background: #0a0a0a;">
                     <div class="t-panel-header">WHAT THIS MEANS</div>
                     <div style="font-size: 13px; color: #d1d5db; line-height: 2;">
@@ -1223,7 +1223,7 @@ with tabs[2]:
                         <b>Mgmt Tone ({mgmt}/10):</b> {interpret(mgmt)} — how confident is the leadership team<br>
                     </div>
                 </div>
-                ''', unsafe_allow_html=True)
+                ''')
                 
         with t3_tabs[1]:
             st.info("Select two or more companies to compare them head-to-head across key competitive dimensions.")
@@ -1275,21 +1275,21 @@ with tabs[2]:
                     st.plotly_chart(fig_corr, use_container_width=True)
                     
                     # Interpretation
-                    st.markdown('''
+                    st.html('''
                     <div style="font-size: 12px; color: #9ca3af; line-height: 1.6; padding: 12px; background: #0a0a0a; border: 1px solid #1f2937; border-radius: 4px; margin-top: 10px;">
                         <b style="color: #fbbf24;">How to read this:</b> Each cell shows the Pearson correlation coefficient (-1 to +1) between two metrics.
                         <b style="color: #10b981;">Green = positively correlated</b> (when one goes up, the other tends to go up).
                         <b style="color: #ef4444;">Red = negatively correlated</b> (when one goes up, the other tends to go down).
                         This is a classical statistical method computed across your entire custom cohort, not an AI generation.
                     </div>
-                    ''', unsafe_allow_html=True)
+                    ''')
             else:
                 st.warning("⚠️ You need to upload and ingest at least 2 companies in Tab 1 to generate the Correlation Matrix.")
                 
 # --- TAB 4: DCF SIMULATOR ---
 with tabs[3]:
     if not st.session_state.briefs:
-        st.markdown('''
+        st.html('''
         <div class="t-panel" style="text-align:center; padding: 60px 40px; color: #6b7280;">
             <div style="font-size: 40px; margin-bottom: 16px;">💰</div>
             <div style="font-size: 16px; color: #9ca3af; font-weight: 600; margin-bottom: 12px;">Intrinsic Value Calculator (DCF Model)</div>
@@ -1303,52 +1303,52 @@ with tabs[3]:
                 </div>
             </div>
         </div>
-        ''', unsafe_allow_html=True)
+        ''')
     else:
-        st.markdown('<div style="display:flex; justify-content:flex-end; margin-bottom: 10px;">', unsafe_allow_html=True)
+        st.html('<div style="display:flex; justify-content:flex-end; margin-bottom: 10px;">')
         target_dcf = st.selectbox("ACTIVE ASSET", list(st.session_state.briefs.keys()), key="t4_target", label_visibility="collapsed")
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.html('</div>')
         b = st.session_state.briefs[target_dcf]
         
         dc1, dc2 = st.columns([1, 2])
         with dc1:
-            st.markdown('<div class="t-panel">', unsafe_allow_html=True)
-            st.markdown('<div class="t-panel-header">DCF VARIABLES</div>', unsafe_allow_html=True)
+            st.html('<div class="t-panel">')
+            st.html('<div class="t-panel-header">DCF VARIABLES</div>')
             st.info("The Baseline Variables below were dynamically extracted by the LLM from the 10-K. Override them to model intrinsic value changes.")
             
-            st.markdown('<div style="font-size: 10px; color: #6b7280; margin-bottom: 4px; margin-top: 12px;">DISCOUNT RATE (WACC)</div>', unsafe_allow_html=True)
+            st.html('<div style="font-size: 10px; color: #6b7280; margin-bottom: 4px; margin-top: 12px;">DISCOUNT RATE (WACC)</div>')
             wacc = st.number_input("WACC", min_value=0.01, max_value=0.30, value=float(b.wacc), step=0.005, format="%.3f", label_visibility="collapsed", key=f"wacc_{target_dcf}", help="Weighted Average Cost of Capital. Determines the discount applied to future cash flows.")
             
-            st.markdown('<div style="font-size: 10px; color: #6b7280; margin: 16px 0 4px 0;">TERMINAL GROWTH RATE</div>', unsafe_allow_html=True)
+            st.html('<div style="font-size: 10px; color: #6b7280; margin: 16px 0 4px 0;">TERMINAL GROWTH RATE</div>')
             g = st.number_input("Growth", min_value=-0.05, max_value=0.10, value=float(b.growth_rate), step=0.005, format="%.3f", label_visibility="collapsed", key=f"g_{target_dcf}", help="The expected perpetual growth rate of the asset after the projection horizon.")
             
-            st.markdown('<div style="font-size: 10px; color: #6b7280; margin: 16px 0 4px 0;">BASE FCF (MILLIONS)</div>', unsafe_allow_html=True)
+            st.html('<div style="font-size: 10px; color: #6b7280; margin: 16px 0 4px 0;">BASE FCF (MILLIONS)</div>')
             fcf = st.number_input("FCF", value=float(b.fcf_base), step=100.0, label_visibility="collapsed", key=f"fcf_{target_dcf}", help="Trailing Twelve Months (TTM) Free Cash Flow baseline.")
             
-            st.markdown('<div style="font-size: 10px; color: #6b7280; margin: 16px 0 4px 0;">PROJECTION HORIZON (YRS)</div>', unsafe_allow_html=True)
+            st.html('<div style="font-size: 10px; color: #6b7280; margin: 16px 0 4px 0;">PROJECTION HORIZON (YRS)</div>')
             years = st.slider("Years", 3, 10, 5, label_visibility="collapsed", key=f"yrs_{target_dcf}")
-            st.markdown('</div>', unsafe_allow_html=True)
+            st.html('</div>')
             
         with dc2:
-            st.markdown('<div class="t-panel">', unsafe_allow_html=True)
-            st.markdown('<div class="t-panel-header">INTRINSIC VALUE MODELER</div>', unsafe_allow_html=True)
+            st.html('<div class="t-panel">')
+            st.html('<div class="t-panel-header">INTRINSIC VALUE MODELER</div>')
             pv, vals = simulate_dcf(fcf, wacc, g, years)
             tv = pv - sum(vals)
             st.plotly_chart(c_dcf_sim(vals, tv, pv, years), use_container_width=True)
             
             # Plain English Interpretation
-            st.markdown(f'''
+            st.html(f'''
             <div style="font-size: 13px; color: #d1d5db; line-height: 1.8; padding: 12px; background: #0a0a0a; border: 1px solid #1f2937; border-radius: 4px; margin-top: 8px;">
                 <b style="color: #fbbf24;">What this means:</b> Based on the current inputs, the AI estimates that <b>{target_dcf}</b> is worth approximately <b style="color: #10b981;">${pv:,.0f}M</b>. 
                 This is calculated by projecting {years} years of future cash flows (blue bars) and adding the present value of all cash flows beyond that horizon (purple bar = Terminal Value). 
                 Try adjusting the sliders on the left to see how different assumptions change the valuation.
             </div>
-            ''', unsafe_allow_html=True)
-            st.markdown('</div>', unsafe_allow_html=True)
+            ''')
+            st.html('</div>')
         
         # CLASSICAL ANALYTICS: Monte Carlo Simulation
-        st.markdown('<div class="t-panel">', unsafe_allow_html=True)
-        st.markdown('<div class="t-panel-header">CLASSICAL ANALYTICS: MONTE CARLO SIMULATION (1,000 TRIALS)</div>', unsafe_allow_html=True)
+        st.html('<div class="t-panel">')
+        st.html('<div class="t-panel-header">CLASSICAL ANALYTICS: MONTE CARLO SIMULATION (1,000 TRIALS)</div>')
         st.info("This is a classical statistical method, not AI. It runs 1,000 randomized simulations of the DCF model by varying the WACC and Growth Rate within ±20% of your current inputs. The resulting distribution shows the range of possible valuations and the probability of each outcome.")
         
         np.random.seed(42)
@@ -1386,7 +1386,7 @@ with tabs[3]:
             with mc1:
                 st.plotly_chart(fig_mc, use_container_width=True)
             with mc2:
-                st.markdown(f'''
+                st.html(f'''
                 <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                     <div style="background: #0a0a0a; border: 1px solid #7f1d1d; border-radius: 6px; padding: 16px; text-align: center;">
                         <div style="font-size: 11px; color: #ef4444; font-weight: bold; letter-spacing: 0.5px;">BEARISH SKEW (5th %ile)</div>
@@ -1401,20 +1401,20 @@ with tabs[3]:
                         <div style="font-size: 26px; color: #10b981; font-family: 'JetBrains Mono', monospace; font-weight: bold;">${p95:,.0f}M</div>
                     </div>
                 </div>
-                ''', unsafe_allow_html=True)
+                ''')
                 
-            st.markdown(f'''
+            st.html(f'''
             <div style="font-size: 12px; color: #9ca3af; margin-top: 16px; padding: 12px; background: #0a0a0a; border: 1px solid #1f2937; border-radius: 4px;">
                 <b style="color: #fbbf24;">What this means:</b> Out of 1,000 randomized scenarios, {target_dcf}'s valuation falls between 
                 <b style="color: #ef4444;">${p5:,.0f}M</b> (pessimistic) and <b style="color: #10b981;">${p95:,.0f}M</b> (optimistic) with 90% confidence.
                 The median estimate is <b style="color: #fbbf24;">${p50:,.0f}M</b>. This validates the point estimate against parameter uncertainty.
             </div>
-            ''', unsafe_allow_html=True)
+            ''')
         
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.html('</div>')
         
         # SENSITIVITY ANALYSIS: WACC × Growth Rate Matrix
-        st.markdown('<div class="t-panel-header" style="margin-top: 20px; margin-bottom: 12px;">SENSITIVITY ANALYSIS: WACC × GROWTH RATE MATRIX</div>', unsafe_allow_html=True)
+        st.html('<div class="t-panel-header" style="margin-top: 20px; margin-bottom: 12px;">SENSITIVITY ANALYSIS: WACC × GROWTH RATE MATRIX</div>')
         st.info("This classic equity research tool shows how the intrinsic value changes across different combinations of WACC (discount rate) and terminal growth rate. The highlighted cell is your current base case. Green = above base case; Red = below base case.")
         
         sens_df = build_sensitivity_table(fcf, wacc, g, years)
@@ -1458,17 +1458,17 @@ with tabs[3]:
             table_html += '</tr>'
         table_html += '</table>'
         
-        st.markdown(table_html, unsafe_allow_html=True)
-        st.markdown('''
+        st.html(table_html)
+        st.html('''
         <div style="font-size: 11px; color: #6b7280; margin-top: 8px; text-align: center;">
             <b style="color:#10b981;">■</b> Above base case &nbsp;&nbsp; <b style="color:#fbbf24;">■</b> Near base case (±5%) &nbsp;&nbsp; <b style="color:#ef4444;">■</b> Below base case
         </div>
-        ''', unsafe_allow_html=True)
+        ''')
 
 # --- TAB 5: INDUSTRY BENCHMARK ---
 with tabs[4]:
     if not st.session_state.macro_db:
-        st.markdown('''
+        st.html('''
         <div class="t-panel" style="text-align:center; padding: 60px 40px; color: #6b7280;">
             <div style="font-size: 40px; margin-bottom: 16px;">🏆</div>
             <div style="font-size: 16px; color: #9ca3af; font-weight: 600; margin-bottom: 12px;">Cross-Industry Benchmark Rankings</div>
@@ -1480,9 +1480,9 @@ with tabs[4]:
                 <span style="color: #fbbf24;">→ Upload reports for 2+ companies in Tab 1 to see meaningful comparisons.</span>
             </div>
         </div>
-        ''', unsafe_allow_html=True)
+        ''')
     else:
-        st.markdown('<div class="t-panel-header" style="margin-bottom: 16px;">INDUSTRY BENCHMARK SUMMARY</div>', unsafe_allow_html=True)
+        st.html('<div class="t-panel-header" style="margin-bottom: 16px;">INDUSTRY BENCHMARK SUMMARY</div>')
         st.info("Select an industry to algorithmically benchmark all ingested companies against their sector averages. The Quantitative Sector Matrix uses color gradients to highlight outperformance (darker green) versus underperformance.")
         
         # Get unique sectors
@@ -1493,7 +1493,7 @@ with tabs[4]:
             
         c1, c2 = st.columns([1, 4])
         with c1:
-            st.markdown('<div style="font-size: 10px; color: #6b7280; margin-bottom: 8px; margin-top: 12px;">TARGET INDUSTRY</div>', unsafe_allow_html=True)
+            st.html('<div style="font-size: 10px; color: #6b7280; margin-bottom: 8px; margin-top: 12px;">TARGET INDUSTRY</div>')
             target_sector = st.selectbox("Sector", sorted(list(sectors)), label_visibility="collapsed", key="t5_sector")
             
         # Filter DB by sector
@@ -1519,7 +1519,7 @@ with tabs[4]:
             avg_mgmt = sum([get_m(v) for v in sector_db.values()]) / len(sector_db)
             
             with c2:
-                st.markdown('<div class="metric-grid">', unsafe_allow_html=True)
+                st.html('<div class="metric-grid">')
                 html = f'''
                 <div class="m-card bull">
                     <div class="m-title">IND: INNO AVG</div>
@@ -1538,9 +1538,9 @@ with tabs[4]:
                     <div class="m-val">{avg_mgmt:.1f}<span style="font-size:14px;color:#6b7280">/10</span></div>
                 </div>
                 '''
-                st.markdown(html + '</div>', unsafe_allow_html=True)
+                st.html(html + '</div>')
                 
-            st.markdown("<hr style='border-color: #1f2937; margin: 20px 0;'>", unsafe_allow_html=True)
+            st.html("<hr style='border-color: #1f2937; margin: 20px 0;'>")
             
             # Build DataFrame
             df_data = []
@@ -1560,7 +1560,7 @@ with tabs[4]:
             
             df = pd.DataFrame(df_data).set_index("Asset Ticker")
             
-            st.markdown('<div style="font-size: 11px; color: #9ca3af; margin-bottom: 8px;">QUANTITATIVE SECTOR MATRIX</div>', unsafe_allow_html=True)
+            st.html('<div style="font-size: 11px; color: #9ca3af; margin-bottom: 8px;">QUANTITATIVE SECTOR MATRIX</div>')
             
             # Professional Screener Aesthetic using Native Streamlit Configurations (zero matplotlib dependency)
             st.dataframe(
