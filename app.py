@@ -393,7 +393,42 @@ class AnalystBrief(BaseModel):
 # ─────────────────────────────────────────────
 
 
-@st.cache_data(ttl=900, show_spinner=False)
+@st.cache_data(ttl=86400, show_spinner=False)
+def resolve_ticker(query):
+    """Resolve a company name or ticker to a valid ticker symbol using yfinance."""
+    query = query.strip()
+    if not query:
+        return None, None
+    
+    # First, try as a direct ticker
+    try:
+        tk = yf.Ticker(query.upper())
+        info = tk.info
+        if info and info.get('regularMarketPrice') or info.get('marketCap'):
+            return query.upper(), info.get('longName', query.upper())
+    except Exception:
+        pass
+    
+    # If that didn't work, search by name
+    try:
+        results = yf.Search(query, max_results=5)
+        if hasattr(results, 'quotes') and results.quotes:
+            for q in results.quotes:
+                symbol = q.get('symbol', '')
+                name = q.get('longname') or q.get('shortname') or symbol
+                exchange = q.get('exchange', '')
+                # Prefer US exchanges
+                if exchange in ('NMS', 'NYQ', 'NGM', 'PCX', 'BTS', 'NAS'):
+                    return symbol, name
+            # Fallback to first result
+            first = results.quotes[0]
+            return first.get('symbol', query.upper()), first.get('longname') or first.get('shortname') or query.upper()
+    except Exception:
+        pass
+    
+    # Final fallback: return as-is (user typed a ticker we can't validate)
+    return query.upper(), None
+
 def fetch_company_context(ticker):
     """Pull comprehensive financial data from yfinance and format as context string."""
     try:
@@ -988,7 +1023,7 @@ Enter any public ticker to generate an instant, comprehensive institutional anal
     with search_col1:
         search_ticker = st.text_input(
             "TICKER", 
-            placeholder="Enter ticker (e.g. AAPL, NVDA, JPM)...",
+            placeholder="Search by name or ticker (e.g. Apple, NVDA, Tesla, JPM)...",
             label_visibility="collapsed",
             key="search_ticker_input"
         )
@@ -998,45 +1033,60 @@ Enter any public ticker to generate an instant, comprehensive institutional anal
     st.html('''
         </div>
         <div style="text-align: center; font-size: 12px; color: #71717a; margin-top: 16px;">
-            Supports all major global exchanges in real-time.
+            Search by company name or ticker symbol · Supports all major global exchanges
         </div>
     </div>
     ''')
     
     # Process live search
     if analyze_btn and search_ticker:
-        ticker_clean = search_ticker.upper().strip()
+        # Resolve company name to ticker
+        with st.spinner("🔍 Resolving ticker..."):
+            resolved_ticker, resolved_name = resolve_ticker(search_ticker)
         
-        with st.container():
-            st.html(f'''
-            <div class="t-panel">
-                <div class="t-panel-header">PIPELINE EXECUTION LOG — {ticker_clean}</div>
-            ''')
-            
-            pb = st.progress(0)
-            st_txt = st.empty()
-            
-            def upd_live(v, m):
-                pb.progress(min(v, 1.0))
-                st_txt.markdown(f"<span style='color:#10b981; font-family:monospace;'>[{v*100:02.0f}%] <b>[{ticker_clean}]</b> {m}</span>", unsafe_allow_html=True)
-            
-            result = run_llm_live(ticker_clean, upd_live)
-            
-            if result and result[0] is not None:
-                b, sector = result
-                st.session_state.briefs[ticker_clean] = b
-                b_dict = b.model_dump()
-                st.session_state.macro_db[ticker_clean] = b_dict
-                st.session_state.macro_db[ticker_clean]['sensitivity'] = {'rates': -0.2, 'inflation': -0.4, 'supply_chain': -0.1}
-                persist_to_db(ticker_clean, st.session_state.macro_db[ticker_clean])
+        if not resolved_ticker:
+            st.error("❌ Could not resolve that company. Please try a different name or ticker.")
+        else:
+            ticker_clean = resolved_ticker.upper().strip()
+            if resolved_name and resolved_name.upper() != ticker_clean:
+                st.html(f'''
+<div style="max-width:600px; margin:0 auto 20px auto; background: rgba(16,185,129,0.05); border:1px solid rgba(16,185,129,0.15); border-radius:100px; padding:12px 24px; text-align:center;">
+<span style="font-size:13px; color:#a1a1aa;">Resolved:</span>
+<span style="font-size:14px; color:#10b981; font-weight:700; margin-left:8px;">{resolved_name}</span>
+<span style="font-size:13px; color:#71717a; margin-left:4px;">({ticker_clean})</span>
+</div>
+                ''')
+        
+            with st.container():
+                st.html(f'''
+                <div class="t-panel">
+                    <div class="t-panel-header">PIPELINE EXECUTION LOG — {ticker_clean}</div>
+                ''')
                 
-                upd_live(1.0, "PROFILE GENERATED & PERSISTED ✓")
-                st.success(f"✅ **{b.company_name}** analyzed successfully! Navigate to **Tab 2 (AI Analysis)** to view the full report.")
-                time.sleep(2)
-                pb.empty()
-                st_txt.empty()
-            
-            st.html('</div>')
+                pb = st.progress(0)
+                st_txt = st.empty()
+                
+                def upd_live(v, m):
+                    pb.progress(min(v, 1.0))
+                    st_txt.markdown(f"<span style='color:#10b981; font-family:monospace;'>[{v*100:02.0f}%] <b>[{ticker_clean}]</b> {m}</span>", unsafe_allow_html=True)
+                
+                result = run_llm_live(ticker_clean, upd_live)
+                
+                if result and result[0] is not None:
+                    b, sector = result
+                    st.session_state.briefs[ticker_clean] = b
+                    b_dict = b.model_dump()
+                    st.session_state.macro_db[ticker_clean] = b_dict
+                    st.session_state.macro_db[ticker_clean]['sensitivity'] = {'rates': -0.2, 'inflation': -0.4, 'supply_chain': -0.1}
+                    persist_to_db(ticker_clean, st.session_state.macro_db[ticker_clean])
+                    
+                    upd_live(1.0, "PROFILE GENERATED & PERSISTED ✓")
+                    st.success(f"✅ **{b.company_name}** analyzed successfully! Navigate to **Tab 2 (AI Analysis)** to view the full report.")
+                    time.sleep(2)
+                    pb.empty()
+                    st_txt.empty()
+                
+                st.html('</div>')
     
     # Show currently loaded companies
     if st.session_state.briefs:
