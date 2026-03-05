@@ -543,10 +543,10 @@ def c_gru_forecast_chart(gru_data):
         title=dict(text="GRU NEURAL NETWORK PRICE FORECAST", font=dict(color='#e5e7eb', size=14)),
         height=350,
         margin=dict(l=0, r=0, t=40, b=0),
-        yaxis=dict(gridcolor='#1f2937', title='Price ($)', titlefont=dict(size=11)),
+        yaxis=dict(gridcolor='#1f2937', title=dict(text='Price ($)', font=dict(size=11))),
         xaxis=dict(gridcolor='#1f2937'),
         legend=dict(bgcolor='rgba(0,0,0,0)', font=dict(size=10), orientation='h', yanchor='bottom', y=1.02, xanchor='right', x=1),
-        hovermode='x unified'
+        hovermode='x'
     )
     return fig
 
