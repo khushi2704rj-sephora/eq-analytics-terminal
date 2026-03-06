@@ -710,6 +710,8 @@ def run_gru_prediction(ticker, lookback=60, forecast_days=10, epochs=50):
         import ssl
         import json
         import random
+        import datetime
+        import time
         
         url = f"https://query2.finance.yahoo.com/v8/finance/chart/{ticker}?interval=1d&range=1y"
         
