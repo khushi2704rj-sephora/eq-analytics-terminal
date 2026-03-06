@@ -706,16 +706,50 @@ class GRUModel(nn.Module):
 def run_gru_prediction(ticker, lookback=60, forecast_days=10, epochs=50):
     """Train a GRU on 1 year of daily closes and forecast forward."""
     try:
-        # Use yfinance native history fetcher with stealth session
-        # This bypasses raw JSON endpoint blocks by automatically handling Yahoo's crumbs
-        tk = yf.Ticker(ticker, session=get_yf_session())
-        df = tk.history(period="1y", interval="1d")
+        import urllib.request
+        import ssl
+        import json
+        import random
         
-        if df.empty or len(df) < lookback + 20:
-            return None
+        url = f"https://query2.finance.yahoo.com/v8/finance/chart/{ticker}?interval=1d&range=1y"
         
-        # Ensure we only have the Close column as expected by downstream tensors
-        closes = df['Close'].values.flatten().astype(float)
+        ctx = ssl.create_default_context()
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE
+        
+        user_agents = [
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.3.1 Safari/605.1.15",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0"
+        ]
+        
+        req = urllib.request.Request(url, headers={
+            'User-Agent': random.choice(user_agents),
+            'Accept': '*/*',
+            'Connection': 'keep-alive'
+        })
+        
+        with urllib.request.urlopen(req, context=ctx, timeout=10) as response:
+            data = json.loads(response.read().decode())
+            
+        result = data.get('chart', {}).get('result', [])
+        if not result:
+            raise ValueError(f"No result found for {ticker}")
+            
+        timestamps = result[0].get('timestamp', [])
+        closes_raw = result[0].get('indicators', {}).get('quote', [{}])[0].get('close', [])
+        
+        # Filter out None values
+        valid_data = [(ts, c) for ts, c in zip(timestamps, closes_raw) if c is not None]
+        if len(valid_data) < lookback + 20:
+             raise ValueError("Insufficient trading days.")
+             
+        timestamps, closes_raw = zip(*valid_data)
+        
+        dates = [datetime.datetime.fromtimestamp(ts, datetime.timezone.utc).date() for ts in timestamps]
+        df = pd.DataFrame({'Close': closes_raw}, index=pd.DatetimeIndex(dates))
+        
+        closes = df['Close'].values.astype(float)
         
         # Normalize
         min_p, max_p = closes.min(), closes.max()
