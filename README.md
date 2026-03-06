@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0d1117,50:1a2a4f,100:3b82f6&height=220&section=header&text=Nexus%20Equity%20Terminal&fontSize=42&fontColor=ffffff&animation=fadeIn&fontAlignY=35&desc=AI-Powered%20Financial%20Analysis%20%7C%20RAG%20Pipelines%20%7C%20DCF%20Valuation&descSize=16&descAlignY=55&descColor=cccccc" alt="Banner" width="100%">
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0d1218,50:1b2b50,100:3b83f6&height=221&section=header&text=Nexus%20Equity%20Terminal&fontSize=42&fontColor=ffffff&animation=twinkling&fontAlignY=35&desc=AI-Powered%20Financial%20Analysis%20%7C%20RAG%20Pipelines%20%7C%20GRU%20Deep%20Learning%20%7C%20DCF%20Valuation&descSize=16&descAlignY=55&descColor=cccccc" alt="Banner" width="100%">
 
 </div>
 
@@ -34,9 +34,9 @@
 
 ## 📖 Overview
 
-The **Nexus Equity Terminal** is a quantitative trading and equity research platform designed to bridge the gap between deterministic financial modeling, Deep Learning, and Generative AI. 
+The **Nexus Equity Terminal** is a quantitative trading and equity research platform designed to bridge the gap between deterministic financial modeling, Deep Learning, and Generative AI.
 
-Achieving an **8.71/10 on a simulated Monte Carlo assessment** (50,000 trials across 6 dimensions), this terminal acts as a production-grade research environment. It utilizes a **Dynamic Retrieval-Augmented Generation (RAG) pipeline** to ingest live SEC data, vectorizes the semantic context via `sentence-transformers`, and leverages `Llama-3.1-8B-Instruct` to generate heavily structured institutional analyst briefs. 
+Achieving an **8.71/10 on a simulated Monte Carlo assessment** (50,000 trials across 6 dimensions), this terminal acts as a production-grade research environment. It utilizes a **Dynamic Retrieval-Augmented Generation (RAG) pipeline** to ingest live SEC data, vectorizes the semantic context via `sentence-transformers`, and leverages `Llama-3.1-8B-Instruct` to generate heavily structured institutional analyst briefs.
 
 These qualitative insights are paired with a **Live Market Data Pipeline** (bypassing blockades to pull real-time metrics) and a custom **GRU Neural Network**, empowering users to see both 10-day price forecasts and interactive Discounted Cash Flow (DCF) models in a single Bloomberg-style dashboard.
 
@@ -55,12 +55,12 @@ These qualitative insights are paired with a **Live Market Data Pipeline** (bypa
 
 ## 🛠️ Architecture Stack
 
-* **Frontend:** Streamlit, Custom HTML/CSS Overlays, Plotly Graph Objects
-* **Deep Learning:** PyTorch (`torch.nn.GRU`), Pandas, Scikit-learn (MinMaxScaler)
-* **Vector Store:** FAISS (Facebook AI Similarity Search)
-* **Embeddings:** `all-MiniLM-L6-v2` via HuggingFace
-* **LLM:** `Llama-3.1-8B-Instruct` (Novita Inference API)
-* **Data Ingestion:** Custom SSL-bypassing `urllib` pipelines, `yfinance` (fallback), `PyPDF2`
+- **Frontend:** Streamlit, Custom HTML/CSS Overlays, Plotly Graph Objects
+- **Deep Learning:** PyTorch (`torch.nn.GRU`), Pandas, Scikit-learn (MinMaxScaler)
+- **Vector Store:** FAISS (Facebook AI Similarity Search)
+- **Embeddings:** `all-MiniLM-L6-v2` via HuggingFace
+- **LLM:** `Llama-3.1-8B-Instruct` (Novita Inference API)
+- **Data Ingestion:** Custom SSL-bypassing `urllib` pipelines, `yfinance` (fallback), `PyPDF2`
 
 ---
 
@@ -122,17 +122,20 @@ If you use this research, pipeline, or methodology in your academic work, please
 To run this terminal locally, ensure you have Python 3.10+ installed and a valid HuggingFace Access Token.
 
 **1. Clone the repository:**
+
 ```bash
 git clone https://github.com/khushi2704rj-sephora/eq-analytics-terminal.git
 cd eq-analytics-terminal
 ```
 
 **2. Install dependencies:**
+
 ```bash
 pip install -r requirements.txt
 ```
 
 **3. Set your API Key and Launch:**
+
 ```bash
 export HF_TOKEN="your_huggingface_write_token"
 streamlit run app.py
