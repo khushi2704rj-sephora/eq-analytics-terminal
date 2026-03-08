@@ -542,20 +542,23 @@ def fetch_company_context(ticker):
         # Primary: Use our crumb-authenticated v7 quote API
         info = yahoo_quote(ticker)
         
-        # If rate limited (HTTP 429) or empty, fallback to robust yfinance library
+        # If rate limited (HTTP 429) or empty, fallback to the robust v8 chart API which doesn't need crumb auth
         if not info or not (info.get('regularMarketPrice') or info.get('marketCap')):
             try:
-                import yfinance as yf
-                yt = yf.Ticker(ticker)
-                y_info = yt.info
-                if y_info and (y_info.get('currentPrice') or y_info.get('regularMarketPrice') or y_info.get('marketCap')):
-                    info = y_info
-                    if 'currentPrice' in info and 'regularMarketPrice' not in info:
-                        info['regularMarketPrice'] = info['currentPrice']
+                chart = yahoo_chart(ticker, range_str='1d')
+                meta = chart.get('chart', {}).get('result', [{}])[0].get('meta', {})
+                if meta and (meta.get('regularMarketPrice') or meta.get('marketCap')):
+                    # Reconstruct info from chart metadata
+                    info = {
+                        'regularMarketPrice': meta.get('regularMarketPrice'),
+                        'longName': meta.get('longName') or meta.get('shortName') or ticker,
+                        # Chart meta doesn't have market cap, but we can bypass the strict check
+                        'marketCap': meta.get('regularMarketPrice') * meta.get('regularMarketVolume', 0) if meta.get('regularMarketPrice') else 0
+                    }
             except Exception:
                 pass
                 
-        if not info or not (info.get('regularMarketPrice') or info.get('marketCap')):
+        if not info or not info.get('regularMarketPrice'):
             return None, None, None
         
         # Basic info
