@@ -542,19 +542,24 @@ def fetch_company_context(ticker):
         # Primary: Use our crumb-authenticated v7 quote API
         info = yahoo_quote(ticker)
         
-        # If rate limited (HTTP 429) or empty, fallback to the robust v8 chart API which doesn't need crumb auth
+        # If rate limited (HTTP 429) or empty, fallback to the robust v8 chart API
         if not info or not (info.get('regularMarketPrice') or info.get('marketCap')):
             try:
                 chart = yahoo_chart(ticker, range_str='1d')
                 meta = chart.get('chart', {}).get('result', [{}])[0].get('meta', {})
                 if meta and (meta.get('regularMarketPrice') or meta.get('marketCap')):
-                    # Reconstruct info from chart metadata
                     info = {
                         'regularMarketPrice': meta.get('regularMarketPrice'),
                         'longName': meta.get('longName') or meta.get('shortName') or ticker,
-                        # Chart meta doesn't have market cap, but we can bypass the strict check
                         'marketCap': meta.get('regularMarketPrice') * meta.get('regularMarketVolume', 0) if meta.get('regularMarketPrice') else 0
                     }
+                    # Grab sector/industry from search API since chart meta lacks it
+                    s_res = yahoo_search(ticker)
+                    for q in s_res:
+                        if q.get('symbol', '').upper() == ticker.upper():
+                            if 'sector' in q: info['sector'] = q['sector']
+                            if 'industry' in q: info['industry'] = q['industry']
+                            break
             except Exception:
                 pass
                 
@@ -732,17 +737,39 @@ def fetch_live_data(ticker):
     """Fetch live market data for the dashboard metrics panel."""
     try:
         info = yahoo_quote(ticker)
-        if not info:
+        
+        # If rate limited (HTTP 429), use the robust v8 chart API fallback for the live price strip
+        if not info or not info.get('regularMarketPrice'):
+            try:
+                chart = yahoo_chart(ticker, range_str='1d')
+                meta = chart.get('chart', {}).get('result', [{}])[0].get('meta', {})
+                if meta and meta.get('regularMarketPrice'):
+                    info = {
+                        'regularMarketPrice': meta.get('regularMarketPrice'),
+                        # Chart meta doesn't have shares outstanding. Never calculate Price * Volume.
+                        'marketCap': 'N/A',
+                        'fiftyTwoWeekHigh': meta.get('fiftyTwoWeekHigh', 'N/A'),
+                        'fiftyTwoWeekLow': meta.get('fiftyTwoWeekLow', 'N/A')
+                    }
+            except Exception:
+                pass
+
+        if not info or not info.get('regularMarketPrice'):
             return None
             
-        stats = yahoo_modules(ticker, "defaultKeyStatistics")
-        ks = stats.get('defaultKeyStatistics', {})
-        beta = ks.get('beta', {}).get('raw', 'N/A')
-        ev_ebitda = ks.get('enterpriseToEbitda', {}).get('raw', 'N/A')
+        beta = 'N/A'
+        ev_ebitda = 'N/A'
+        try:
+            stats = yahoo_modules(ticker, "defaultKeyStatistics")
+            ks = stats.get('defaultKeyStatistics', {})
+            beta = ks.get('beta', {}).get('raw', 'N/A')
+            ev_ebitda = ks.get('enterpriseToEbitda', {}).get('raw', 'N/A')
+        except Exception:
+            pass
             
         return {
             'price': info.get('regularMarketPrice', 'N/A'),
-            'market_cap': info.get('marketCap', 'N/A'),
+            'market_cap': info.get('marketCap') or 'N/A',  # Fix for $33B bug: use info.get directly
             'pe_ratio': info.get('trailingPE', 'N/A'),
             'ev_ebitda': ev_ebitda,
             'week52_high': info.get('fiftyTwoWeekHigh', 'N/A'),
