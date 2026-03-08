@@ -507,12 +507,27 @@ def resolve_ticker(query):
     try:
         results = yahoo_search(query)
         if results:
+            # 1. Exact symbol match first
             for q in results:
-                symbol = q.get('symbol', '')
-                name = q.get('longname') or q.get('shortname') or symbol
-                exchange = q.get('exchange', '')
-                if exchange in ('NMS', 'NYQ', 'NGM', 'PCX', 'BTS', 'NAS'):
+                if q.get('symbol', '').upper() == query.upper():
+                    return q['symbol'], q.get('longname') or q.get('shortname') or q['symbol']
+            
+            # 2. Major global exchanges (US + International)
+            major_exchanges = ('NMS', 'NYQ', 'NGM', 'PCX', 'BTS', 'NAS', 'LSE', 'NSI', 'BSE', 'JPX', 'HKG', 'TOR', 'FRA', 'ASX', 'EBS', 'PAR', 'AMS')
+            for q in results:
+                if q.get('exchange', '') in major_exchanges and q.get('quoteType') == 'EQUITY':
+                    symbol = q.get('symbol', '')
+                    name = q.get('longname') or q.get('shortname') or symbol
                     return symbol, name
+                    
+            # 3. Any Equity
+            for q in results:
+                if q.get('quoteType') == 'EQUITY':
+                    symbol = q.get('symbol', '')
+                    name = q.get('longname') or q.get('shortname') or symbol
+                    return symbol, name
+            
+            # 4. Fallback to first result
             first = results[0]
             return first.get('symbol', query.upper()), first.get('longname') or first.get('shortname') or query.upper()
     except Exception:
