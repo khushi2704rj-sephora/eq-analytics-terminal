@@ -258,7 +258,7 @@ st.html('''
 # ENVIRONMENT & STATE
 # ─────────────────────────────────────────────
 TOKEN = os.environ.get('HF_TOKEN', '')
-DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'nexus.db')
+DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'nexus_v2.db')
 
 def init_db():
     conn = sqlite3.connect(DB_PATH)
@@ -463,6 +463,21 @@ def yahoo_chart(ticker, range_str='1y', interval='1d'):
     with urllib.request.urlopen(req, context=_YF_SSL_CTX, timeout=10) as resp:
         return json.loads(resp.read().decode())
 
+def yahoo_modules(ticker, modules="defaultKeyStatistics"):
+    """Fetch specialized module data (like Beta, EV/EBITDA) from v10 API."""
+    cookie, crumb = _get_yahoo_crumb()
+    if not cookie or not crumb:
+        return {}
+    url = f"https://query2.finance.yahoo.com/v10/finance/quoteSummary/{ticker}?modules={modules}&crumb={crumb}"
+    req = urllib.request.Request(url, headers={'User-Agent': _YF_UA, 'Cookie': cookie})
+    try:
+        with urllib.request.urlopen(req, context=_YF_SSL_CTX, timeout=10) as resp:
+            data = json.loads(resp.read().decode())
+        result = data.get('quoteSummary', {}).get('result', [])
+        return result[0] if result else {}
+    except Exception:
+        return {}
+
 def yahoo_search(query):
     """Search for a ticker by company name."""
     import urllib.parse
@@ -503,7 +518,7 @@ def resolve_ticker(query):
     except Exception:
         pass
     
-    return query.upper(), None
+    return None, None
 
 @st.cache_data(ttl=900, show_spinner=False)
 def fetch_company_context(ticker):
@@ -688,15 +703,21 @@ def fetch_live_data(ticker):
         info = yahoo_quote(ticker)
         if not info:
             return None
+            
+        stats = yahoo_modules(ticker, "defaultKeyStatistics")
+        ks = stats.get('defaultKeyStatistics', {})
+        beta = ks.get('beta', {}).get('raw', 'N/A')
+        ev_ebitda = ks.get('enterpriseToEbitda', {}).get('raw', 'N/A')
+            
         return {
             'price': info.get('regularMarketPrice', 'N/A'),
             'market_cap': info.get('marketCap', 'N/A'),
             'pe_ratio': info.get('trailingPE', 'N/A'),
-            'ev_ebitda': info.get('enterpriseToEbitda', 'N/A'),
+            'ev_ebitda': ev_ebitda,
             'week52_high': info.get('fiftyTwoWeekHigh', 'N/A'),
             'week52_low': info.get('fiftyTwoWeekLow', 'N/A'),
             'dividend_yield': info.get('dividendYield', 'N/A'),
-            'beta': info.get('beta', 'N/A'),
+            'beta': beta,
         }
     except Exception:
         return None
@@ -1062,30 +1083,29 @@ Enter any public ticker to generate an instant, comprehensive institutional anal
     ''')
 
     # DEMO MODE — One-Click Preloaded Data
-    if not st.session_state.briefs:
-        demo_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'demo_profiles.json')
-        if os.path.exists(demo_path):
-            st.html('''
-            <div style="max-width: 600px; margin: 0 auto 40px auto; background: rgba(59,130,246,0.05); border: 1px solid rgba(59,130,246,0.2); border-radius: 100px; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between;">
-                <div style="font-size: 14px; color: #e5e7eb; font-weight: 500;">
-                    <span style="color:#3b82f6; margin-right:8px;">🎯</span> 
-                    <b>First time?</b> Load our pre-analyzed demo dataset.
-                </div>
-            ''')
-            
-            col_z, col_b, col_z2 = st.columns([1, 2, 1])
-            with col_b:
-                if st.button("Load Demo (AAPL, MSFT, TSLA)", use_container_width=True):
-                    with open(demo_path, 'r') as f:
-                        demo_data = json.load(f)
-                    for ticker, data in demo_data.items():
-                        brief = AnalystBrief(**{k: v for k, v in data.items() if k != 'sensitivity'})
-                        st.session_state.briefs[ticker] = brief
-                        st.session_state.macro_db[ticker] = data
-                    st.success("✅ Demo loaded! View Tabs 2–5.")
-                    time.sleep(1)
-                    st.rerun()
-            st.html('</div>')
+    demo_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'demo_profiles.json')
+    if os.path.exists(demo_path):
+        st.html('''
+        <div style="max-width: 600px; margin: 0 auto 40px auto; background: rgba(59,130,246,0.05); border: 1px solid rgba(59,130,246,0.2); border-radius: 100px; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="font-size: 14px; color: #e5e7eb; font-weight: 500;">
+                <span style="color:#3b82f6; margin-right:8px;">🎯</span> 
+                <b>Want robust data instantly?</b> Load the pre-analyzed demo dataset.
+            </div>
+        ''')
+        
+        col_z, col_b, col_z2 = st.columns([1, 2, 1])
+        with col_b:
+            if st.button("Load Demo (50 Companies · All Sectors)", use_container_width=True):
+                with open(demo_path, 'r') as f:
+                    demo_data = json.load(f)
+                for ticker, data in demo_data.items():
+                    brief = AnalystBrief(**{k: v for k, v in data.items() if k != 'sensitivity'})
+                    st.session_state.briefs[ticker] = brief
+                    st.session_state.macro_db[ticker] = data
+                st.success("✅ Demo loaded! View Tabs 2–5.")
+                time.sleep(1)
+                st.rerun()
+        st.html('</div>')
 
     # ── LIVE SEARCH BAR ──
     st.html('''
@@ -1222,12 +1242,14 @@ with tabs[1]:
         if live:
             def fmt_num(v, prefix='', suffix='', decimals=2):
                 if v == 'N/A' or v is None: return 'N/A'
-                if isinstance(v, (int, float)):
+                try:
+                    v = float(v)
                     if abs(v) >= 1e12: return f'{prefix}{v/1e12:.{decimals}f}T{suffix}'
                     if abs(v) >= 1e9: return f'{prefix}{v/1e9:.{decimals}f}B{suffix}'
                     if abs(v) >= 1e6: return f'{prefix}{v/1e6:.{decimals}f}M{suffix}'
                     return f'{prefix}{v:,.{decimals}f}{suffix}'
-                return str(v)
+                except (ValueError, TypeError):
+                    return str(v)
             
             st.html(f'''
             <div style="display:flex; gap:16px; flex-wrap:wrap; margin-bottom:24px;">
@@ -1241,11 +1263,11 @@ with tabs[1]:
                 </div>
                 <div style="flex:1; min-width:140px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); border-radius:16px; padding:20px; text-align:center; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
                     <div style="font-size:11px; color:#71717a; font-weight:600; letter-spacing:1px; margin-bottom:8px;">P/E RATIO</div>
-                    <div style="font-size:20px; color:#ffffff; font-family:'Inter',sans-serif; font-weight:800; letter-spacing:-0.5px;">{fmt_num(live['pe_ratio'], decimals=1) if live['pe_ratio'] != 'N/A' else 'N/A'}x</div>
+                    <div style="font-size:20px; color:#ffffff; font-family:'Inter',sans-serif; font-weight:800; letter-spacing:-0.5px;">{fmt_num(live['pe_ratio'], suffix='x', decimals=1)}</div>
                 </div>
                 <div style="flex:1; min-width:140px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); border-radius:16px; padding:20px; text-align:center; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
                     <div style="font-size:11px; color:#71717a; font-weight:600; letter-spacing:1px; margin-bottom:8px;">EV/EBITDA</div>
-                    <div style="font-size:20px; color:#ffffff; font-family:'Inter',sans-serif; font-weight:800; letter-spacing:-0.5px;">{fmt_num(live['ev_ebitda'], decimals=1) if live['ev_ebitda'] != 'N/A' else 'N/A'}x</div>
+                    <div style="font-size:20px; color:#ffffff; font-family:'Inter',sans-serif; font-weight:800; letter-spacing:-0.5px;">{fmt_num(live['ev_ebitda'], suffix='x', decimals=1)}</div>
                 </div>
                 <div style="flex:1; min-width:140px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); border-radius:16px; padding:20px; text-align:center; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
                     <div style="font-size:11px; color:#71717a; font-weight:600; letter-spacing:1px; margin-bottom:12px;">52W RANGE</div>

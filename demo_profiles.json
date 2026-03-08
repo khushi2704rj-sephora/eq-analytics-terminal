@@ -1,235 +1,3881 @@
 {
-    "AAPL": {
-        "company_name": "Apple Inc.",
-        "fiscal_year": "FY2024",
-        "sector": "Technology",
-        "business_model": "Apple Inc. designs, manufactures, and markets smartphones, personal computers, tablets, wearables, and accessories worldwide. The company generates revenue through hardware sales (iPhone, Mac, iPad, Wearables), digital services (App Store, Apple Music, iCloud, Apple TV+), and financial services (Apple Pay, Apple Card). Its ecosystem strategy creates high customer retention through deep hardware-software integration.",
-        "key_segments": [
-            "iPhone",
-            "Mac",
-            "iPad",
-            "Wearables & Accessories",
-            "Services"
-        ],
-        "financial_highlights": [
-            "Revenue of $383B in FY2024, driven by 14% services growth to $96B",
-            "Gross margin expanded to 46.2%, reflecting favorable product mix shift toward services",
-            "Free cash flow of $110B enabled $95B in share buybacks and $15B in dividends",
-            "Net cash position of $65B provides substantial financial flexibility"
-        ],
-        "top_risks": [
-            {
-                "risk": "China Revenue Dependency",
-                "description": "Greater China represents 19% of total revenue and faces geopolitical headwinds including potential tariffs and local competitor growth from Huawei",
-                "severity": "High",
-                "likelihood": 4,
-                "impact": 5
-            },
-            {
-                "risk": "Regulatory Antitrust Pressure",
-                "description": "EU Digital Markets Act and US DOJ lawsuit targeting App Store practices could force structural changes to the 30% commission model",
-                "severity": "High",
-                "likelihood": 4,
-                "impact": 4
-            },
-            {
-                "risk": "iPhone Upgrade Cycle Risk",
-                "description": "Lengthening upgrade cycles to 4+ years and smartphone market saturation could pressure hardware revenue growth",
-                "severity": "Medium",
-                "likelihood": 3,
-                "impact": 4
-            }
-        ],
-        "strategic_priorities": [
-            {
-                "priority": "Apple Intelligence AI Platform",
-                "detail": "Integrating on-device AI across all products to drive upgrade cycles and differentiate the ecosystem",
-                "time_horizon": "Short-term"
-            },
-            {
-                "priority": "Services Revenue Expansion",
-                "detail": "Growing high-margin services segment including advertising, fintech, and health subscriptions",
-                "time_horizon": "Medium-term"
-            },
-            {
-                "priority": "Vision Pro & Spatial Computing",
-                "detail": "Establishing market leadership in mixed reality computing as the next major platform shift",
-                "time_horizon": "Long-term"
-            }
-        ],
-        "competitive_scores": {
-            "innovation": 8,
-            "market_position": 9,
-            "financial_health": 9,
-            "risk_profile": 4
-        },
-        "management_tone": "Optimistic",
-        "management_tone_score": 8,
-        "bull_case": "Apple Intelligence drives a super-cycle iPhone upgrade wave while services revenue accelerates past $120B, expanding margins and validating the ecosystem thesis. Vision Pro finds enterprise PMF.",
-        "bear_case": "China revenue deteriorates under trade restrictions, App Store commissions are forced down by regulators, and consumers resist premium pricing in a weakening macro environment.",
-        "analyst_verdict": "BUY — Apple's fortress balance sheet, accelerating services mix, and AI-driven upgrade catalyst make it a core portfolio holding despite near-term China headwinds.",
-        "wacc": 0.085,
-        "growth_rate": 0.04,
-        "fcf_base": 110000,
-        "sensitivity": {
-            "rates": -0.15,
-            "inflation": -0.30,
-            "supply_chain": -0.45
-        }
+  "AAPL": {
+    "company_name": "Apple Inc.",
+    "fiscal_year": "FY2024",
+    "sector": "Technology",
+    "business_model": "Apple designs, manufactures, and markets smartphones, personal computers, tablets, wearables, and accessories worldwide. The company generates revenue through hardware sales (iPhone, Mac, iPad, Wearables), digital services (App Store, Apple Music, iCloud, Apple TV+), and financial services (Apple Pay, Apple Card). Its ecosystem strategy creates high customer retention through deep hardware-software integration.",
+    "key_segments": [
+      "iPhone",
+      "Mac",
+      "iPad",
+      "Wearables & Accessories",
+      "Services"
+    ],
+    "financial_highlights": [
+      "Revenue of $383B in FY2024, driven by 14% services growth to $96B",
+      "Gross margin expanded to 46.2%, reflecting favorable product mix shift toward services",
+      "Free cash flow of $110B enabled $95B in share buybacks and $15B in dividends",
+      "Net cash position of $65B provides substantial financial flexibility"
+    ],
+    "top_risks": [
+      {
+        "risk": "China Revenue Dependency",
+        "description": "Greater China represents 19% of total revenue and faces geopolitical headwinds including potential tariffs and local competitor growth from Huawei",
+        "severity": "High",
+        "likelihood": 4,
+        "impact": 5
+      },
+      {
+        "risk": "Regulatory Antitrust Pressure",
+        "description": "EU Digital Markets Act and US DOJ lawsuit targeting App Store practices could force structural changes to the 30% commission model",
+        "severity": "High",
+        "likelihood": 4,
+        "impact": 4
+      },
+      {
+        "risk": "iPhone Upgrade Cycle Risk",
+        "description": "Lengthening upgrade cycles to 4+ years and smartphone market saturation could pressure hardware revenue growth",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 4
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "Apple Intelligence AI Platform",
+        "detail": "Integrating on-device AI across all products to drive upgrade cycles and differentiate the ecosystem",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "Services Revenue Expansion",
+        "detail": "Growing high-margin services segment including advertising, fintech, and health subscriptions",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Vision Pro & Spatial Computing",
+        "detail": "Establishing market leadership in mixed reality computing as the next major platform shift",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 8,
+      "market_position": 9,
+      "financial_health": 9,
+      "risk_profile": 4
     },
-    "MSFT": {
-        "company_name": "Microsoft Corporation",
-        "fiscal_year": "FY2024",
-        "sector": "Technology",
-        "business_model": "Microsoft operates through three segments: Productivity & Business Processes (Office 365, LinkedIn, Dynamics), Intelligent Cloud (Azure, GitHub, server products), and More Personal Computing (Windows, Xbox, Surface, Search). Azure cloud infrastructure and AI services are the primary growth engine, powered by the strategic OpenAI partnership.",
-        "key_segments": [
-            "Azure & Cloud",
-            "Office 365 Commercial",
-            "LinkedIn",
-            "Windows OEM",
-            "Gaming/Xbox"
-        ],
-        "financial_highlights": [
-            "Revenue of $245B in FY2024, up 16% YoY, with Intelligent Cloud segment growing 22%",
-            "Azure revenue growth accelerated to 29%, driven by AI workload adoption",
-            "Operating margin of 44.6% reflects exceptional operating leverage in the cloud business",
-            "Free cash flow of $74B with net cash position enabling aggressive M&A and R&D investment"
-        ],
-        "top_risks": [
-            {
-                "risk": "Azure Competition Intensifying",
-                "description": "AWS and Google Cloud are closing the AI infrastructure gap, while Oracle and specialized cloud providers target specific workloads",
-                "severity": "Medium",
-                "likelihood": 4,
-                "impact": 4
-            },
-            {
-                "risk": "OpenAI Partnership Risk",
-                "description": "Dependence on OpenAI for frontier AI models creates concentration risk, especially if the partnership terms are renegotiated or OpenAI pursues independence",
-                "severity": "High",
-                "likelihood": 3,
-                "impact": 5
-            },
-            {
-                "risk": "Enterprise IT Spending Slowdown",
-                "description": "Macroeconomic uncertainty could delay enterprise digital transformation projects and cloud migration timelines",
-                "severity": "Medium",
-                "likelihood": 3,
-                "impact": 3
-            }
-        ],
-        "strategic_priorities": [
-            {
-                "priority": "Copilot Monetization",
-                "detail": "Embedding AI assistants across the entire Microsoft 365 suite to drive ARPU expansion at $30/user/month premium",
-                "time_horizon": "Short-term"
-            },
-            {
-                "priority": "Azure AI Infrastructure",
-                "detail": "Expanding GPU capacity and developing custom silicon to capture the growing AI training and inference workload market",
-                "time_horizon": "Medium-term"
-            },
-            {
-                "priority": "Autonomous AI Agents",
-                "detail": "Building an ecosystem of AI agents that automate enterprise workflows, creating a new revenue category",
-                "time_horizon": "Long-term"
-            }
-        ],
-        "competitive_scores": {
-            "innovation": 9,
-            "market_position": 9,
-            "financial_health": 9,
-            "risk_profile": 3
-        },
-        "management_tone": "Optimistic",
-        "management_tone_score": 9,
-        "bull_case": "Copilot adoption reaches 50%+ of Office 365 users, Azure AI revenue compounds at 35%+ annually, and Microsoft becomes the default enterprise AI platform, driving valuation to $4.5T.",
-        "bear_case": "OpenAI partnership fractures, Copilot sees low enterprise adoption due to ROI concerns, and Azure growth decelerates to sub-20% as cloud commoditization intensifies.",
-        "analyst_verdict": "STRONG BUY — Microsoft is the best-positioned company in enterprise AI with diversified revenue streams, strong margin expansion, and the most comprehensive AI product suite.",
-        "wacc": 0.082,
-        "growth_rate": 0.045,
-        "fcf_base": 74000,
-        "sensitivity": {
-            "rates": -0.10,
-            "inflation": -0.25,
-            "supply_chain": -0.20
-        }
-    },
-    "TSLA": {
-        "company_name": "Tesla, Inc.",
-        "fiscal_year": "FY2024",
-        "sector": "Automotive/Energy",
-        "business_model": "Tesla designs, develops, manufactures, and sells electric vehicles (Model 3, Y, S, X, Cybertruck), energy generation/storage solutions (Solar Roof, Powerwall, Megapack), and is developing autonomous driving technology (FSD) and humanoid robotics (Optimus). The company operates a vertically integrated model with direct-to-consumer sales and a growing high-margin services/software segment.",
-        "key_segments": [
-            "Automotive Sales",
-            "Energy Generation & Storage",
-            "Services & Other",
-            "Regulatory Credits"
-        ],
-        "financial_highlights": [
-            "Revenue of $97B in FY2024, with Energy segment growing 67% to $10.4B",
-            "Automotive gross margin compressed to 17.9% amid aggressive pricing strategy",
-            "Delivered 1.8M vehicles globally, maintaining market leader position in BEVs",
-            "Free cash flow of $4.4B, significantly lower than FY2022 peak of $7.6B due to capex for new factories and Cybertruck ramp"
-        ],
-        "top_risks": [
-            {
-                "risk": "Margin Compression",
-                "description": "Ongoing price cuts to maintain volume growth are eroding automotive margins, with competition from Chinese BEV makers like BYD intensifying globally",
-                "severity": "High",
-                "likelihood": 5,
-                "impact": 4
-            },
-            {
-                "risk": "FSD Regulatory Uncertainty",
-                "description": "Full Self-Driving technology faces significant regulatory hurdles and liability questions that could delay the high-margin robotaxi revenue model",
-                "severity": "High",
-                "likelihood": 4,
-                "impact": 5
-            },
-            {
-                "risk": "Key Person Risk",
-                "description": "Heavy dependence on Elon Musk's leadership, brand association, and capital allocation decisions creates unique governance risk",
-                "severity": "Medium",
-                "likelihood": 3,
-                "impact": 5
-            }
-        ],
-        "strategic_priorities": [
-            {
-                "priority": "Next-Gen Affordable EV",
-                "detail": "Launching a sub-$25K vehicle platform to dramatically expand the total addressable market",
-                "time_horizon": "Short-term"
-            },
-            {
-                "priority": "Robotaxi Network",
-                "detail": "Deploying autonomous ride-hailing service leveraging FSD technology for recurring high-margin revenue",
-                "time_horizon": "Medium-term"
-            },
-            {
-                "priority": "Optimus Humanoid Robot",
-                "detail": "Commercializing general-purpose humanoid robots for factory labor and household applications",
-                "time_horizon": "Long-term"
-            }
-        ],
-        "competitive_scores": {
-            "innovation": 9,
-            "market_position": 8,
-            "financial_health": 6,
-            "risk_profile": 7
-        },
-        "management_tone": "Optimistic",
-        "management_tone_score": 9,
-        "bull_case": "FSD achieves Level 4 autonomy and the robotaxi network launches successfully, transforming Tesla from a car company into a high-margin mobility platform worth $2T+.",
-        "bear_case": "EV competition commoditizes the market, margin compression continues, FSD remains stuck in supervised mode, and the valuation premium evaporates as growth decelerates.",
-        "analyst_verdict": "HOLD — Tesla's innovation pipeline is compelling but current valuation prices in flawless execution on FSD and robotaxi, leaving limited margin of safety.",
-        "wacc": 0.10,
-        "growth_rate": 0.06,
-        "fcf_base": 4400,
-        "sensitivity": {
-            "rates": 0.05,
-            "inflation": -0.50,
-            "supply_chain": -0.60
-        }
+    "management_tone": "Optimistic",
+    "management_tone_score": 8,
+    "bull_case": "Apple Intelligence drives a super-cycle iPhone upgrade wave while services revenue accelerates past $120B, expanding margins and validating the ecosystem thesis. Vision Pro finds enterprise PMF.",
+    "bear_case": "China revenue deteriorates under trade restrictions, App Store commissions are forced down by regulators, and consumers resist premium pricing in a weakening macro environment.",
+    "analyst_verdict": "BUY \u2014 Apple's fortress balance sheet, accelerating services mix, and AI-driven upgrade catalyst make it a core portfolio holding despite near-term China headwinds.",
+    "wacc": 0.085,
+    "growth_rate": 0.04,
+    "fcf_base": 110000,
+    "sensitivity": {
+      "rates": -0.15,
+      "inflation": -0.3,
+      "supply_chain": -0.45
     }
+  },
+  "MSFT": {
+    "company_name": "Microsoft Corporation",
+    "fiscal_year": "FY2024",
+    "sector": "Technology",
+    "business_model": "Microsoft operates through three segments: Productivity & Business Processes (Office 365, LinkedIn, Dynamics), Intelligent Cloud (Azure, GitHub, server products), and More Personal Computing (Windows, Xbox, Surface, Search). Azure cloud infrastructure and AI services are the primary growth engine, powered by the strategic OpenAI partnership.",
+    "key_segments": [
+      "Azure & Cloud",
+      "Office 365 Commercial",
+      "LinkedIn",
+      "Windows OEM",
+      "Gaming/Xbox"
+    ],
+    "financial_highlights": [
+      "Revenue of $245B in FY2024, up 16% YoY, with Intelligent Cloud segment growing 22%",
+      "Azure revenue growth accelerated to 29%, driven by AI workload adoption",
+      "Operating margin of 44.6% reflects exceptional operating leverage in the cloud business",
+      "Free cash flow of $74B with net cash position enabling aggressive M&A and R&D investment"
+    ],
+    "top_risks": [
+      {
+        "risk": "Azure Competition Intensifying",
+        "description": "AWS and Google Cloud are closing the AI infrastructure gap, while Oracle and specialized cloud providers target specific workloads",
+        "severity": "Medium",
+        "likelihood": 4,
+        "impact": 4
+      },
+      {
+        "risk": "OpenAI Partnership Risk",
+        "description": "Dependence on OpenAI for frontier AI models creates concentration risk, especially if the partnership terms are renegotiated or OpenAI pursues independence",
+        "severity": "High",
+        "likelihood": 3,
+        "impact": 5
+      },
+      {
+        "risk": "Enterprise IT Spending Slowdown",
+        "description": "Macroeconomic uncertainty could delay enterprise digital transformation projects and cloud migration timelines",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 3
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "Copilot Monetization",
+        "detail": "Embedding AI assistants across the entire Microsoft 365 suite to drive ARPU expansion at $30/user/month premium",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "Azure AI Infrastructure",
+        "detail": "Expanding GPU capacity and developing custom silicon to capture the growing AI training and inference workload market",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Autonomous AI Agents",
+        "detail": "Building an ecosystem of AI agents that automate enterprise workflows, creating a new revenue category",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 9,
+      "market_position": 9,
+      "financial_health": 9,
+      "risk_profile": 3
+    },
+    "management_tone": "Optimistic",
+    "management_tone_score": 9,
+    "bull_case": "Copilot adoption reaches 50%+ of Office 365 users, Azure AI revenue compounds at 35%+ annually, and Microsoft becomes the default enterprise AI platform, driving valuation to $4.5T.",
+    "bear_case": "OpenAI partnership fractures, Copilot sees low enterprise adoption due to ROI concerns, and Azure growth decelerates to sub-20% as cloud commoditization intensifies.",
+    "analyst_verdict": "STRONG BUY \u2014 Microsoft is the best-positioned company in enterprise AI with diversified revenue streams, strong margin expansion, and the most comprehensive AI product suite.",
+    "wacc": 0.082,
+    "growth_rate": 0.045,
+    "fcf_base": 74000,
+    "sensitivity": {
+      "rates": -0.1,
+      "inflation": -0.25,
+      "supply_chain": -0.2
+    }
+  },
+  "TSLA": {
+    "company_name": "Tesla, Inc.",
+    "fiscal_year": "FY2024",
+    "sector": "Automotive/Energy",
+    "business_model": "Tesla designs, develops, manufactures, and sells electric vehicles (Model 3, Y, S, X, Cybertruck), energy generation/storage solutions (Solar Roof, Powerwall, Megapack), and is developing autonomous driving technology (FSD) and humanoid robotics (Optimus). The company operates a vertically integrated model with direct-to-consumer sales.",
+    "key_segments": [
+      "Automotive Sales",
+      "Energy Generation & Storage",
+      "Services & Other",
+      "Regulatory Credits"
+    ],
+    "financial_highlights": [
+      "Revenue of $97B in FY2024, with Energy segment growing 67% to $10.4B",
+      "Automotive gross margin compressed to 17.9% amid aggressive pricing strategy",
+      "Delivered 1.8M vehicles globally, maintaining market leader position in BEVs",
+      "Free cash flow of $4.4B, significantly lower than FY2022 peak of $7.6B due to capex"
+    ],
+    "top_risks": [
+      {
+        "risk": "Margin Compression",
+        "description": "Ongoing price cuts to maintain volume growth are eroding automotive margins, with competition from Chinese BEV makers like BYD intensifying globally",
+        "severity": "High",
+        "likelihood": 5,
+        "impact": 4
+      },
+      {
+        "risk": "FSD Regulatory Uncertainty",
+        "description": "Full Self-Driving technology faces significant regulatory hurdles and liability questions that could delay the high-margin robotaxi revenue model",
+        "severity": "High",
+        "likelihood": 4,
+        "impact": 5
+      },
+      {
+        "risk": "Key Person Risk",
+        "description": "Heavy dependence on Elon Musk's leadership, brand association, and capital allocation decisions creates unique governance risk",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 5
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "Next-Gen Affordable EV",
+        "detail": "Launching a sub-$25K vehicle platform to dramatically expand the total addressable market",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "Robotaxi Network",
+        "detail": "Deploying autonomous ride-hailing service leveraging FSD technology for recurring high-margin revenue",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Optimus Humanoid Robot",
+        "detail": "Commercializing general-purpose humanoid robots for factory labor and household applications",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 9,
+      "market_position": 8,
+      "financial_health": 6,
+      "risk_profile": 7
+    },
+    "management_tone": "Optimistic",
+    "management_tone_score": 9,
+    "bull_case": "FSD achieves Level 4 autonomy and the robotaxi network launches successfully, transforming Tesla from a car company into a high-margin mobility platform worth $2T+.",
+    "bear_case": "EV competition commoditizes the market, margin compression continues, FSD remains stuck in supervised mode, and the valuation premium evaporates as growth decelerates.",
+    "analyst_verdict": "HOLD \u2014 Tesla's innovation pipeline is compelling but current valuation prices in flawless execution on FSD and robotaxi, leaving limited margin of safety.",
+    "wacc": 0.1,
+    "growth_rate": 0.06,
+    "fcf_base": 4400,
+    "sensitivity": {
+      "rates": 0.05,
+      "inflation": -0.5,
+      "supply_chain": -0.6
+    }
+  },
+  "GOOG": {
+    "company_name": "Alphabet Inc.",
+    "fiscal_year": "FY2024",
+    "sector": "Technology",
+    "business_model": "Alphabet operates through Google Services (Search, YouTube, Android, Chrome, Gmail, Maps, Play), Google Cloud (GCP, Workspace), and Other Bets (Waymo, Verily, Calico). Digital advertising across Search and YouTube remains the dominant revenue source, while Google Cloud has reached profitability.",
+    "key_segments": [
+      "Google Search & Other",
+      "YouTube Ads",
+      "Google Cloud",
+      "Google Subscriptions",
+      "Other Bets"
+    ],
+    "financial_highlights": [
+      "Revenue of $340B in FY2024, up 14% YoY driven by Search AI integration and Cloud growth",
+      "Google Cloud achieved $38B revenue with 26% growth and first full-year profitability at 9% margins",
+      "Operating margin expanded to 32% as cost discipline offset Gemini AI investment spend",
+      "Free cash flow of $72B enabled $62B in share buybacks and first-ever dividend initiation"
+    ],
+    "top_risks": [
+      {
+        "risk": "DOJ Antitrust Ruling",
+        "description": "The DOJ search monopoly ruling could force structural remedies including unbundling default search agreements worth $26B+ annually",
+        "severity": "High",
+        "likelihood": 4,
+        "impact": 5
+      },
+      {
+        "risk": "AI Search Disruption",
+        "description": "ChatGPT, Perplexity and AI-native search competitors threaten Google's core search advertising model by changing how users find information",
+        "severity": "High",
+        "likelihood": 3,
+        "impact": 5
+      },
+      {
+        "risk": "YouTube Monetization Ceiling",
+        "description": "Creator economy competition from TikTok and regulatory pressure on children's content could limit YouTube ad revenue growth trajectory",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 3
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "Gemini AI Integration",
+        "detail": "Embedding Gemini across all Google products to defend Search moat and create new revenue surfaces in AI-assisted workflows",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "Google Cloud AI Platform",
+        "detail": "Positioning GCP as the enterprise AI training and deployment platform of choice, targeting AWS and Azure market share",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Waymo Commercialization",
+        "detail": "Scaling autonomous ride-hailing from 100K+ weekly trips to a national robotaxi network, monetizing $30B+ R&D investment",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 9,
+      "market_position": 10,
+      "financial_health": 9,
+      "risk_profile": 5
+    },
+    "management_tone": "Cautiously Optimistic",
+    "management_tone_score": 7,
+    "bull_case": "Gemini AI supercharges Search monetization, Google Cloud reaches Azure-level margins, and Waymo becomes a $100B standalone business, pushing Alphabet to $3.5T valuation.",
+    "bear_case": "DOJ forces Search contract divestiture, AI search alternatives erode market share, and regulatory fines across EU and US compress margins and limit capital allocation flexibility.",
+    "analyst_verdict": "BUY \u2014 Despite antitrust overhang, Alphabet's AI capabilities, Cloud profitability inflection, and Waymo optionality create a compelling risk-reward at current multiples.",
+    "wacc": 0.088,
+    "growth_rate": 0.04,
+    "fcf_base": 72000,
+    "sensitivity": {
+      "rates": -0.1,
+      "inflation": -0.2,
+      "supply_chain": -0.15
+    }
+  },
+  "AMZN": {
+    "company_name": "Amazon.com, Inc.",
+    "fiscal_year": "FY2024",
+    "sector": "Technology",
+    "business_model": "Amazon operates through three pillars: e-commerce (1P retail, 3P marketplace, Prime membership), cloud computing (AWS), and digital advertising. AWS provides infrastructure-as-a-service globally, while the advertising business monetizes traffic across the e-commerce platform, Prime Video, and Twitch.",
+    "key_segments": [
+      "AWS Cloud",
+      "Online Stores",
+      "Third-Party Seller Services",
+      "Advertising",
+      "Prime Subscriptions"
+    ],
+    "financial_highlights": [
+      "Revenue of $620B in FY2024, with AWS growing 19% to $105B",
+      "Operating income surged 55% to $58B driven by AWS margin expansion and fulfillment cost optimization",
+      "Advertising revenue grew 24% to $56B, becoming Amazon's third profit engine",
+      "Free cash flow recovered to $35B as capex normalized post-pandemic infrastructure buildout"
+    ],
+    "top_risks": [
+      {
+        "risk": "AWS Growth Deceleration",
+        "description": "Increasing competition from Azure and GCP in enterprise AI workloads could slow AWS revenue growth below 15%, pressuring the high-margin profit engine",
+        "severity": "High",
+        "likelihood": 3,
+        "impact": 5
+      },
+      {
+        "risk": "E-commerce Margin Pressure",
+        "description": "Rising labor costs, last-mile delivery expenses, and return rates continue to compress retail margins despite automation investments",
+        "severity": "Medium",
+        "likelihood": 4,
+        "impact": 3
+      },
+      {
+        "risk": "Regulatory Fragmentation",
+        "description": "Global antitrust scrutiny of marketplace practices, data privacy regulations, and tax policy changes could increase compliance costs",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 3
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "AWS AI Leadership",
+        "detail": "Investing in custom Trainium/Inferentia chips and Bedrock AI platform to capture generative AI training and inference workloads",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "Same-Day Delivery Network",
+        "detail": "Expanding sub-24-hour delivery coverage to 90%+ of US population through regional fulfillment center densification",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Healthcare & Satellite",
+        "detail": "Scaling Amazon Clinic, One Medical, and Project Kuiper satellite broadband as new multi-billion dollar business lines",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 9,
+      "market_position": 10,
+      "financial_health": 8,
+      "risk_profile": 4
+    },
+    "management_tone": "Optimistic",
+    "management_tone_score": 8,
+    "bull_case": "AWS AI workloads re-accelerate growth above 25%, advertising becomes a $80B business at 60%+ margins, and Amazon Health disrupts the $4T US healthcare market.",
+    "bear_case": "AWS loses market share to specialized AI clouds, retail margins remain structurally thin, and antitrust actions force marketplace concessions that benefit competitors like Shopify and Walmart.",
+    "analyst_verdict": "BUY \u2014 Amazon's three-engine model (AWS + Advertising + Retail) provides diversified growth with margin expansion optionality that justifies the premium multiple.",
+    "wacc": 0.09,
+    "growth_rate": 0.04,
+    "fcf_base": 35000,
+    "sensitivity": {
+      "rates": -0.15,
+      "inflation": -0.35,
+      "supply_chain": -0.4
+    }
+  },
+  "META": {
+    "company_name": "Meta Platforms, Inc.",
+    "fiscal_year": "FY2024",
+    "sector": "Technology",
+    "business_model": "Meta operates the world's largest social media platforms (Facebook, Instagram, WhatsApp, Messenger) monetized through targeted digital advertising. Reality Labs develops AR/VR hardware (Quest headsets) and the metaverse platform. The company serves 3.3B+ daily active users across its family of apps.",
+    "key_segments": [
+      "Family of Apps (Advertising)",
+      "Reality Labs",
+      "Instagram",
+      "WhatsApp Business",
+      "Threads"
+    ],
+    "financial_highlights": [
+      "Revenue of $162B in FY2024, up 22% YoY driven by Reels monetization and AI-powered ad targeting",
+      "Operating margin expanded to 41% as Year of Efficiency cost cuts delivered $10B+ in savings",
+      "Reality Labs losses narrowed to $13.7B but remain a significant drag on consolidated profitability",
+      "Free cash flow of $52B enabled $35B in share buybacks and first dividend payment"
+    ],
+    "top_risks": [
+      {
+        "risk": "Apple Privacy Changes Impact",
+        "description": "iOS ATT framework continues to create ad targeting headwinds, requiring Meta to rebuild signal infrastructure through on-platform conversions API",
+        "severity": "Medium",
+        "likelihood": 4,
+        "impact": 4
+      },
+      {
+        "risk": "Reality Labs Losses",
+        "description": "$13.7B annual losses in metaverse/AR-VR division with no clear path to profitability creates shareholder pressure and capital allocation questions",
+        "severity": "High",
+        "likelihood": 5,
+        "impact": 3
+      },
+      {
+        "risk": "TikTok Competition",
+        "description": "Short-form video competition for user attention and advertiser budgets continues to pressure Instagram Reels engagement and monetization rates",
+        "severity": "Medium",
+        "likelihood": 4,
+        "impact": 3
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "AI-Driven Ad Optimization",
+        "detail": "Deploying Llama AI models to improve ad relevance, targeting precision, and conversion rates across all surfaces",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "WhatsApp Commerce",
+        "detail": "Monetizing 2B+ WhatsApp users through business messaging, payments, and click-to-WhatsApp ads in emerging markets",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "AR Glasses Platform",
+        "detail": "Launching consumer AR glasses (Orion) as the next computing platform to succeed smartphones",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 8,
+      "market_position": 9,
+      "financial_health": 8,
+      "risk_profile": 5
+    },
+    "management_tone": "Optimistic",
+    "management_tone_score": 8,
+    "bull_case": "AI-powered ad targeting fully recovers post-ATT headwinds, WhatsApp Commerce unlocks $20B+ revenue from emerging markets, and AR glasses create an entirely new computing paradigm owned by Meta.",
+    "bear_case": "Reality Labs losses accelerate without product-market fit, regulatory pressure forces data collection limitations in the EU, and younger demographics continue migrating to TikTok and decentralized social platforms.",
+    "analyst_verdict": "BUY \u2014 Meta's core advertising business is a cash generation machine with expanding margins, and the AI pivot is delivering measurable ROI despite Reality Labs drag.",
+    "wacc": 0.09,
+    "growth_rate": 0.035,
+    "fcf_base": 52000,
+    "sensitivity": {
+      "rates": -0.1,
+      "inflation": -0.2,
+      "supply_chain": -0.15
+    }
+  },
+  "NVDA": {
+    "company_name": "NVIDIA Corporation",
+    "fiscal_year": "FY2025",
+    "sector": "Technology",
+    "business_model": "NVIDIA designs and sells GPU-accelerated computing platforms for data centers, gaming, professional visualization, and automotive. The Data Center segment dominates revenue through AI training and inference chips (H100, H200, Blackwell), while the Gaming segment serves consumers. NVIDIA's CUDA software ecosystem creates deep customer lock-in.",
+    "key_segments": [
+      "Data Center",
+      "Gaming",
+      "Professional Visualization",
+      "Automotive",
+      "OEM & Other"
+    ],
+    "financial_highlights": [
+      "Revenue of $130B in FY2025, up 114% YoY driven by unprecedented AI infrastructure demand",
+      "Data Center revenue reached $115B, representing 88% of total revenue with 73% gross margins",
+      "Net income of $73B with operating margins exceeding 65%, the highest in semiconductor history",
+      "Free cash flow of $61B enabling aggressive R&D investment of $12B+ and significant buybacks"
+    ],
+    "top_risks": [
+      {
+        "risk": "Customer Concentration",
+        "description": "Top 4 hyperscalers (MSFT, GOOG, AMZN, META) represent 40%+ of Data Center revenue, creating dependency on their capex cycles",
+        "severity": "High",
+        "likelihood": 3,
+        "impact": 5
+      },
+      {
+        "risk": "Custom Silicon Competition",
+        "description": "Google TPUs, Amazon Trainium, Microsoft Maia, and startup ASICs threaten NVIDIA's GPU monopoly in AI training and inference",
+        "severity": "High",
+        "likelihood": 4,
+        "impact": 4
+      },
+      {
+        "risk": "China Export Controls",
+        "description": "US government restrictions on AI chip exports to China eliminate a $10B+ addressable market and drive Chinese self-sufficiency efforts",
+        "severity": "High",
+        "likelihood": 5,
+        "impact": 3
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "Blackwell GPU Ramp",
+        "detail": "Scaling next-gen Blackwell architecture to meet $200B+ in reported backlog demand from hyperscale and enterprise customers",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "Inference Market Capture",
+        "detail": "Expanding from training dominance into the growing AI inference market through TensorRT optimization and NIM microservices",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Sovereign AI & Robotics",
+        "detail": "Selling complete AI infrastructure stacks to national governments and expanding Omniverse for industrial digital twins and robotics",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 10,
+      "market_position": 10,
+      "financial_health": 10,
+      "risk_profile": 5
+    },
+    "management_tone": "Highly Optimistic",
+    "management_tone_score": 10,
+    "bull_case": "AI infrastructure spending continues at $300B+ annually, NVIDIA captures 80%+ share through Blackwell and CUDA lock-in, and inference revenue becomes a second growth engine driving $200B+ revenue.",
+    "bear_case": "AI capex cycle peaks as hyperscalers shift to custom silicon, training demand saturates, and China export controls expand, causing revenue growth to decelerate sharply and compressing the premium multiple.",
+    "analyst_verdict": "BUY \u2014 NVIDIA is the foundational infrastructure provider for the AI revolution with unmatched competitive moats in hardware + software, though valuation requires continued hypergrowth execution.",
+    "wacc": 0.1,
+    "growth_rate": 0.05,
+    "fcf_base": 61000,
+    "sensitivity": {
+      "rates": -0.05,
+      "inflation": -0.15,
+      "supply_chain": -0.55
+    }
+  },
+  "NFLX": {
+    "company_name": "Netflix, Inc.",
+    "fiscal_year": "FY2024",
+    "sector": "Technology",
+    "business_model": "Netflix is the world's largest streaming entertainment service with 282M+ paid subscribers across 190+ countries. Revenue is generated through tiered subscription plans (Basic with Ads, Standard, Premium). The company produces original content globally and licenses third-party programming, leveraging recommendation AI to maximize engagement and minimize churn.",
+    "key_segments": [
+      "Streaming Subscriptions",
+      "Advertising Tier",
+      "Gaming",
+      "Live Events"
+    ],
+    "financial_highlights": [
+      "Revenue of $39B in FY2024, up 16% YoY as paid sharing crackdown added 30M+ net subscribers",
+      "Operating margin expanded to 28% driven by content spending discipline and ad tier contribution",
+      "Ad-supported tier reached 40M+ monthly active users, creating a new high-margin revenue stream",
+      "Free cash flow of $7.1B as content amortization expense normalized post-investment cycle"
+    ],
+    "top_risks": [
+      {
+        "risk": "Subscriber Growth Saturation",
+        "description": "After the paid sharing crackdown boost, organic subscriber growth may slow as Netflix approaches penetration limits in mature markets",
+        "severity": "Medium",
+        "likelihood": 4,
+        "impact": 4
+      },
+      {
+        "risk": "Content Cost Inflation",
+        "description": "Competition for premium talent and IP is driving content costs higher while audience fragmentation reduces per-title viewership impact",
+        "severity": "Medium",
+        "likelihood": 4,
+        "impact": 3
+      },
+      {
+        "risk": "Streaming Competition",
+        "description": "Disney+, Amazon Prime Video, Apple TV+, and YouTube compete for viewing time and subscriber budgets, potentially increasing churn",
+        "severity": "Medium",
+        "likelihood": 4,
+        "impact": 3
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "Advertising Scale",
+        "detail": "Scaling the ad tier to $5B+ annual revenue through programmatic buying, measurement partnerships, and premium live event inventory",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "Live Events & Sports",
+        "detail": "Expanding into live programming (NFL, WWE, comedy specials) to drive engagement spikes and reduce seasonal viewership variance",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Gaming & Interactive",
+        "detail": "Building a mobile gaming portfolio and interactive entertainment to increase per-subscriber engagement and justify premium pricing",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 7,
+      "market_position": 9,
+      "financial_health": 7,
+      "risk_profile": 4
+    },
+    "management_tone": "Optimistic",
+    "management_tone_score": 8,
+    "bull_case": "Ad tier scales to $10B+ revenue at 70% margins, live sports drives engagement above 3 hours/day, and Netflix becomes the default global entertainment platform with 400M+ subscribers.",
+    "bear_case": "Subscriber growth stalls at 300M, content cost inflation compresses margins, and a recession triggers mass subscription downgrades to the cheaper ad tier, diluting ARPU.",
+    "analyst_verdict": "BUY \u2014 Netflix has successfully pivoted from growth-at-all-costs to a profitable, cash-generative entertainment platform with multiple margin expansion levers ahead.",
+    "wacc": 0.09,
+    "growth_rate": 0.035,
+    "fcf_base": 7100,
+    "sensitivity": {
+      "rates": -0.1,
+      "inflation": -0.25,
+      "supply_chain": -0.1
+    }
+  },
+  "CRM": {
+    "company_name": "Salesforce, Inc.",
+    "fiscal_year": "FY2025",
+    "sector": "Technology",
+    "business_model": "Salesforce is the global leader in cloud-based CRM software, offering a suite of enterprise applications for sales, marketing, commerce, service, and analytics. The platform connects customer data across touchpoints and is deeply embedded in enterprise workflows through customization and AppExchange ecosystem integrations.",
+    "key_segments": [
+      "Sales Cloud",
+      "Service Cloud",
+      "Platform & Other",
+      "Marketing & Commerce Cloud",
+      "Data Cloud"
+    ],
+    "financial_highlights": [
+      "Revenue of $37.9B in FY2025, up 9% YoY with subscription & support revenue at 94% of total",
+      "Operating margin expanded to 33% as restructuring and efficiency initiatives reduced headcount",
+      "Remaining performance obligation (RPO) of $53B provides strong forward revenue visibility",
+      "Free cash flow of $12.5B with 33% FCF margin, a record for the company"
+    ],
+    "top_risks": [
+      {
+        "risk": "AI Disruption of CRM",
+        "description": "AI-native CRM startups and Microsoft Copilot integration could reduce the value proposition of traditional CRM platforms",
+        "severity": "High",
+        "likelihood": 3,
+        "impact": 4
+      },
+      {
+        "risk": "Enterprise Spending Caution",
+        "description": "Longer deal cycles and budget scrutiny are slowing large enterprise contract expansion and new logo acquisition",
+        "severity": "Medium",
+        "likelihood": 4,
+        "impact": 3
+      },
+      {
+        "risk": "Integration Complexity",
+        "description": "Post-acquisition integration of Slack, Tableau, and MuleSoft creates complexity that may dilute focus and slow innovation velocity",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 3
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "Agentforce AI Platform",
+        "detail": "Deploying autonomous AI agents that handle customer service, sales outreach, and analytics without human intervention",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "Data Cloud Expansion",
+        "detail": "Unifying customer data across all Salesforce products to create a real-time customer intelligence platform",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Vertical Industry Solutions",
+        "detail": "Building pre-configured CRM solutions for healthcare, financial services, and manufacturing to accelerate enterprise adoption",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 7,
+      "market_position": 9,
+      "financial_health": 8,
+      "risk_profile": 4
+    },
+    "management_tone": "Optimistic",
+    "management_tone_score": 7,
+    "bull_case": "Agentforce becomes the enterprise AI standard, Data Cloud drives 20%+ ARPU expansion, and margin expansion continues to 40%+ operating margins, re-rating the stock as a profitable compounder.",
+    "bear_case": "AI-native CRM alternatives cannibalize Salesforce's traditional seat-based pricing, large enterprise deals stall, and the multi-cloud integration strategy fails to deliver unified customer experiences.",
+    "analyst_verdict": "HOLD \u2014 Salesforce's profitability transformation is impressive but growth deceleration and AI disruption risk balance the improved margin profile.",
+    "wacc": 0.085,
+    "growth_rate": 0.035,
+    "fcf_base": 12500,
+    "sensitivity": {
+      "rates": -0.1,
+      "inflation": -0.2,
+      "supply_chain": -0.1
+    }
+  },
+  "ADBE": {
+    "company_name": "Adobe Inc.",
+    "fiscal_year": "FY2024",
+    "sector": "Technology",
+    "business_model": "Adobe is the market leader in creative and document management software, operating through Digital Media (Creative Cloud, Document Cloud) and Digital Experience (analytics, marketing automation). The company monetizes through SaaS subscriptions with deeply embedded workflows in design, photography, video editing, and enterprise marketing.",
+    "key_segments": [
+      "Creative Cloud",
+      "Document Cloud",
+      "Digital Experience",
+      "Adobe Firefly AI"
+    ],
+    "financial_highlights": [
+      "Revenue of $21.5B in FY2024, up 11% YoY with 93% recurring revenue mix",
+      "Digital Media ARR reached $16.8B with Creative Cloud growing at 12% driven by AI features",
+      "Operating margin of 46% reflects the strength of the subscription model and pricing power",
+      "Free cash flow of $8.0B with 37% FCF margin enabling consistent share buybacks"
+    ],
+    "top_risks": [
+      {
+        "risk": "Generative AI Disruption",
+        "description": "Open-source and startup AI image/video generation tools (Midjourney, Stable Diffusion) could commoditize creative workflows that Adobe charges premium prices for",
+        "severity": "High",
+        "likelihood": 4,
+        "impact": 4
+      },
+      {
+        "risk": "Figma Deal Collapse Aftermath",
+        "description": "The failed $20B Figma acquisition exposed Adobe's vulnerability in collaborative design, where Figma and Canva continue gaining share",
+        "severity": "Medium",
+        "likelihood": 4,
+        "impact": 3
+      },
+      {
+        "risk": "Price Sensitivity",
+        "description": "Aggressive price increases on Creative Cloud subscriptions risk accelerating churn, especially among individual creators and small businesses",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 3
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "Adobe Firefly Monetization",
+        "detail": "Embedding generative AI across all Creative Cloud apps and monetizing through premium Firefly credits and enterprise API access",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "Video & 3D Expansion",
+        "detail": "Strengthening Premiere Pro and After Effects with AI-powered video editing to capture the growing short-form video creation market",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Content Authenticity",
+        "detail": "Leading the Content Authenticity Initiative (CAI) to become the trust layer for AI-generated content verification",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 8,
+      "market_position": 9,
+      "financial_health": 9,
+      "risk_profile": 4
+    },
+    "management_tone": "Optimistic",
+    "management_tone_score": 7,
+    "bull_case": "Firefly AI drives a creative tool upgrade supercycle, Adobe captures the enterprise marketing AI market through Experience Cloud, and Content Authenticity becomes an industry standard generating licensing revenue.",
+    "bear_case": "Free AI tools erode Creative Cloud's value proposition, Canva and Figma win the prosumer segment, and enterprise marketing budgets shift to in-house AI solutions, compressing growth below 8%.",
+    "analyst_verdict": "HOLD \u2014 Adobe's AI integration is impressive but growing competition from free/low-cost alternatives and the Figma setback create uncertainty about sustainable premium pricing.",
+    "wacc": 0.085,
+    "growth_rate": 0.035,
+    "fcf_base": 8000,
+    "sensitivity": {
+      "rates": -0.1,
+      "inflation": -0.15,
+      "supply_chain": -0.1
+    }
+  },
+  "ORCL": {
+    "company_name": "Oracle Corporation",
+    "fiscal_year": "FY2025",
+    "sector": "Technology",
+    "business_model": "Oracle provides cloud infrastructure (OCI), cloud applications (ERP, HCM, SCM), and database technology to enterprise customers globally. The company is experiencing rapid growth in its Oracle Cloud Infrastructure division, positioning as a multi-cloud AI training provider for hyperscalers and enterprises.",
+    "key_segments": [
+      "Cloud Services",
+      "Cloud License & On-Premise License",
+      "Hardware",
+      "Services"
+    ],
+    "financial_highlights": [
+      "Revenue of $57B in FY2025, up 15% YoY with cloud revenue growing 29% to $24B",
+      "OCI consumption revenue growing 50%+ driven by GPU cluster demand for AI training workloads",
+      "Remaining performance obligations of $98B, more than doubling YoY, signaling massive backlog",
+      "Free cash flow of $13B despite elevated capex for data center expansion"
+    ],
+    "top_risks": [
+      {
+        "risk": "Capex Intensity",
+        "description": "Massive data center buildout ($16B+ annual capex) to meet AI demand creates execution risk and could pressure free cash flow if demand softens",
+        "severity": "High",
+        "likelihood": 3,
+        "impact": 4
+      },
+      {
+        "risk": "Debt Leverage",
+        "description": "Net debt of $76B from OCI expansion and Cerner acquisition limits financial flexibility and creates refinancing risk in a higher-rate environment",
+        "severity": "High",
+        "likelihood": 3,
+        "impact": 4
+      },
+      {
+        "risk": "Hyperscaler Competition",
+        "description": "AWS, Azure, and GCP have significantly larger scale and broader ecosystems, making it difficult for OCI to sustain market share gains long-term",
+        "severity": "Medium",
+        "likelihood": 4,
+        "impact": 3
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "AI Infrastructure Scaling",
+        "detail": "Deploying GPU superclusters for AI training contracts with OpenAI, Meta, and xAI to establish OCI as the fourth major cloud provider",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "Multi-Cloud Database",
+        "detail": "Embedding Oracle Autonomous Database across AWS, Azure, and GCP to capture enterprise database workloads regardless of cloud provider choice",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Healthcare Cloud",
+        "detail": "Leveraging the Cerner acquisition to build a dominant healthcare cloud platform serving hospitals, insurers, and pharmaceutical companies",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 7,
+      "market_position": 7,
+      "financial_health": 6,
+      "risk_profile": 5
+    },
+    "management_tone": "Highly Optimistic",
+    "management_tone_score": 9,
+    "bull_case": "OCI becomes the go-to platform for AI training workloads, multi-cloud database strategy captures $30B+ TAM, and healthcare cloud monetizes Cerner at scale, driving Oracle to $100B+ revenue.",
+    "bear_case": "AI infrastructure demand normalizes, hyperscalers recapture GPU training share, high debt levels limit strategic flexibility, and legacy on-premise revenue declines accelerate.",
+    "analyst_verdict": "BUY \u2014 Oracle's AI infrastructure pivot and record backlog provide strong growth visibility, though elevated debt and capex create execution risk that warrants monitoring.",
+    "wacc": 0.085,
+    "growth_rate": 0.04,
+    "fcf_base": 13000,
+    "sensitivity": {
+      "rates": -0.2,
+      "inflation": -0.25,
+      "supply_chain": -0.3
+    }
+  },
+  "INTC": {
+    "company_name": "Intel Corporation",
+    "fiscal_year": "FY2024",
+    "sector": "Technology",
+    "business_model": "Intel designs and manufactures semiconductors for computing and networking. The company operates an IDM (Integrated Device Manufacturing) model with its own fabrication facilities. Intel Foundry Services (IFS) aims to become a major third-party chip manufacturer competing with TSMC and Samsung.",
+    "key_segments": [
+      "Client Computing Group",
+      "Data Center & AI",
+      "Network & Edge",
+      "Intel Foundry Services",
+      "Mobileye"
+    ],
+    "financial_highlights": [
+      "Revenue of $54B in FY2024, down 1% YoY as PC recovery offset data center weakness",
+      "Data Center revenue declined 10% as enterprise customers shifted AI workloads to NVIDIA GPUs",
+      "Gross margin compressed to 41% as process node transitions and foundry investments weighed on profitability",
+      "Free cash flow of negative $3.5B due to massive capex of $25B+ for foundry buildout"
+    ],
+    "top_risks": [
+      {
+        "risk": "Process Technology Gap",
+        "description": "Intel remains 1-2 nodes behind TSMC in manufacturing capability, threatening competitiveness in high-performance computing and AI silicon",
+        "severity": "High",
+        "likelihood": 4,
+        "impact": 5
+      },
+      {
+        "risk": "Foundry Strategy Execution",
+        "description": "Intel Foundry Services has minimal external customers and requires $100B+ in investment to reach competitive scale with TSMC",
+        "severity": "High",
+        "likelihood": 4,
+        "impact": 5
+      },
+      {
+        "risk": "AI Market Share Loss",
+        "description": "NVIDIA's GPU dominance in AI has made Intel's Xeon CPUs and Gaudi accelerators largely irrelevant for training workloads",
+        "severity": "High",
+        "likelihood": 5,
+        "impact": 4
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "Intel 18A Process Node",
+        "detail": "Achieving manufacturing parity with TSMC through the 18A node to regain technology leadership and attract foundry customers",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "CHIPS Act Subsidies",
+        "detail": "Leveraging $8.5B in US government grants and $11B in loans to fund domestic fab construction in Ohio, Arizona, and Oregon",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Foundry Customer Acquisition",
+        "detail": "Winning external foundry customers including Qualcomm, MediaTek, and defense contractors to justify IDM 2.0 investment",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 5,
+      "market_position": 5,
+      "financial_health": 4,
+      "risk_profile": 8
+    },
+    "management_tone": "Cautiously Optimistic",
+    "management_tone_score": 5,
+    "bull_case": "Intel 18A achieves process parity, IFS wins major foundry contracts, and the CHIPS Act creates a geopolitical moat making Intel the strategic Western alternative to TSMC.",
+    "bear_case": "Process technology remains behind, foundry strategy fails to attract customers, AI market share continues eroding, and cash burn from fab construction forces dilutive financing.",
+    "analyst_verdict": "SELL \u2014 Intel's turnaround requires flawless multi-year execution against well-funded competitors, and current cash burn provides no margin of safety for investors.",
+    "wacc": 0.1,
+    "growth_rate": 0.02,
+    "fcf_base": -3500,
+    "sensitivity": {
+      "rates": -0.25,
+      "inflation": -0.35,
+      "supply_chain": -0.5
+    }
+  },
+  "AMD": {
+    "company_name": "Advanced Micro Devices, Inc.",
+    "fiscal_year": "FY2024",
+    "sector": "Technology",
+    "business_model": "AMD designs high-performance CPUs (Ryzen, EPYC), GPUs (Radeon, Instinct), FPGAs (Xilinx), and adaptive SoCs for computing, gaming, embedded, and data center markets. The company operates a fabless model, partnering with TSMC for manufacturing. The Instinct MI300X GPU targets NVIDIA's AI data center dominance.",
+    "key_segments": [
+      "Data Center",
+      "Client",
+      "Gaming",
+      "Embedded"
+    ],
+    "financial_highlights": [
+      "Revenue of $26B in FY2024, up 14% YoY with Data Center segment growing 122% to $12.6B",
+      "MI300X AI accelerator revenue exceeded $6B in its first full year, validating the AI GPU strategy",
+      "Gross margin expanded to 52% reflecting favorable product mix shift toward high-margin data center chips",
+      "Free cash flow of $5.2B with disciplined capital allocation focused on R&D and strategic M&A"
+    ],
+    "top_risks": [
+      {
+        "risk": "NVIDIA AI GPU Dominance",
+        "description": "NVIDIA's CUDA ecosystem lock-in and 80%+ market share in AI training GPUs makes it extremely difficult for AMD to win large-scale training contracts",
+        "severity": "High",
+        "likelihood": 4,
+        "impact": 5
+      },
+      {
+        "risk": "Embedded Segment Weakness",
+        "description": "Post-pandemic inventory correction in industrial and automotive markets is causing sustained revenue declines in the Xilinx-based embedded business",
+        "severity": "Medium",
+        "likelihood": 4,
+        "impact": 3
+      },
+      {
+        "risk": "Customer Concentration",
+        "description": "Hyperscaler customers seeking NVIDIA alternatives represent the majority of MI300X demand, creating dependency on their strategic hedging decisions",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 4
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "MI350 AI GPU Launch",
+        "detail": "Shipping next-gen MI350X with competitive training performance to maintain momentum against NVIDIA Blackwell",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "ROCm Software Ecosystem",
+        "detail": "Investing heavily in ROCm open-source software stack to reduce CUDA switching costs and enable broader AI framework support",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "AI Edge & Client",
+        "detail": "Embedding AI accelerators into Ryzen laptop and desktop CPUs to capture on-device AI inference demand",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 8,
+      "market_position": 7,
+      "financial_health": 7,
+      "risk_profile": 5
+    },
+    "management_tone": "Optimistic",
+    "management_tone_score": 8,
+    "bull_case": "MI300X/MI350 wins expand share to 20%+ of AI GPU market, EPYC continues taking server CPU share from Intel, and ROCm achieves CUDA-competitive developer adoption.",
+    "bear_case": "NVIDIA's Blackwell architecture extends performance gap, MI300X demand proves to be a one-time hedging play by hyperscalers, and PC market weakness persists.",
+    "analyst_verdict": "BUY \u2014 AMD is the strongest credible challenger to NVIDIA in AI GPUs with proven execution in server CPUs, though the CUDA moat remains a formidable barrier.",
+    "wacc": 0.095,
+    "growth_rate": 0.045,
+    "fcf_base": 5200,
+    "sensitivity": {
+      "rates": -0.1,
+      "inflation": -0.2,
+      "supply_chain": -0.4
+    }
+  },
+  "CSCO": {
+    "company_name": "Cisco Systems, Inc.",
+    "fiscal_year": "FY2024",
+    "sector": "Technology",
+    "business_model": "Cisco provides networking hardware (switches, routers, wireless), security solutions, collaboration tools (Webex), and observability software to enterprise and service provider customers. The company is transitioning from hardware sales to recurring software and subscription revenue.",
+    "key_segments": [
+      "Networking",
+      "Security",
+      "Collaboration",
+      "Observability",
+      "Services"
+    ],
+    "financial_highlights": [
+      "Revenue of $54B in FY2024, down 6% YoY as enterprise customers digested pandemic-era over-ordering",
+      "Software and subscription revenue grew to 53% of total, reflecting successful business model transition",
+      "Operating margin of 29% with disciplined cost management offsetting revenue headwinds",
+      "Free cash flow of $13B with 24% FCF margin supporting $6B+ annual dividend and buyback program"
+    ],
+    "top_risks": [
+      {
+        "risk": "Networking Demand Cyclicality",
+        "description": "Enterprise networking hardware faces lumpy demand cycles as customers digest existing inventory before re-ordering",
+        "severity": "Medium",
+        "likelihood": 4,
+        "impact": 3
+      },
+      {
+        "risk": "Cloud-Native Competition",
+        "description": "Arista, Juniper (HPE), and white-box ODMs are winning hyperscale networking deals with more modern architectures",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 3
+      },
+      {
+        "risk": "Splunk Integration Risk",
+        "description": "The $28B Splunk acquisition needs successful integration to deliver the promised security and observability synergies",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 4
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "AI Networking Infrastructure",
+        "detail": "Selling high-bandwidth Ethernet switches and silicon for AI data center fabrics as an alternative to NVIDIA InfiniBand",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "Security Platform Consolidation",
+        "detail": "Unifying Splunk, Duo, Umbrella, and Talos into a comprehensive security platform to drive cross-sell and ARPU expansion",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Network-as-a-Service",
+        "detail": "Converting enterprise networking from capex hardware purchases to opex subscription models with managed services",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 6,
+      "market_position": 8,
+      "financial_health": 8,
+      "risk_profile": 3
+    },
+    "management_tone": "Neutral",
+    "management_tone_score": 6,
+    "bull_case": "AI data center networking becomes a $15B+ revenue opportunity for Cisco, Splunk integration succeeds in creating a security platform leader, and subscription transition drives margin expansion to 35%+.",
+    "bear_case": "Enterprise networking spending remains weak, Arista and HPE-Juniper win the AI networking build, and Splunk integration stumbles, creating a $28B write-down risk.",
+    "analyst_verdict": "HOLD \u2014 Cisco's recurring revenue transition and AI networking opportunity provide stability, but muted growth and integration execution risk limit near-term upside.",
+    "wacc": 0.08,
+    "growth_rate": 0.025,
+    "fcf_base": 13000,
+    "sensitivity": {
+      "rates": -0.1,
+      "inflation": -0.15,
+      "supply_chain": -0.2
+    }
+  },
+  "IBM": {
+    "company_name": "International Business Machines Corporation",
+    "fiscal_year": "FY2024",
+    "sector": "Technology",
+    "business_model": "IBM provides hybrid cloud infrastructure, AI/ML platforms (watsonx), consulting services, and enterprise software globally. After spinning off Kyndryl (managed infrastructure), IBM focuses on higher-margin software and consulting. The Red Hat acquisition anchors the hybrid cloud strategy with OpenShift.",
+    "key_segments": [
+      "Software",
+      "Consulting",
+      "Infrastructure",
+      "Red Hat"
+    ],
+    "financial_highlights": [
+      "Revenue of $62.8B in FY2024, up 3% YoY at constant currency with Software growing 8%",
+      "Red Hat revenue crossed $7B with strong bookings growth in OpenShift hybrid cloud platform",
+      "Operating margin improved to 18% as software mix increased and consulting efficiency improved",
+      "Free cash flow of $12.7B supporting a 4.5% dividend yield and modest share buybacks"
+    ],
+    "top_risks": [
+      {
+        "risk": "Consulting Slowdown",
+        "description": "Enterprise consulting spending is under pressure as clients defer digital transformation projects and increasingly use AI to reduce advisory needs",
+        "severity": "Medium",
+        "likelihood": 4,
+        "impact": 3
+      },
+      {
+        "risk": "AI Platform Competition",
+        "description": "watsonx competes against better-funded AI platforms from Microsoft (Azure AI), Google (Vertex AI), and AWS (Bedrock) with stronger developer ecosystems",
+        "severity": "High",
+        "likelihood": 4,
+        "impact": 4
+      },
+      {
+        "risk": "Revenue Growth Stagnation",
+        "description": "Low-single-digit revenue growth limits multiple expansion and makes IBM less attractive relative to faster-growing tech peers",
+        "severity": "Medium",
+        "likelihood": 4,
+        "impact": 3
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "watsonx Enterprise AI",
+        "detail": "Positioning watsonx as the trusted enterprise AI platform for regulated industries with on-premise and hybrid deployment options",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "Red Hat Hybrid Cloud",
+        "detail": "Expanding OpenShift adoption as the default Kubernetes platform for multi-cloud enterprise deployments",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Quantum Computing",
+        "detail": "Advancing quantum computing through IBM Quantum Network with 100K+ qubit roadmap for commercial applications by 2033",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 6,
+      "market_position": 6,
+      "financial_health": 7,
+      "risk_profile": 4
+    },
+    "management_tone": "Neutral",
+    "management_tone_score": 6,
+    "bull_case": "watsonx becomes the enterprise AI standard for regulated industries, Red Hat achieves Azure-level growth at premium margins, and quantum computing creates an entirely new revenue stream.",
+    "bear_case": "Consulting revenue declines as AI automates advisory work, watsonx fails to compete with hyperscaler AI platforms, and IBM returns to negative organic growth.",
+    "analyst_verdict": "HOLD \u2014 IBM's dividend yield and hybrid cloud positioning provide stability, but low growth and fierce AI competition limit capital appreciation potential.",
+    "wacc": 0.08,
+    "growth_rate": 0.025,
+    "fcf_base": 12700,
+    "sensitivity": {
+      "rates": -0.15,
+      "inflation": -0.2,
+      "supply_chain": -0.1
+    }
+  },
+  "JPM": {
+    "company_name": "JPMorgan Chase & Co.",
+    "fiscal_year": "FY2024",
+    "sector": "Financial Services",
+    "business_model": "JPMorgan is the largest US bank by assets, operating through Consumer & Community Banking (Chase retail, credit cards, mortgages), Corporate & Investment Bank (M&A advisory, trading, lending), Commercial Banking (middle market lending), and Asset & Wealth Management ($3.4T AUM).",
+    "key_segments": [
+      "Consumer & Community Banking",
+      "Corporate & Investment Bank",
+      "Commercial Banking",
+      "Asset & Wealth Management"
+    ],
+    "financial_highlights": [
+      "Revenue of $180B in FY2024, up 11% YoY driven by record net interest income of $92B",
+      "Net income of $58B representing a 17% ROE, industry-leading among global banks",
+      "CET1 capital ratio of 15.3% provides substantial buffer above regulatory requirements",
+      "Credit card loan growth of 14% with net charge-off rate remaining below historical averages"
+    ],
+    "top_risks": [
+      {
+        "risk": "Net Interest Income Normalization",
+        "description": "As the Fed cuts rates, NII could decline from record levels, compressing the primary revenue driver for the consumer banking franchise",
+        "severity": "High",
+        "likelihood": 4,
+        "impact": 4
+      },
+      {
+        "risk": "Credit Cycle Deterioration",
+        "description": "Rising consumer delinquencies in credit cards and potential commercial real estate loan losses could materially increase provision expenses",
+        "severity": "High",
+        "likelihood": 3,
+        "impact": 4
+      },
+      {
+        "risk": "Regulatory Capital Requirements",
+        "description": "Basel III Endgame rules could require $50B+ in additional capital, restricting share buyback capacity and limiting ROE expansion",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 4
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "AI Transformation",
+        "detail": "Deploying 2,000+ AI use cases across trading, risk management, and customer service with $15B annual technology budget",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "International Expansion",
+        "detail": "Scaling Chase consumer banking internationally, starting with the UK digital bank and expanding into continental Europe",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Payments & Commerce",
+        "detail": "Building an integrated payments ecosystem connecting merchant acquiring, consumer cards, and real-time payment rails",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 8,
+      "market_position": 10,
+      "financial_health": 9,
+      "risk_profile": 4
+    },
+    "management_tone": "Cautiously Optimistic",
+    "management_tone_score": 7,
+    "bull_case": "JPM's scale advantages widen as smaller banks consolidate, AI-driven efficiency gains expand ROE above 20%, and international consumer banking creates a second growth engine.",
+    "bear_case": "Credit losses accelerate beyond provisions, NII declines 15%+ as rates normalize, and regulatory capital requirements force $20B+ in retained earnings, killing buyback capacity.",
+    "analyst_verdict": "BUY \u2014 JPMorgan's best-in-class management, diversified revenue streams, and fortress balance sheet justify a premium valuation among global banks.",
+    "wacc": 0.095,
+    "growth_rate": 0.03,
+    "fcf_base": 58000,
+    "sensitivity": {
+      "rates": 0.2,
+      "inflation": -0.15,
+      "supply_chain": -0.05
+    }
+  },
+  "BAC": {
+    "company_name": "Bank of America Corporation",
+    "fiscal_year": "FY2024",
+    "sector": "Financial Services",
+    "business_model": "Bank of America is the second-largest US bank, operating through Consumer Banking, Global Wealth & Investment Management (Merrill Lynch), Global Banking, and Global Markets. The company leverages its 67M+ consumer and small business clients as a distribution platform for banking, investment, and lending products.",
+    "key_segments": [
+      "Consumer Banking",
+      "Global Wealth & Investment Management",
+      "Global Banking",
+      "Global Markets"
+    ],
+    "financial_highlights": [
+      "Revenue of $102B in FY2024 with net interest income of $56B",
+      "Merrill Lynch and Private Bank AUM reached $4.0T with strong inflows from mass affluent segment",
+      "Digital banking adoption at 77% of consumer households, highest among major US banks",
+      "Free cash flow supported $25B in capital returns including $12B in share buybacks"
+    ],
+    "top_risks": [
+      {
+        "risk": "Rate Sensitivity",
+        "description": "BAC's asset-sensitive balance sheet means NII is highly correlated to short-term rates, creating significant downside risk in a rate-cutting cycle",
+        "severity": "High",
+        "likelihood": 4,
+        "impact": 5
+      },
+      {
+        "risk": "Unrealized Securities Losses",
+        "description": "Hold-to-maturity portfolio contains $100B+ in unrealized losses from bonds purchased at low rates, creating potential capital concerns",
+        "severity": "Medium",
+        "likelihood": 2,
+        "impact": 5
+      },
+      {
+        "risk": "Wealth Management Competition",
+        "description": "Morgan Stanley, Schwab, and fintech platforms compete aggressively for advisor talent and high-net-worth client assets",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 3
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "Erica AI Assistant",
+        "detail": "Expanding AI virtual assistant Erica to 2B+ annual interactions, driving digital engagement and reducing branch operating costs",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "Zelle & Payments",
+        "detail": "Leveraging Zelle dominance (1B+ transactions) to build a comprehensive consumer-to-merchant payment network",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Sustainable Finance",
+        "detail": "Deploying $1.5T in sustainable finance commitments by 2030 across green bonds, renewable energy lending, and ESG advisory",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 7,
+      "market_position": 8,
+      "financial_health": 7,
+      "risk_profile": 5
+    },
+    "management_tone": "Neutral",
+    "management_tone_score": 6,
+    "bull_case": "NII stabilizes as deposit costs peak, wealth management inflows accelerate, and digital banking efficiency drives cost-to-income ratio below 55%.",
+    "bear_case": "Rate cuts compress NII by $10B+, unrealized bond losses force capital-raising actions, and credit deterioration in commercial real estate drives elevated provisions.",
+    "analyst_verdict": "HOLD \u2014 Bank of America offers value at current levels but rate sensitivity and unrealized losses create near-term headwinds that limit upside potential.",
+    "wacc": 0.095,
+    "growth_rate": 0.025,
+    "fcf_base": 25000,
+    "sensitivity": {
+      "rates": 0.25,
+      "inflation": -0.2,
+      "supply_chain": -0.05
+    }
+  },
+  "GS": {
+    "company_name": "The Goldman Sachs Group, Inc.",
+    "fiscal_year": "FY2024",
+    "sector": "Financial Services",
+    "business_model": "Goldman Sachs is a leading global investment banking, securities, and investment management firm. The company operates through Global Banking & Markets (M&A advisory, equity/debt underwriting, FICC and equity trading) and Asset & Wealth Management ($2.9T AUM). Goldman has strategically exited consumer banking (Marcus) to refocus on institutional strengths.",
+    "key_segments": [
+      "Global Banking & Markets",
+      "Asset & Wealth Management",
+      "Platform Solutions"
+    ],
+    "financial_highlights": [
+      "Revenue of $53B in FY2024, up 16% YoY driven by M&A advisory and trading revenue recovery",
+      "Investment banking fees of $8.5B as deal activity rebounded from 2023 trough",
+      "Asset & Wealth Management achieved record management fees of $10B with growing private credit allocation",
+      "ROE of 13.5% with target to sustainably achieve 15%+ through AWM scaling"
+    ],
+    "top_risks": [
+      {
+        "risk": "Capital Markets Cyclicality",
+        "description": "Investment banking and trading revenue are inherently cyclical and could decline sharply in a risk-off market environment",
+        "severity": "High",
+        "likelihood": 3,
+        "impact": 5
+      },
+      {
+        "risk": "Alternatives Fee Compression",
+        "description": "Growing competition in private equity, credit, and real estate from Blackstone, Apollo, and KKR may compress management fees",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 3
+      },
+      {
+        "risk": "Regulatory Capital Burden",
+        "description": "As a G-SIB, Goldman faces higher capital surcharges that limit leverage and constrain trading book profitability",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 3
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "AWM Revenue Scaling",
+        "detail": "Growing Asset & Wealth Management to $12B+ in management fees through private alternatives fundraising and ultra-high-net-worth acquisition",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "Transaction Banking",
+        "detail": "Scaling the digital transaction banking platform to capture Fortune 500 cash management from incumbent banks",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Technology Platform",
+        "detail": "Monetizing GS Financial Cloud and Marquee risk analytics platforms as third-party fintech infrastructure",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 8,
+      "market_position": 9,
+      "financial_health": 8,
+      "risk_profile": 6
+    },
+    "management_tone": "Optimistic",
+    "management_tone_score": 7,
+    "bull_case": "M&A supercycle drives advisory fees to $12B+, AWM reaches 15%+ operating margins at scale, and Goldman becomes the dominant platform for institutional alternatives distribution.",
+    "bear_case": "Capital markets freeze, trading revenue declines 30%+, AWM fundraising slows as LP appetite for alternatives wanes, and the consumer banking exit creates lingering losses.",
+    "analyst_verdict": "BUY \u2014 Goldman's refocus on institutional strengths, growing management fee base, and M&A recovery create an attractive risk-reward for cyclical recovery positioning.",
+    "wacc": 0.1,
+    "growth_rate": 0.03,
+    "fcf_base": 12000,
+    "sensitivity": {
+      "rates": 0.1,
+      "inflation": -0.15,
+      "supply_chain": -0.05
+    }
+  },
+  "V": {
+    "company_name": "Visa Inc.",
+    "fiscal_year": "FY2024",
+    "sector": "Financial Services",
+    "business_model": "Visa operates the world's largest electronic payment network, processing 212B+ transactions annually across 200+ countries. Revenue is generated through payment volume fees, transaction processing fees, and international cross-border transaction fees. Visa does not take credit risk \u2014 it earns fees for facilitating payments between merchants, banks, and consumers.",
+    "key_segments": [
+      "Payment Volume Fees",
+      "Transaction Processing",
+      "International Revenue",
+      "Value-Added Services"
+    ],
+    "financial_highlights": [
+      "Net revenue of $36B in FY2024, up 10% YoY driven by 8% payment volume growth and cross-border recovery",
+      "Operating margin of 67% \u2014 one of the highest in the S&P 500 reflecting the network's operating leverage",
+      "Cross-border volume grew 15% as international travel spending continued normalizing post-pandemic",
+      "Free cash flow of $20B enabling $16B+ in capital returns through buybacks and dividends"
+    ],
+    "top_risks": [
+      {
+        "risk": "Real-Time Payment Networks",
+        "description": "Government-backed instant payment systems (FedNow, PIX, UPI) could disintermediate Visa's payment rails for domestic transactions",
+        "severity": "High",
+        "likelihood": 3,
+        "impact": 4
+      },
+      {
+        "risk": "Regulatory Fee Pressure",
+        "description": "DOJ antitrust lawsuit and EU interchange fee caps could force structural changes to Visa's fee economics",
+        "severity": "High",
+        "likelihood": 3,
+        "impact": 4
+      },
+      {
+        "risk": "Crypto/Stablecoin Disruption",
+        "description": "Stablecoin payment networks and blockchain-based cross-border transfers could reduce demand for traditional card network cross-border services",
+        "severity": "Medium",
+        "likelihood": 2,
+        "impact": 4
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "Value-Added Services Growth",
+        "detail": "Scaling risk management, tokenization, and analytics services that now represent 30%+ of revenue at higher growth rates than core payments",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "B2B Payment Capture",
+        "detail": "Expanding Visa B2B Connect and virtual card platforms to capture a share of the $125T B2B cross-border payment market",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "New Payment Flows",
+        "detail": "Enabling government disbursements, earned wage access, and A2A account-to-account payments through the Visa network",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 7,
+      "market_position": 10,
+      "financial_health": 10,
+      "risk_profile": 3
+    },
+    "management_tone": "Optimistic",
+    "management_tone_score": 8,
+    "bull_case": "Digital payment penetration expands to 60%+ of global consumer spending, B2B payments unlock $5B+ incremental revenue, and Visa maintains pricing power despite regulatory scrutiny.",
+    "bear_case": "Government instant payment networks (UPI, PIX, FedNow) gain critical mass, DOJ lawsuit forces fee concessions, and crypto/stablecoin networks capture cross-border remittance volumes.",
+    "analyst_verdict": "BUY \u2014 Visa's unmatched global network, 67% margins, and secular tailwind from cash-to-digital conversion make it a premium compounder with limited downside risk.",
+    "wacc": 0.08,
+    "growth_rate": 0.04,
+    "fcf_base": 20000,
+    "sensitivity": {
+      "rates": -0.05,
+      "inflation": -0.1,
+      "supply_chain": -0.05
+    }
+  },
+  "MA": {
+    "company_name": "Mastercard Incorporated",
+    "fiscal_year": "FY2024",
+    "sector": "Financial Services",
+    "business_model": "Mastercard operates a global payment network connecting consumers, merchants, financial institutions, and governments across 210+ countries. Revenue is generated from transaction fees, cross-border volume fees, and a growing suite of cybersecurity, data analytics, and consulting services. Like Visa, Mastercard takes no credit risk.",
+    "key_segments": [
+      "Payment Network",
+      "Value-Added Services",
+      "Cross-Border",
+      "Cyber & Intelligence"
+    ],
+    "financial_highlights": [
+      "Net revenue of $28B in FY2024, up 12% YoY with value-added services growing 18%",
+      "Operating margin of 59% with consistent expansion from services mix shift",
+      "Cross-border transaction growth of 17% driven by international travel and e-commerce",
+      "Free cash flow of $13B supporting aggressive capital returns of $11B+ annually"
+    ],
+    "top_risks": [
+      {
+        "risk": "Open Banking Disruption",
+        "description": "PSD3 in Europe and open banking regulations globally could enable A2A payments that bypass card networks entirely",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 4
+      },
+      {
+        "risk": "Interchange Fee Regulation",
+        "description": "Global regulatory pressure to cap interchange and scheme fees could compress network economics",
+        "severity": "High",
+        "likelihood": 3,
+        "impact": 3
+      },
+      {
+        "risk": "Fintech Competition",
+        "description": "Stripe, Square, and mobile wallets are building direct merchant relationships that could shift payment routing away from traditional card rails",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 3
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "Cybersecurity & Intelligence",
+        "detail": "Growing the Cyber & Intelligence division (RiskRecon, Ethoca, NuDetect) as the leading real-time fraud prevention and identity verification platform",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "Multi-Rail Strategy",
+        "detail": "Acquiring and integrating real-time payment capabilities (Vocalink, Nets) to process payments across cards, ACH, and real-time rails",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Digital Identity",
+        "detail": "Building a global digital identity verification network for financial services, healthcare, and government applications",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 8,
+      "market_position": 9,
+      "financial_health": 9,
+      "risk_profile": 3
+    },
+    "management_tone": "Optimistic",
+    "management_tone_score": 8,
+    "bull_case": "Services revenue compounds at 20%+ driving margin expansion, multi-rail strategy future-proofs against real-time payment disruption, and digital identity becomes a multi-billion-dollar platform.",
+    "bear_case": "A2A payments gain market share in Europe, regulatory actions compress fees globally, and fintech platforms successfully disintermediate card networks for e-commerce transactions.",
+    "analyst_verdict": "BUY \u2014 Mastercard's growing services portfolio, multi-rail flexibility, and secular cash-to-digital trend provide durable double-digit growth with best-in-class capital returns.",
+    "wacc": 0.085,
+    "growth_rate": 0.04,
+    "fcf_base": 13000,
+    "sensitivity": {
+      "rates": -0.05,
+      "inflation": -0.1,
+      "supply_chain": -0.05
+    }
+  },
+  "BRK-B": {
+    "company_name": "Berkshire Hathaway Inc.",
+    "fiscal_year": "FY2024",
+    "sector": "Financial Services",
+    "business_model": "Berkshire Hathaway is a diversified conglomerate led by Warren Buffett, operating through insurance and reinsurance (GEICO, Berkshire Hathaway Reinsurance), regulated utilities and energy (BHE), industrial manufacturing (Precision Castparts, Lubrizol), railroads (BNSF), and a $350B+ equity investment portfolio.",
+    "key_segments": [
+      "Insurance & Reinsurance",
+      "BNSF Railway",
+      "Berkshire Hathaway Energy",
+      "Manufacturing & Retail",
+      "Investment Portfolio"
+    ],
+    "financial_highlights": [
+      "Revenue of $371B in FY2024 with operating earnings of $40.6B, up 8% YoY",
+      "Insurance float of $169B providing zero-cost capital for investment deployment",
+      "Cash and short-term investments reached a record $334B, signaling cautious positioning",
+      "Book value per Class B share grew 16% driven by equity portfolio appreciation"
+    ],
+    "top_risks": [
+      {
+        "risk": "Succession Risk",
+        "description": "Warren Buffett's eventual departure creates significant uncertainty about capital allocation philosophy and conglomerate discount dynamics",
+        "severity": "High",
+        "likelihood": 3,
+        "impact": 5
+      },
+      {
+        "risk": "Catastrophe Insurance Losses",
+        "description": "Increasing frequency of hurricanes, wildfires, and floods driven by climate change could produce outsized underwriting losses",
+        "severity": "High",
+        "likelihood": 3,
+        "impact": 4
+      },
+      {
+        "risk": "Concentrated Equity Portfolio",
+        "description": "Apple alone represents 40%+ of the public equity portfolio, creating significant single-stock concentration risk",
+        "severity": "Medium",
+        "likelihood": 2,
+        "impact": 4
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "Capital Deployment",
+        "detail": "Deploying $334B cash hoard through large-scale acquisitions or equity investments when attractive valuations materialize",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "Insurance Underwriting",
+        "detail": "Maintaining underwriting discipline to sustain combined ratios below 100% while growing float volume",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Energy Transition",
+        "detail": "Investing $30B+ through BHE in renewable energy generation, transmission infrastructure, and grid modernization",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 5,
+      "market_position": 9,
+      "financial_health": 10,
+      "risk_profile": 3
+    },
+    "management_tone": "Cautiously Optimistic",
+    "management_tone_score": 6,
+    "bull_case": "Buffett deploys $100B+ in a great acquisition at distressed valuations, insurance underwriting profits compound, and the next generation of leadership maintains the capital allocation framework.",
+    "bear_case": "Succession triggers conglomerate discount widening, catastrophe losses deplete insurance reserves, and the inability to deploy cash productively results in sub-market returns.",
+    "analyst_verdict": "BUY \u2014 Berkshire's unmatched balance sheet, $334B in dry powder, and diversified earnings streams provide rare downside protection with significant optionality for capital deployment.",
+    "wacc": 0.08,
+    "growth_rate": 0.03,
+    "fcf_base": 40600,
+    "sensitivity": {
+      "rates": 0.1,
+      "inflation": -0.15,
+      "supply_chain": -0.1
+    }
+  },
+  "C": {
+    "company_name": "Citigroup Inc.",
+    "fiscal_year": "FY2024",
+    "sector": "Financial Services",
+    "business_model": "Citigroup operates through Services (Treasury & Trade Solutions, Securities Services), Markets (Fixed Income, Equities), Banking (Investment Banking, Corporate Lending), US Personal Banking (Branded Cards, Retail), and Wealth Management. Citi's distinguishing asset is its unmatched global footprint spanning 95+ markets.",
+    "key_segments": [
+      "Services",
+      "Markets",
+      "Banking",
+      "US Personal Banking",
+      "Wealth"
+    ],
+    "financial_highlights": [
+      "Revenue of $81B in FY2024, up 3% YoY with Services growing 8% to $19B",
+      "Treasury & Trade Solutions (TTS) generated $14B in revenue, the industry's largest cross-border payments franchise",
+      "ROE of 7.2%, significantly below the 11-13% medium-term target, reflecting ongoing transformation costs",
+      "Returned $7.5B to shareholders through dividends and buybacks while building capital buffers"
+    ],
+    "top_risks": [
+      {
+        "risk": "Transformation Execution",
+        "description": "CEO Jane Fraser's multi-year restructuring involves eliminating 20,000 positions and exiting 14 consumer markets, creating execution and morale risk",
+        "severity": "High",
+        "likelihood": 3,
+        "impact": 5
+      },
+      {
+        "risk": "Regulatory Consent Orders",
+        "description": "Outstanding consent orders from OCC and Fed regarding risk management and data governance require significant technology and compliance investment",
+        "severity": "High",
+        "likelihood": 4,
+        "impact": 4
+      },
+      {
+        "risk": "Geopolitical Exposure",
+        "description": "Operating in 95+ countries exposes Citi to sanctions, foreign exchange, and sovereign credit risks that domestic-focused peers avoid",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 4
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "Organizational Simplification",
+        "detail": "Completing the multi-year restructuring to flatten management layers, exit non-core consumer markets, and improve accountability",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "Services Technology Upgrade",
+        "detail": "Investing in TTS platform modernization with APIs and real-time processing to defend and grow the cross-border payments franchise",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Wealth Management Growth",
+        "detail": "Scaling the wealth platform in Asia and the Middle East to capture ultra-high-net-worth and family office assets",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 6,
+      "market_position": 7,
+      "financial_health": 6,
+      "risk_profile": 6
+    },
+    "management_tone": "Neutral",
+    "management_tone_score": 5,
+    "bull_case": "Restructuring delivers 12%+ ROE by 2026, TTS maintains dominance in cross-border payments, and the stock re-rates from 0.6x tangible book value to 1.0x+ as execution proves out.",
+    "bear_case": "Transformation stalls, consent order remediation costs exceed estimates, geopolitical disruption forces further market exits, and ROE remains stuck below 10%.",
+    "analyst_verdict": "HOLD \u2014 Citi trades at a steep discount to peers for good reason, but the turnaround optionality is significant if Jane Fraser's restructuring delivers on ROE targets.",
+    "wacc": 0.1,
+    "growth_rate": 0.025,
+    "fcf_base": 15000,
+    "sensitivity": {
+      "rates": 0.15,
+      "inflation": -0.2,
+      "supply_chain": -0.1
+    }
+  },
+  "WFC": {
+    "company_name": "Wells Fargo & Company",
+    "fiscal_year": "FY2024",
+    "sector": "Financial Services",
+    "business_model": "Wells Fargo operates through Consumer Banking & Lending (deposits, mortgage, auto, credit cards), Commercial Banking (middle market), Corporate & Investment Banking (M&A, capital markets), and Wealth & Investment Management. The bank is still operating under a Fed asset cap imposed after the 2016 fake accounts scandal.",
+    "key_segments": [
+      "Consumer Banking & Lending",
+      "Commercial Banking",
+      "Corporate & Investment Banking",
+      "Wealth & Investment Management"
+    ],
+    "financial_highlights": [
+      "Revenue of $82B in FY2024 with NII of $52B, stable as deposit repricing offset rate curve normalization",
+      "Efficiency ratio improved to 62% as restructuring eliminated $10B+ in expenses since 2020",
+      "CET1 ratio of 11.4% with excess capital supporting $12B in share buybacks",
+      "Net charge-offs of 0.55% reflecting normalized but manageable credit losses"
+    ],
+    "top_risks": [
+      {
+        "risk": "Fed Asset Cap",
+        "description": "The $1.95T asset cap continues limiting growth, new product development, and competitive positioning relative to unconstrained peers",
+        "severity": "High",
+        "likelihood": 4,
+        "impact": 5
+      },
+      {
+        "risk": "Litigation & Regulatory Risk",
+        "description": "Ongoing regulatory scrutiny from the 2016 scandal era creates potential for additional fines, restrictions, and remediation costs",
+        "severity": "High",
+        "likelihood": 3,
+        "impact": 4
+      },
+      {
+        "risk": "NII Compression",
+        "description": "Rate cuts and competitive deposit pricing could compress net interest income by $5B+ from peak levels",
+        "severity": "Medium",
+        "likelihood": 4,
+        "impact": 3
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "Asset Cap Removal",
+        "detail": "Completing all remaining regulatory remediation requirements to achieve lifting of the Fed's $1.95T asset cap, unlocking growth potential",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "CIB Buildout",
+        "detail": "Growing the Corporate & Investment Banking franchise through senior talent hiring and technology investment to compete with JPM and BAC",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Digital Banking Modernization",
+        "detail": "Migrating legacy technology systems to cloud infrastructure and deploying AI across customer service and risk management",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 5,
+      "market_position": 7,
+      "financial_health": 7,
+      "risk_profile": 6
+    },
+    "management_tone": "Cautiously Optimistic",
+    "management_tone_score": 6,
+    "bull_case": "Asset cap is lifted in 2025, unleashing pent-up growth and re-rating the stock to peer-level multiples, while CIB buildout gains traction and efficiency ratio reaches 55%.",
+    "bear_case": "Asset cap removal is further delayed, NII compression accelerates, and additional regulatory penalties emerge from legacy compliance failures.",
+    "analyst_verdict": "BUY \u2014 Wells Fargo's deep discount to book value prices in the asset cap headwind, creating significant upside optionality when regulatory constraints are eventually lifted.",
+    "wacc": 0.095,
+    "growth_rate": 0.025,
+    "fcf_base": 18000,
+    "sensitivity": {
+      "rates": 0.2,
+      "inflation": -0.15,
+      "supply_chain": -0.05
+    }
+  },
+  "MS": {
+    "company_name": "Morgan Stanley",
+    "fiscal_year": "FY2024",
+    "sector": "Financial Services",
+    "business_model": "Morgan Stanley operates through Institutional Securities (investment banking, equity/fixed income sales & trading), Wealth Management (16,000+ financial advisors, $6T+ in client assets), and Investment Management (public and private market strategies). CEO Ted Pick has positioned wealth management as the primary growth and earnings stability engine.",
+    "key_segments": [
+      "Institutional Securities",
+      "Wealth Management",
+      "Investment Management"
+    ],
+    "financial_highlights": [
+      "Revenue of $61B in FY2024, up 14% YoY driven by strong equity trading and wealth management inflows",
+      "Wealth Management pre-tax margin reached 28% with $6.2T in client assets, more than tripling since 2010",
+      "Net new assets of $260B in wealth management, reflecting strong advisor productivity",
+      "ROE of 15.2% putting Morgan Stanley firmly in the top tier of global financial institutions"
+    ],
+    "top_risks": [
+      {
+        "risk": "Market-Dependent Revenue",
+        "description": "Trading and underwriting fees remain cyclical and could decline 20-30% in a risk-off environment, despite wealth management ballast",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 4
+      },
+      {
+        "risk": "Wealth Advisor Attrition",
+        "description": "Competition for experienced financial advisors from RIAs, boutiques, and rivals could increase headcount costs and reduce net new assets",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 3
+      },
+      {
+        "risk": "Integration Execution",
+        "description": "E*TRADE and Eaton Vance integrations are largely complete but require sustained technology investment to deliver planned synergies",
+        "severity": "Low",
+        "likelihood": 2,
+        "impact": 3
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "Workplace Channel Growth",
+        "detail": "Leveraging E*TRADE's stock plan administration to convert corporate employees into full wealth management clients",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "Private Markets Expansion",
+        "detail": "Growing the private credit, infrastructure, and real estate investment platform to capture institutional and HNW appetite for alternatives",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "International Wealth",
+        "detail": "Scaling wealth management in Asia-Pacific and the Middle East where HNW household formation is accelerating",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 7,
+      "market_position": 9,
+      "financial_health": 8,
+      "risk_profile": 4
+    },
+    "management_tone": "Optimistic",
+    "management_tone_score": 8,
+    "bull_case": "Wealth management AUM reaches $10T, pretax margins expand to 35%, and Morgan Stanley sustains 17%+ ROE, justifying a 14x P/E premium to pure-play banks.",
+    "bear_case": "Markets sell off sharply reducing trading revenue and wealth management asset values, NNA stalls, and competition for advisors drives up compensation ratios.",
+    "analyst_verdict": "BUY \u2014 Morgan Stanley's wealth management transformation provides earnings durability that peers lack, with cyclical upside from institutional securities recovery.",
+    "wacc": 0.095,
+    "growth_rate": 0.035,
+    "fcf_base": 14000,
+    "sensitivity": {
+      "rates": 0.1,
+      "inflation": -0.15,
+      "supply_chain": -0.05
+    }
+  },
+  "AXP": {
+    "company_name": "American Express Company",
+    "fiscal_year": "FY2024",
+    "sector": "Financial Services",
+    "business_model": "American Express operates as an integrated payments company, functioning as both card network and card issuer. The company earns discount revenue from merchants (2.2% average), net card fees from premium memberships (Platinum, Gold, Business), and net interest income from card lending. The premium positioning targets affluent consumers and small businesses with higher-than-average spending.",
+    "key_segments": [
+      "US Consumer Services",
+      "Commercial Services",
+      "International Card Services",
+      "Global Merchant & Network Services"
+    ],
+    "financial_highlights": [
+      "Revenue of $65B in FY2024, up 10% YoY with billings growth of 6% driven by Millennial and Gen Z card acquisition",
+      "Net card fees grew 17% to $8.2B as premium card membership renewals remained above 90%",
+      "Net income of $10.1B with 37% ROE reflecting the asset-light closed-loop network model",
+      "Free cash flow of $14B supporting $6.5B in share buybacks and $2.1B in dividends"
+    ],
+    "top_risks": [
+      {
+        "risk": "Premium Market Saturation",
+        "description": "The affluent card market is increasingly competitive with Chase Sapphire, Capital One Venture X, and Apple Card targeting Amex's core demographic",
+        "severity": "Medium",
+        "likelihood": 4,
+        "impact": 3
+      },
+      {
+        "risk": "Merchant Acceptance Gap",
+        "description": "Despite improvements, Amex acceptance remains below Visa/Mastercard, limiting total addressable volume and frustrating cardmembers",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 3
+      },
+      {
+        "risk": "Credit Normalization",
+        "description": "As the credit cycle matures, card lending losses could increase from historically low levels, particularly in the SMB segment",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 3
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "Next-Gen Card Acquisition",
+        "detail": "Acquiring 3M+ new US cards per quarter, with 60%+ from Millennial and Gen Z demographics to build lifetime value",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "SMB Platform Expansion",
+        "detail": "Growing business card spending through integrated expense management, lending, and financial planning tools for small and mid-size businesses",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Global Network Expansion",
+        "detail": "Expanding merchant acceptance in emerging markets and building digital-first card products for international markets",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 7,
+      "market_position": 8,
+      "financial_health": 9,
+      "risk_profile": 4
+    },
+    "management_tone": "Optimistic",
+    "management_tone_score": 8,
+    "bull_case": "Millennial/Gen Z cohort drives sustained 10%+ revenue growth, premium positioning defends pricing power, and international expansion unlocks new growth vectors while SMB platform creates competitive moat.",
+    "bear_case": "Premium card competition erodes pricing power, an economic downturn reduces travel & entertainment spend (T&E represents 30%+ of billings), and credit losses normalize above pre-pandemic levels.",
+    "analyst_verdict": "BUY \u2014 American Express's premium brand, closed-loop data advantages, and successful generational shift position it for continued double-digit earnings growth with best-in-class ROE.",
+    "wacc": 0.09,
+    "growth_rate": 0.035,
+    "fcf_base": 14000,
+    "sensitivity": {
+      "rates": 0.05,
+      "inflation": -0.15,
+      "supply_chain": -0.1
+    }
+  },
+  "JNJ": {
+    "company_name": "Johnson & Johnson",
+    "fiscal_year": "FY2024",
+    "sector": "Healthcare",
+    "business_model": "J&J operates through Innovative Medicine (pharmaceuticals including immunology, oncology, neuroscience) and MedTech (surgical, orthopedic, cardiovascular devices). Following the Kenvue consumer health spinoff, J&J is a pure-play healthcare company focused on high-margin prescription drugs and medical devices.",
+    "key_segments": [
+      "Innovative Medicine",
+      "MedTech",
+      "Immunology",
+      "Oncology",
+      "Cardiovascular"
+    ],
+    "financial_highlights": [
+      "Revenue of $85B in FY2024, up 5% YoY with Innovative Medicine growing 7%",
+      "Adjusted operating margin of 35% reflecting premium pharma pricing power",
+      "Free cash flow of $18B supporting $11B dividend and strategic M&A",
+      "Pipeline includes 90+ programs with 30+ in Phase III or filed for approval"
+    ],
+    "top_risks": [
+      {
+        "risk": "Patent Cliff",
+        "description": "Stelara ($9B) loses exclusivity in 2025, creating a significant revenue gap requiring pipeline assets to fill",
+        "severity": "High",
+        "likelihood": 5,
+        "impact": 4
+      },
+      {
+        "risk": "Talc Litigation",
+        "description": "Ongoing talc/asbestos lawsuits represent $8B+ in potential liabilities despite repeated bankruptcy settlement attempts",
+        "severity": "High",
+        "likelihood": 3,
+        "impact": 4
+      },
+      {
+        "risk": "Drug Pricing Reform",
+        "description": "IRA Medicare negotiation provisions will directly impact pricing for top-selling drugs starting 2026",
+        "severity": "Medium",
+        "likelihood": 4,
+        "impact": 3
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "Pipeline Acceleration",
+        "detail": "Advancing 10+ potential blockbusters including nipocalimab, teclistamab, and RYBREVANT combinations",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "MedTech Innovation",
+        "detail": "Deploying robotic surgery (OTTAVA), digital surgery platforms, and AI-guided interventional tools",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Cell & Gene Therapy",
+        "detail": "Building next-generation cell therapy manufacturing capabilities for solid tumor oncology treatments",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 8,
+      "market_position": 9,
+      "financial_health": 9,
+      "risk_profile": 3
+    },
+    "management_tone": "Cautiously Optimistic",
+    "management_tone_score": 7,
+    "bull_case": "Pipeline assets successfully replace Stelara revenue, OTTAVA robotic surgery gains share from Intuitive, and strategic M&A adds $10B+ in peak sales potential.",
+    "bear_case": "Stelara biosimilar erosion exceeds estimates, talc litigation forces a multi-billion settlement, and IRA drug pricing negotiations compress pharma margins.",
+    "analyst_verdict": "BUY \u2014 J&J's diversified healthcare portfolio, fortress balance sheet, and deep pipeline provide defensive growth with 3%+ dividend yield.",
+    "wacc": 0.075,
+    "growth_rate": 0.03,
+    "fcf_base": 18000,
+    "sensitivity": {
+      "rates": -0.05,
+      "inflation": -0.1,
+      "supply_chain": -0.2
+    }
+  },
+  "UNH": {
+    "company_name": "UnitedHealth Group Incorporated",
+    "fiscal_year": "FY2024",
+    "sector": "Healthcare",
+    "business_model": "UnitedHealth Group operates through UnitedHealthcare (health insurance covering 50M+ people) and Optum (healthcare services including OptumHealth clinics, OptumRx pharmacy benefits, and OptumInsight technology/analytics). The vertically integrated model captures margin across the entire healthcare value chain.",
+    "key_segments": [
+      "UnitedHealthcare",
+      "OptumHealth",
+      "OptumRx",
+      "OptumInsight"
+    ],
+    "financial_highlights": [
+      "Revenue of $400B in FY2024, up 10% YoY making UNH the largest US company by revenue",
+      "Medical care ratio of 84.3% reflecting disciplined underwriting despite rising healthcare utilization",
+      "Optum revenue grew 14% to $250B with expanding margins across all three sub-segments",
+      "Free cash flow of $24B supporting consistent dividend growth and strategic acquisitions"
+    ],
+    "top_risks": [
+      {
+        "risk": "Healthcare Regulation",
+        "description": "Change Healthcare cyberattack fallout, PBM reform legislation, and antitrust scrutiny of vertical integration create regulatory overhang",
+        "severity": "High",
+        "likelihood": 4,
+        "impact": 4
+      },
+      {
+        "risk": "Medical Cost Trends",
+        "description": "Rising utilization from GLP-1 drugs, behavioral health demand, and aging population could push medical costs above premium pricing assumptions",
+        "severity": "High",
+        "likelihood": 4,
+        "impact": 4
+      },
+      {
+        "risk": "Provider Consolidation Backlash",
+        "description": "Optum's aggressive physician practice acquisitions face growing political and antitrust opposition",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 3
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "AI-Powered Care Delivery",
+        "detail": "Deploying clinical AI across 90,000+ OptumHealth physicians to improve outcomes and reduce cost of care",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "Value-Based Care Expansion",
+        "detail": "Converting 5M+ additional patients to capitated value-based arrangements that reward outcomes over volume",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Home Health & Senior Care",
+        "detail": "Building a comprehensive home-based care platform for the 70M+ Medicare-eligible population by 2030",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 8,
+      "market_position": 10,
+      "financial_health": 9,
+      "risk_profile": 4
+    },
+    "management_tone": "Optimistic",
+    "management_tone_score": 8,
+    "bull_case": "Optum's care delivery model proves structurally superior, AI reduces medical costs by 200bps, and UNH compounds earnings at 15%+ annually through 2030.",
+    "bear_case": "PBM reform legislation compresses OptumRx margins, cyberattack remediation costs persist, and medical cost ratio deteriorates as utilization trends accelerate beyond pricing.",
+    "analyst_verdict": "BUY \u2014 UnitedHealth's vertically integrated model and unmatched scale create a healthcare platform with structural competitive advantages and visible double-digit earnings growth.",
+    "wacc": 0.08,
+    "growth_rate": 0.035,
+    "fcf_base": 24000,
+    "sensitivity": {
+      "rates": -0.05,
+      "inflation": -0.15,
+      "supply_chain": -0.1
+    }
+  },
+  "PFE": {
+    "company_name": "Pfizer Inc.",
+    "fiscal_year": "FY2024",
+    "sector": "Healthcare",
+    "business_model": "Pfizer discovers, develops, manufactures, and sells biopharmaceutical products globally. Key therapeutic areas include oncology, immunology, cardiology, and infectious disease. The company is navigating the post-COVID revenue cliff while deploying $43B from COVID profits into M&A including the $43B Seagen acquisition for oncology.",
+    "key_segments": [
+      "Oncology",
+      "Internal Medicine",
+      "Vaccines",
+      "Hospital",
+      "COVID Therapeutics"
+    ],
+    "financial_highlights": [
+      "Revenue of $59B in FY2024, down 2% YoY as Paxlovid and Comirnaty continued normalizing",
+      "Seagen acquisition added $3.5B in oncology revenue with growing antibody-drug conjugate pipeline",
+      "Adjusted operating margin of 28% as cost reduction program delivered $4B in savings",
+      "Free cash flow of $9B as working capital improved and restructuring costs wound down"
+    ],
+    "top_risks": [
+      {
+        "risk": "Post-COVID Revenue Gap",
+        "description": "Combined COVID product revenue declined from $57B peak to $8B, requiring $50B+ in new revenue to replace",
+        "severity": "High",
+        "likelihood": 5,
+        "impact": 5
+      },
+      {
+        "risk": "Seagen Integration Risk",
+        "description": "$43B Seagen acquisition must deliver on pipeline expectations to justify the premium paid and prevent write-downs",
+        "severity": "High",
+        "likelihood": 3,
+        "impact": 5
+      },
+      {
+        "risk": "Patent Expirations",
+        "description": "$17B in revenue faces loss of exclusivity through 2030, including Eliquis ($6.5B) and Ibrance ($4.5B)",
+        "severity": "High",
+        "likelihood": 5,
+        "impact": 4
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "ADC Pipeline Execution",
+        "detail": "Advancing Seagen's antibody-drug conjugate technology across 5+ tumor types with potential for $20B+ in peak sales",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "GLP-1 Entry",
+        "detail": "Developing oral and injectable GLP-1 assets to enter the $100B+ obesity/diabetes market",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "mRNA Platform Expansion",
+        "detail": "Leveraging COVID mRNA technology for flu, RSV, shingles, and oncology vaccine combinations",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 7,
+      "market_position": 7,
+      "financial_health": 6,
+      "risk_profile": 6
+    },
+    "management_tone": "Cautiously Optimistic",
+    "management_tone_score": 5,
+    "bull_case": "Seagen ADCs become blockbusters, GLP-1 program succeeds, and mRNA platform delivers multiple new vaccines, driving revenue back above $70B with margin expansion.",
+    "bear_case": "Pipeline disappoints, Seagen acquisition is written down, patent cliff revenue losses exceed replacements, and Pfizer is forced to cut the dividend.",
+    "analyst_verdict": "HOLD \u2014 Pfizer's deep pipeline and Seagen acquisition provide recovery optionality, but execution must be flawless to replace $50B+ in lost COVID revenue.",
+    "wacc": 0.085,
+    "growth_rate": 0.025,
+    "fcf_base": 9000,
+    "sensitivity": {
+      "rates": -0.1,
+      "inflation": -0.15,
+      "supply_chain": -0.25
+    }
+  },
+  "LLY": {
+    "company_name": "Eli Lilly and Company",
+    "fiscal_year": "FY2024",
+    "sector": "Healthcare",
+    "business_model": "Eli Lilly discovers, develops, and markets pharmaceutical products globally with a focus on diabetes, obesity, oncology, immunology, and neurodegeneration. The company's GLP-1 receptor agonists (Mounjaro/Zepbound for diabetes/obesity) have created unprecedented demand, making Lilly one of the fastest-growing large-cap pharma companies in history.",
+    "key_segments": [
+      "Diabetes",
+      "Obesity",
+      "Oncology",
+      "Immunology",
+      "Neurodegeneration"
+    ],
+    "financial_highlights": [
+      "Revenue of $45B in FY2024, up 32% YoY driven by Mounjaro ($12.4B) and Zepbound ($4.5B) launches",
+      "Adjusted operating margin expanded to 36% as GLP-1 scale drove operating leverage",
+      "R&D investment of $11B reflecting aggressive pipeline expansion into obesity combinations and neurodegeneration",
+      "Free cash flow of $8B with capacity investment of $20B+ for GLP-1 manufacturing expansion"
+    ],
+    "top_risks": [
+      {
+        "risk": "GLP-1 Supply Constraints",
+        "description": "Unprecedented demand for Mounjaro/Zepbound exceeds manufacturing capacity, limiting revenue capture and inviting competitor entry",
+        "severity": "High",
+        "likelihood": 5,
+        "impact": 4
+      },
+      {
+        "risk": "GLP-1 Competition",
+        "description": "Novo Nordisk's Wegovy/Ozempic, Amgen's MariTide, and 20+ GLP-1 programs from competitors could erode Lilly's market share",
+        "severity": "High",
+        "likelihood": 4,
+        "impact": 4
+      },
+      {
+        "risk": "Valuation Premium",
+        "description": "Trading at 60x+ forward earnings prices in flawless GLP-1 execution, creating significant downside risk if growth disappoints",
+        "severity": "High",
+        "likelihood": 3,
+        "impact": 5
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "Manufacturing Capacity Ramp",
+        "detail": "Investing $20B+ in new manufacturing facilities to meet GLP-1 demand and eliminate supply constraints by 2026",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "Obesity Combination Therapy",
+        "detail": "Developing retatrutide (triple agonist) and orforglipron (oral) to expand the obesity drug market beyond injectable-only formulations",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Alzheimer's Treatment",
+        "detail": "Advancing donanemab and next-gen anti-amyloid therapies for early-stage Alzheimer's disease treatment",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 10,
+      "market_position": 9,
+      "financial_health": 8,
+      "risk_profile": 5
+    },
+    "management_tone": "Highly Optimistic",
+    "management_tone_score": 10,
+    "bull_case": "GLP-1 market reaches $150B+ by 2030, Lilly maintains 40%+ share through manufacturing scale and superior efficacy, and Alzheimer's drugs add $10B+ in incremental revenue.",
+    "bear_case": "GLP-1 competition compresses pricing, oral formulations cannibalize higher-margin injectables, safety concerns emerge from long-term use studies, and the premium multiple de-rates sharply.",
+    "analyst_verdict": "BUY \u2014 Eli Lilly is building a generational franchise in obesity treatment with the most advanced GLP-1 pipeline, though investors must accept premium valuation risk.",
+    "wacc": 0.09,
+    "growth_rate": 0.06,
+    "fcf_base": 8000,
+    "sensitivity": {
+      "rates": -0.05,
+      "inflation": -0.1,
+      "supply_chain": -0.35
+    }
+  },
+  "KO": {
+    "company_name": "The Coca-Cola Company",
+    "fiscal_year": "FY2024",
+    "sector": "Consumer Staples",
+    "business_model": "Coca-Cola is the world's largest non-alcoholic beverage company, owning 200+ brands across sparkling soft drinks, water, juice, dairy, tea, coffee, and sports drinks. The company operates an asset-light franchise bottling model, earning concentrate/syrup margins of 60%+ while bottling partners handle manufacturing and distribution.",
+    "key_segments": [
+      "Sparkling Beverages",
+      "Water/Sports/Coffee",
+      "Juice/Dairy",
+      "Bottling Investments",
+      "Emerging Markets"
+    ],
+    "financial_highlights": [
+      "Revenue of $46B in FY2024, up 3% YoY on 2% organic volume growth and positive price/mix",
+      "Operating margin of 30% reflecting the high-margin concentrate business model",
+      "Free cash flow of $10B supporting a 3.1% dividend yield with 62 consecutive years of dividend increases",
+      "Brand value of $100B+ makes Coca-Cola the world's most recognized consumer brand"
+    ],
+    "top_risks": [
+      {
+        "risk": "Health & Sugar Concerns",
+        "description": "Growing consumer awareness of sugar's health effects and regulatory sugar taxes could pressure sparkling beverage volumes",
+        "severity": "Medium",
+        "likelihood": 4,
+        "impact": 3
+      },
+      {
+        "risk": "Currency Headwinds",
+        "description": "50%+ of revenue is international, creating significant dollar translation risk in volatile FX environments",
+        "severity": "Medium",
+        "likelihood": 4,
+        "impact": 3
+      },
+      {
+        "risk": "Volume Growth Limits",
+        "description": "Mature carbonated soft drink markets in developed economies limit organic volume growth to low-single-digits",
+        "severity": "Medium",
+        "likelihood": 4,
+        "impact": 3
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "Zero Sugar Portfolio",
+        "detail": "Accelerating Coca-Cola Zero Sugar and other low/no-calorie variants which are growing at 2-3x the rate of regular formulations",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "Emerging Market Penetration",
+        "detail": "Expanding affordable small-format packaging and distribution in Africa, India, and Southeast Asia where per-capita consumption is 10-20% of US levels",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Beyond Beverages",
+        "detail": "Exploring alcohol-ready-to-drink partnerships (Jack & Coke) and functional beverages to expand the total addressable market",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 6,
+      "market_position": 10,
+      "financial_health": 9,
+      "risk_profile": 2
+    },
+    "management_tone": "Optimistic",
+    "management_tone_score": 7,
+    "bull_case": "Zero Sugar drives developed market volume re-acceleration, emerging markets deliver 7%+ organic growth, and pricing power sustains margin expansion through inflationary periods.",
+    "bear_case": "Sugar taxes spread globally and compress volumes, private label gains share in a recessionary environment, and FX headwinds offset organic growth for multiple years.",
+    "analyst_verdict": "BUY \u2014 Coca-Cola's unmatched global distribution, pricing power, and 60+ year dividend growth streak make it a core defensive holding for income-oriented portfolios.",
+    "wacc": 0.07,
+    "growth_rate": 0.025,
+    "fcf_base": 10000,
+    "sensitivity": {
+      "rates": -0.05,
+      "inflation": -0.1,
+      "supply_chain": -0.15
+    }
+  },
+  "WMT": {
+    "company_name": "Walmart Inc.",
+    "fiscal_year": "FY2025",
+    "sector": "Consumer Staples",
+    "business_model": "Walmart is the world's largest retailer operating 10,500+ stores and clubs across 19 countries. Revenue is generated through Walmart US (supercenter grocery and general merchandise), Sam's Club (membership warehouse), and Walmart International. The company is rapidly scaling e-commerce, advertising, and fintech as high-margin growth engines.",
+    "key_segments": [
+      "Walmart US",
+      "Walmart International",
+      "Sam's Club",
+      "Walmart Connect (Advertising)",
+      "Walmart+ Membership"
+    ],
+    "financial_highlights": [
+      "Revenue of $681B in FY2025, up 5.6% YoY with US comp sales growing 4.6% driven by grocery market share gains",
+      "E-commerce revenue grew 22% globally, representing $100B+ in GMV across pickup, delivery, and marketplace",
+      "Walmart Connect advertising revenue grew 28% to $4.4B, emerging as a high-margin profit driver",
+      "Free cash flow of $16B as inventory management improved and capex normalized"
+    ],
+    "top_risks": [
+      {
+        "risk": "Margin Compression",
+        "description": "Grocery represents 60%+ of US revenue at structurally thin margins, limiting overall profitability expansion",
+        "severity": "Medium",
+        "likelihood": 4,
+        "impact": 3
+      },
+      {
+        "risk": "Labor Cost Inflation",
+        "description": "Minimum wage increases and tight labor markets drive $1B+ annual wage cost headwinds despite automation investments",
+        "severity": "Medium",
+        "likelihood": 4,
+        "impact": 3
+      },
+      {
+        "risk": "Amazon Competition",
+        "description": "Amazon Fresh, Whole Foods, and same-day delivery compete directly for the online grocery market Walmart is targeting",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 3
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "Advertising & Data Monetization",
+        "detail": "Scaling Walmart Connect to $10B+ by 2027 through closed-loop measurement, self-serve tools, and supplier demand",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "Marketplace & Fulfillment Services",
+        "detail": "Growing the third-party marketplace to 500M+ SKUs and offering Walmart Fulfillment Services as an Amazon FBA alternative",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Healthcare & Fintech",
+        "detail": "Expanding Walmart Health clinics and financial services (ONE app, BNPL) to underserved communities",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 7,
+      "market_position": 10,
+      "financial_health": 8,
+      "risk_profile": 3
+    },
+    "management_tone": "Optimistic",
+    "management_tone_score": 8,
+    "bull_case": "Advertising and marketplace transform Walmart's profit mix, e-commerce reaches profitability at scale, and grocery market share gains accelerate as consumers trade down.",
+    "bear_case": "Grocery margin compression persists, Amazon captures online grocery share, and labor costs erode the benefits of automation and efficiency investments.",
+    "analyst_verdict": "BUY \u2014 Walmart's advertising and marketplace businesses are transforming the company from a low-margin retailer into a high-margin platform, and we are still in the early innings.",
+    "wacc": 0.075,
+    "growth_rate": 0.03,
+    "fcf_base": 16000,
+    "sensitivity": {
+      "rates": -0.05,
+      "inflation": -0.2,
+      "supply_chain": -0.25
+    }
+  },
+  "NKE": {
+    "company_name": "NIKE, Inc.",
+    "fiscal_year": "FY2025",
+    "sector": "Consumer Discretionary",
+    "business_model": "NIKE is the world's largest athletic footwear and apparel company, selling products through NIKE Direct (own stores, nike.com), wholesale partners, and the Jordan Brand. Revenue is generated across running, basketball, football, training, and sportswear lifestyle categories with operations in 190+ countries.",
+    "key_segments": [
+      "NIKE Direct",
+      "Wholesale",
+      "Jordan Brand",
+      "Converse",
+      "NIKE Digital"
+    ],
+    "financial_highlights": [
+      "Revenue of $47B in FY2025, down 3% YoY as DTC pivot challenges and inventory issues impacted results",
+      "NIKE Direct reached 44% of total revenue, up from 35% pre-pandemic, but growth decelerated",
+      "Gross margin of 44.5% reflecting elevated promotional activity to clear excess inventory",
+      "Free cash flow of $5.8B supporting $9B in share buybacks and $2.2B in dividends"
+    ],
+    "top_risks": [
+      {
+        "risk": "Brand Heat Decline",
+        "description": "Reduced innovation velocity and over-reliance on retro franchises (Air Force 1, Dunk) have allowed competitors like On, Hoka, and New Balance to gain share",
+        "severity": "High",
+        "likelihood": 4,
+        "impact": 4
+      },
+      {
+        "risk": "DTC Channel Conflicts",
+        "description": "Aggressive DTC pivot alienated wholesale partners like Foot Locker and Dick's, ceding shelf space to competitors without fully replacing wholesale revenue",
+        "severity": "High",
+        "likelihood": 4,
+        "impact": 4
+      },
+      {
+        "risk": "China Recovery Uncertainty",
+        "description": "China represents 15% of revenue and faces weak consumer confidence, local brand competition from Anta/Li-Ning, and geopolitical risk",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 3
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "Innovation Reset",
+        "detail": "Launching next-gen performance platforms (Air Max Dn, Pegasus Premium) to re-establish product innovation leadership",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "Wholesale Re-engagement",
+        "detail": "Rebuilding wholesale partnerships and marketplace segmentation to optimize channel distribution and reduce promotional intensity",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Connected Fitness Ecosystem",
+        "detail": "Building a digital ecosystem connecting NIKE Run Club, Training Club, and .SWOOSH membership to drive lifetime customer value",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 7,
+      "market_position": 9,
+      "financial_health": 7,
+      "risk_profile": 5
+    },
+    "management_tone": "Cautiously Optimistic",
+    "management_tone_score": 5,
+    "bull_case": "New CEO Elliott Hill successfully resets the innovation pipeline, wholesale re-engagement drives revenue recovery, and China consumer spending rebounds to pre-COVID levels.",
+    "bear_case": "Brand relevance continues declining to younger consumers, competitors solidify market share gains, and margin pressure from promotions persists through the product reset period.",
+    "analyst_verdict": "HOLD \u2014 NIKE's brand equity and global scale provide a floor, but the innovation and distribution reset will take 12-18 months to fully manifest in financial results.",
+    "wacc": 0.085,
+    "growth_rate": 0.03,
+    "fcf_base": 5800,
+    "sensitivity": {
+      "rates": -0.1,
+      "inflation": -0.25,
+      "supply_chain": -0.3
+    }
+  },
+  "MCD": {
+    "company_name": "McDonald's Corporation",
+    "fiscal_year": "FY2024",
+    "sector": "Consumer Discretionary",
+    "business_model": "McDonald's is the world's largest restaurant company by revenue, operating and franchising 40,000+ restaurants across 100+ countries. 95% of restaurants are franchised, creating an asset-light royalty model with 4-5% system-wide sales royalties plus rent from franchisee-occupied real estate. The company is effectively a real estate and brand licensing business.",
+    "key_segments": [
+      "US Franchised",
+      "International Operated Markets",
+      "International Developmental Licensed",
+      "Company-Owned Restaurants"
+    ],
+    "financial_highlights": [
+      "Revenue of $26B in FY2024 with system-wide sales of $130B across all restaurants",
+      "Operating margin of 46% reflecting the high-margin franchise royalty and real estate rent model",
+      "Same-store sales grew 2% globally as menu innovation and value offerings drove traffic recovery",
+      "Free cash flow of $8B supporting a 2.3% dividend yield with 48 years of consecutive increases"
+    ],
+    "top_risks": [
+      {
+        "risk": "Consumer Value Perception",
+        "description": "Cumulative menu price increases of 40%+ since 2019 are driving affordability concerns and traffic declines among lower-income consumers",
+        "severity": "High",
+        "likelihood": 4,
+        "impact": 4
+      },
+      {
+        "risk": "Labor & Franchisee Relations",
+        "description": "Minimum wage increases and franchisee margin pressure could lead to store closures and limit system-wide expansion capacity",
+        "severity": "Medium",
+        "likelihood": 4,
+        "impact": 3
+      },
+      {
+        "risk": "Health & GLP-1 Impact",
+        "description": "Anti-obesity GLP-1 drugs could structurally reduce fast food consumption as treated patients report decreased appetite and food cravings",
+        "severity": "Medium",
+        "likelihood": 2,
+        "impact": 4
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "$5 Value Meal Platform",
+        "detail": "Launching sustained value menu offerings to recapture price-sensitive customers lost to competitors and home cooking",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "Digital & Loyalty Scaling",
+        "detail": "Growing the MyMcDonald's loyalty program to 200M+ active users globally and increasing digital order frequency through personalization",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "CosMc's & New Formats",
+        "detail": "Testing small-format specialty beverage concepts and automated kitchen technologies to expand addressable occasions",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 6,
+      "market_position": 10,
+      "financial_health": 9,
+      "risk_profile": 3
+    },
+    "management_tone": "Neutral",
+    "management_tone_score": 6,
+    "bull_case": "Value repositioning drives traffic recovery, digital loyalty increases visit frequency by 15%+, and international expansion in emerging markets sustains mid-single-digit system-wide sales growth.",
+    "bear_case": "Affordability crisis accelerates as consumers trade down to grocery, GLP-1 adoption structurally reduces fast food demand, and franchisee profitability deterioration limits new unit growth.",
+    "analyst_verdict": "HOLD \u2014 McDonald's franchise model provides defensive earnings quality, but the value perception challenge and potential GLP-1 demand impact warrant monitoring before adding exposure.",
+    "wacc": 0.075,
+    "growth_rate": 0.025,
+    "fcf_base": 8000,
+    "sensitivity": {
+      "rates": -0.05,
+      "inflation": -0.15,
+      "supply_chain": -0.1
+    }
+  },
+  "DIS": {
+    "company_name": "The Walt Disney Company",
+    "fiscal_year": "FY2024",
+    "sector": "Communication Services",
+    "business_model": "Disney operates through Entertainment (Disney+, Hulu, ESPN+, studios, linear TV), Sports (ESPN), and Experiences (theme parks, cruise lines, consumer products). The company owns the most valuable IP portfolio in entertainment including Marvel, Star Wars, Pixar, Disney Animation, and National Geographic.",
+    "key_segments": [
+      "Disney+ & Hulu",
+      "ESPN & Sports",
+      "Theme Parks & Experiences",
+      "Content Studios",
+      "Consumer Products"
+    ],
+    "financial_highlights": [
+      "Revenue of $91B in FY2024, up 3% YoY with Experiences segment generating $9B in operating income",
+      "Disney+ reached 150M subscribers with streaming profitability achieved for the first time",
+      "Parks & Experiences operating margin of 24% with record attendance and per-capita spending",
+      "Free cash flow of $8.5B as streaming losses reversed and parks generated record cash flow"
+    ],
+    "top_risks": [
+      {
+        "risk": "Cord-Cutting Acceleration",
+        "description": "Linear TV networks (ABC, ESPN, FX) continue losing subscribers, creating a $4B+ revenue headwind that streaming has not fully replaced",
+        "severity": "High",
+        "likelihood": 5,
+        "impact": 4
+      },
+      {
+        "risk": "Content Cost Escalation",
+        "description": "Theatrical release economics are deteriorating as theatrical windows shorten and streaming requires constant high-quality content investment",
+        "severity": "High",
+        "likelihood": 4,
+        "impact": 3
+      },
+      {
+        "risk": "ESPN Standalone Strategy",
+        "description": "Launching ESPN as a standalone streaming product requires $20B+ in annual sports rights commitments with uncertain subscriber economics",
+        "severity": "High",
+        "likelihood": 3,
+        "impact": 4
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "ESPN Flagship Launch",
+        "detail": "Launching the standalone ESPN streaming platform with direct-to-consumer sports betting integration and personalized viewing experiences",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "Parks Expansion",
+        "detail": "Investing $60B over 10 years in theme park expansion including new lands, cruise ships, and a potential sixth US park",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "IP Monetization",
+        "detail": "Maximizing franchise value through coordinated theatrical, streaming, parks, and consumer products strategies across Marvel, Star Wars, and Disney Animation",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 8,
+      "market_position": 9,
+      "financial_health": 7,
+      "risk_profile": 5
+    },
+    "management_tone": "Cautiously Optimistic",
+    "management_tone_score": 6,
+    "bull_case": "ESPN standalone succeeds with 30M+ subscribers, streaming margins reach 15%+, and parks expansion drives double-digit experience revenue growth through 2030.",
+    "bear_case": "ESPN standalone cannibilizes existing bundle economics, theatrical box office continues declining, and parks demand normalizes from post-pandemic highs, stalling growth.",
+    "analyst_verdict": "HOLD \u2014 Disney's IP portfolio is unmatched but the ESPN strategic pivot and streaming content cost discipline require successful execution to justify current valuation.",
+    "wacc": 0.085,
+    "growth_rate": 0.03,
+    "fcf_base": 8500,
+    "sensitivity": {
+      "rates": -0.1,
+      "inflation": -0.2,
+      "supply_chain": -0.15
+    }
+  },
+  "XOM": {
+    "company_name": "Exxon Mobil Corporation",
+    "fiscal_year": "FY2024",
+    "sector": "Energy",
+    "business_model": "ExxonMobil is the world's largest publicly traded energy company, operating through Upstream (oil & gas exploration/production), Product Solutions (refining, chemicals, lubricants), and Low Carbon Solutions. The company produces 3.7M+ barrels of oil equivalent per day with assets spanning 6 continents.",
+    "key_segments": [
+      "Upstream Production",
+      "Refining & Chemicals",
+      "Lubricants",
+      "Low Carbon Solutions",
+      "LNG"
+    ],
+    "financial_highlights": [
+      "Revenue of $340B in FY2024 with net income of $36B at $78/barrel average Brent price",
+      "Achieved record production of 3.7M BOE/day following the Pioneer Natural Resources acquisition",
+      "Free cash flow of $36B enabling $20B+ in capital returns and balance sheet strengthening",
+      "Permian Basin production reached 1.3M BOE/day, making ExxonMobil the largest Permian producer"
+    ],
+    "top_risks": [
+      {
+        "risk": "Oil Price Volatility",
+        "description": "Revenue and earnings are highly correlated to commodity prices, with each $10/barrel move impacting annual earnings by $4B+",
+        "severity": "High",
+        "likelihood": 4,
+        "impact": 5
+      },
+      {
+        "risk": "Energy Transition Risk",
+        "description": "Long-term demand destruction for fossil fuels from EVs, renewables, and climate policy could strand upstream assets and reduce terminal value",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 4
+      },
+      {
+        "risk": "ESG & Climate Litigation",
+        "description": "Growing shareholder pressure, proxy battles, and climate liability lawsuits create governance and financial risks",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 3
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "Pioneer Integration",
+        "detail": "Integrating Pioneer Natural Resources to capture $2B+ in synergies and optimize the combined 1.4M BOE/day Permian asset base",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "LNG Expansion",
+        "detail": "Growing LNG portfolio through Golden Pass and Mozambique projects to capture growing Asian natural gas demand",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Carbon Capture & Hydrogen",
+        "detail": "Investing $20B+ through 2027 in CCS hubs and blue hydrogen production to build a low-carbon business platform",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 6,
+      "market_position": 10,
+      "financial_health": 9,
+      "risk_profile": 5
+    },
+    "management_tone": "Optimistic",
+    "management_tone_score": 7,
+    "bull_case": "Oil prices remain above $80, Pioneer synergies exceed $3B, and ExxonMobil's low-cost Permian and Guyana barrels generate $40B+ annual free cash flow through 2030.",
+    "bear_case": "Oil prices fall below $60 on recession or OPEC+ discipline collapse, energy transition accelerates stranding upstream reserves, and climate lawsuits result in material financial liabilities.",
+    "analyst_verdict": "BUY \u2014 ExxonMobil's low-cost upstream portfolio, Pioneer synergies, and 5%+ shareholder yield make it the premier energy investment for a $70-90 oil price environment.",
+    "wacc": 0.09,
+    "growth_rate": 0.02,
+    "fcf_base": 36000,
+    "sensitivity": {
+      "rates": -0.1,
+      "inflation": 0.15,
+      "supply_chain": -0.2
+    }
+  },
+  "BA": {
+    "company_name": "The Boeing Company",
+    "fiscal_year": "FY2024",
+    "sector": "Industrials",
+    "business_model": "Boeing is one of two global commercial aircraft manufacturers (with Airbus), operating through Commercial Airplanes (737, 787, 777X), Defense Space & Security (fighters, satellites, weapons), and Global Services (MRO, parts, training). The company is executing a multi-year quality and production recovery following the 737 MAX safety crises.",
+    "key_segments": [
+      "Commercial Airplanes",
+      "Defense Space & Security",
+      "Global Services"
+    ],
+    "financial_highlights": [
+      "Revenue of $66B in FY2024, down 14% YoY as 737 MAX production rate remained capped at 38/month",
+      "Operating loss of $5.5B as quality remediation costs, labor strikes, and fixed-price defense contracts weighed on profitability",
+      "Free cash flow of negative $12B reflecting the deep operational trough and supplier payment normalization",
+      "Commercial airplane backlog of $440B representing 5,600+ aircraft with 8+ years of production visibility"
+    ],
+    "top_risks": [
+      {
+        "risk": "Quality & Safety Crisis",
+        "description": "Ongoing quality failures (737 MAX door plug blowout) have triggered FAA production caps and eroded customer and regulator trust",
+        "severity": "High",
+        "likelihood": 5,
+        "impact": 5
+      },
+      {
+        "risk": "Cash Burn & Liquidity",
+        "description": "Negative FCF of $12B+ and $52B net debt create significant balance sheet stress requiring near-term capital raising or asset sales",
+        "severity": "High",
+        "likelihood": 5,
+        "impact": 5
+      },
+      {
+        "risk": "Supply Chain Fragility",
+        "description": "Sole-source suppliers and production rate limitations constrain ramp-up timeline and create vulnerability to disruptions",
+        "severity": "High",
+        "likelihood": 4,
+        "impact": 4
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "Quality System Overhaul",
+        "detail": "Implementing factory-floor quality improvements and rebuilding FAA trust to achieve production rate increase approval to 42+/month",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "737 MAX & 787 Ramp",
+        "detail": "Scaling 737 MAX production to 50+/month and 787 to 10/month to convert the massive $440B backlog into revenue and cash flow",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "777X Certification",
+        "detail": "Achieving FAA certification for the 777X widebody to address the replacement cycle for aging 777 Classic fleet",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 6,
+      "market_position": 8,
+      "financial_health": 3,
+      "risk_profile": 9
+    },
+    "management_tone": "Cautiously Optimistic",
+    "management_tone_score": 3,
+    "bull_case": "Quality crisis resolves, 737 MAX production ramps to 50/month by 2026, and the massive backlog converts into $15B+ annual free cash flow, de-levering the balance sheet.",
+    "bear_case": "Quality issues persist triggering additional FAA restrictions, cash burn forces dilutive equity raise, 777X certification delays extend losses, and Airbus captures incremental market share.",
+    "analyst_verdict": "SELL \u2014 Boeing's operational crisis, negative FCF, and balance sheet stress create significant uncertainty despite the massive backlog, and recovery requires years of flawless execution.",
+    "wacc": 0.1,
+    "growth_rate": 0.02,
+    "fcf_base": -12000,
+    "sensitivity": {
+      "rates": -0.2,
+      "inflation": -0.45,
+      "supply_chain": -0.65
+    }
+  },
+  "CAT": {
+    "company_name": "Caterpillar Inc.",
+    "fiscal_year": "FY2024",
+    "sector": "Industrials",
+    "business_model": "Caterpillar is the world's largest manufacturer of construction and mining equipment, diesel and natural gas engines, industrial gas turbines, and diesel-electric locomotives. The company operates through Construction Industries (excavators, loaders), Resource Industries (mining trucks, bulk material handling), and Energy & Transportation (engines, turbines).",
+    "key_segments": [
+      "Construction Industries",
+      "Resource Industries",
+      "Energy & Transportation",
+      "Financial Products"
+    ],
+    "financial_highlights": [
+      "Revenue of $65B in FY2024, down 3% YoY on normalized dealer inventory cycles",
+      "Adjusted operating margin of 22.4%, near record levels reflecting disciplined pricing and operational efficiency",
+      "Free cash flow of $11B supporting $7.5B in capital returns through dividends and buybacks",
+      "Services revenue grew 12% to $24B, representing 37% of total and growing as the installed base expands"
+    ],
+    "top_risks": [
+      {
+        "risk": "Cyclical Demand",
+        "description": "Construction and mining equipment demand is highly cyclical and correlated to commodity prices, infrastructure spending, and economic growth",
+        "severity": "High",
+        "likelihood": 3,
+        "impact": 4
+      },
+      {
+        "risk": "China Demand Weakness",
+        "description": "Chinese construction activity has declined 30%+ from peak levels, reducing demand for excavators and loaders in the world's largest equipment market",
+        "severity": "Medium",
+        "likelihood": 4,
+        "impact": 3
+      },
+      {
+        "risk": "Electrification Transition",
+        "description": "Customer demand for battery-electric and hydrogen equipment is growing, requiring significant R&D investment in new powertrains",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 3
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "Services & Aftermarket Growth",
+        "detail": "Scaling connected asset monitoring and predictive maintenance services across the 3.5M+ unit installed base",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "Autonomous Mining",
+        "detail": "Expanding Cat MineStar autonomous hauling solutions to additional mining customers globally",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Energy Transition Equipment",
+        "detail": "Developing battery-electric excavators, hydrogen-powered trucks, and hybrid powertrain solutions for sustainability-focused customers",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 7,
+      "market_position": 10,
+      "financial_health": 9,
+      "risk_profile": 4
+    },
+    "management_tone": "Optimistic",
+    "management_tone_score": 7,
+    "bull_case": "US infrastructure spending sustains multi-year equipment demand, services revenue reaches 50% of total improving margin durability, and autonomous mining expands TAM.",
+    "bear_case": "Global recession triggers 20%+ equipment demand decline, China construction activity continues deteriorating, and electrification requires costly product line transitions.",
+    "analyst_verdict": "BUY \u2014 Caterpillar's pricing power, growing services mix, and US infrastructure tailwind support premium margins through the cycle with best-in-class capital returns.",
+    "wacc": 0.085,
+    "growth_rate": 0.025,
+    "fcf_base": 11000,
+    "sensitivity": {
+      "rates": -0.15,
+      "inflation": 0.05,
+      "supply_chain": -0.3
+    }
+  },
+  "PG": {
+    "company_name": "Procter & Gamble Company",
+    "fiscal_year": "FY2025",
+    "sector": "Consumer Staples",
+    "business_model": "P&G is the world's largest consumer packaged goods company, operating through five segments: Beauty (SK-II, Olay), Grooming (Gillette), Health Care (Oral-B, Vicks), Fabric & Home Care (Tide, Downy), and Baby, Feminine & Family Care (Pampers, Always). The company sells products in 180+ countries and owns 20+ billion-dollar brands.",
+    "key_segments": [
+      "Fabric & Home Care",
+      "Baby & Family Care",
+      "Beauty",
+      "Health Care",
+      "Grooming"
+    ],
+    "financial_highlights": [
+      "Revenue of $84B in FY2025 with organic sales growth of 4% driven by superior product innovation",
+      "Operating margin of 24% with productivity savings offsetting commodity cost inflation",
+      "Free cash flow of $15B supporting consistent dividend growth for 68 consecutive years",
+      "Market share gains in 60%+ of product categories globally through innovation-driven superiority strategy"
+    ],
+    "top_risks": [
+      {
+        "risk": "Volume Growth Challenges",
+        "description": "Pricing-led growth is decelerating as consumers reach a ceiling on price acceptance and trade down to private label",
+        "severity": "Medium",
+        "likelihood": 4,
+        "impact": 3
+      },
+      {
+        "risk": "Private Label Competition",
+        "description": "Retailer private label brands are gaining share in key categories (household cleaning, personal care) as quality gaps narrow",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 3
+      },
+      {
+        "risk": "Emerging Market Volatility",
+        "description": "Currency devaluation and inflation in markets like Argentina, Turkey, Nigeria, and Egypt erode reported revenue and margins",
+        "severity": "Medium",
+        "likelihood": 4,
+        "impact": 3
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "Innovation Superiority",
+        "detail": "Launching premium product innovations across skin care (SK-II Generics), laundry (Tide Power Pods), and personal health to justify pricing premiums",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "Digital Commerce Acceleration",
+        "detail": "Growing e-commerce to 20%+ of revenue through D2C brands, marketplace optimization, and programmatic advertising",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Sustainability Transformation",
+        "detail": "Achieving 100% recyclable packaging by 2030 and net-zero emissions across operations and supply chain",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 7,
+      "market_position": 10,
+      "financial_health": 9,
+      "risk_profile": 2
+    },
+    "management_tone": "Optimistic",
+    "management_tone_score": 7,
+    "bull_case": "Innovation-driven market share gains accelerate volume growth to 3%+, emerging market currency headwinds reverse, and margin expansion from productivity savings drives EPS above $8.",
+    "bear_case": "Private label gains share in a recessionary environment, commodity costs re-accelerate, and emerging market currency crises offset pricing gains in key growth regions.",
+    "analyst_verdict": "BUY \u2014 P&G's unmatched brand portfolio, pricing power, and 68-year dividend growth streak make it the quintessential defensive compounder for uncertain market environments.",
+    "wacc": 0.07,
+    "growth_rate": 0.025,
+    "fcf_base": 15000,
+    "sensitivity": {
+      "rates": -0.05,
+      "inflation": -0.1,
+      "supply_chain": -0.15
+    }
+  },
+  "BABA": {
+    "company_name": "Alibaba Group Holding Limited",
+    "fiscal_year": "FY2025",
+    "sector": "Technology",
+    "business_model": "Alibaba operates China's largest e-commerce platforms (Taobao, Tmall), cloud computing (Alibaba Cloud), international commerce (Lazada, AliExpress), local consumer services (Ele.me), and logistics (Cainiao). The company is restructuring into six independent business groups to unlock shareholder value.",
+    "key_segments": [
+      "Taobao & Tmall Group",
+      "Cloud Intelligence Group",
+      "International Digital Commerce",
+      "Cainiao Smart Logistics",
+      "Local Services",
+      "Digital Media"
+    ],
+    "financial_highlights": [
+      "Revenue of $134B in FY2025 with adjusted EBITDA of $30B on 4% organic revenue growth",
+      "Alibaba Cloud grew 7% with AI-related revenue growing triple digits as Chinese enterprises adopt large language models",
+      "International commerce grew 32% driven by AliExpress Choice cross-border model expansion into Europe and Americas",
+      "Free cash flow of $22B enabling $12B+ in share buybacks at depressed valuations"
+    ],
+    "top_risks": [
+      {
+        "risk": "Chinese Regulatory Risk",
+        "description": "Ongoing antitrust scrutiny, data security regulations, and potential for additional government interventions create persistent overhang",
+        "severity": "High",
+        "likelihood": 3,
+        "impact": 5
+      },
+      {
+        "risk": "US-China Geopolitical Tensions",
+        "description": "Potential delisting from US exchanges, investment restrictions, and trade wars could further depress Western investor appetite",
+        "severity": "High",
+        "likelihood": 3,
+        "impact": 5
+      },
+      {
+        "risk": "Domestic Competition",
+        "description": "PDD/Temu, JD.com, Douyin (TikTok) e-commerce, and ByteDance are aggressively competing for Chinese consumer spending and ad budgets",
+        "severity": "High",
+        "likelihood": 4,
+        "impact": 4
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "AI Model Ecosystem",
+        "detail": "Deploying Qwen large language models across Alibaba Cloud to drive enterprise AI adoption in China's $300B+ cloud market",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "International Expansion",
+        "detail": "Scaling AliExpress Choice and Lazada to capture cross-border e-commerce growth in Southeast Asia, Europe, and Latin America",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Business Group IPOs",
+        "detail": "Executing independent IPOs for cloud, logistics, and international commerce units to unlock conglomerate discount",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 8,
+      "market_position": 8,
+      "financial_health": 7,
+      "risk_profile": 7
+    },
+    "management_tone": "Cautiously Optimistic",
+    "management_tone_score": 5,
+    "bull_case": "China stimulus re-accelerates consumer spending, Cloud AI revenue compounds at 50%+, international expansion reaches profitability, and share buybacks drive 15%+ EPS growth despite muted revenue growth.",
+    "bear_case": "Regulatory crackdown intensifies, US-China tensions lead to forced delisting, Temu and Douyin capture incremental domestic market share, and cloud margins compress under AI infrastructure investment.",
+    "analyst_verdict": "BUY \u2014 Alibaba trades at a deep discount to intrinsic value with 9x forward earnings, $22B FCF, and aggressive buybacks, though geopolitical risk limits re-rating potential for Western investors.",
+    "wacc": 0.12,
+    "growth_rate": 0.04,
+    "fcf_base": 22000,
+    "sensitivity": {
+      "rates": -0.1,
+      "inflation": -0.2,
+      "supply_chain": -0.3
+    }
+  },
+  "TSM": {
+    "company_name": "Taiwan Semiconductor Manufacturing Company",
+    "fiscal_year": "FY2024",
+    "sector": "Technology",
+    "business_model": "TSMC is the world's largest dedicated semiconductor foundry, manufacturing chips for Apple, NVIDIA, AMD, Qualcomm, and virtually every major fabless semiconductor company. The company leads in advanced process technology (3nm, 2nm) and produces 90%+ of the world's most advanced chips.",
+    "key_segments": [
+      "Advanced Technology (5nm & below)",
+      "Mature Technology",
+      "Smartphone",
+      "HPC/AI",
+      "Automotive/IoT"
+    ],
+    "financial_highlights": [
+      "Revenue of $90B in FY2024, up 30% YoY driven by unprecedented AI chip demand for NVIDIA and Apple",
+      "Gross margin of 57% reflecting advanced node pricing power and operational excellence",
+      "Capex of $32B focused on 3nm capacity expansion and 2nm pilot production in Arizona and Kumamoto",
+      "Free cash flow of $28B despite massive capital investment cycle for geographic diversification"
+    ],
+    "top_risks": [
+      {
+        "risk": "Geopolitical & Taiwan Risk",
+        "description": "Cross-strait tensions and potential Chinese military action represent an existential risk to the world's most critical technology supply chain",
+        "severity": "High",
+        "likelihood": 2,
+        "impact": 10
+      },
+      {
+        "risk": "Customer Concentration",
+        "description": "Apple and NVIDIA represent 45%+ of revenue, creating dependency on two customers' volume and technology decisions",
+        "severity": "High",
+        "likelihood": 3,
+        "impact": 4
+      },
+      {
+        "risk": "US/Japan Fab Economics",
+        "description": "Overseas fabrication facilities (Arizona, Kumamoto, Dresden) operate at 30-50% higher costs than Taiwan fabs, potentially compressing margins",
+        "severity": "Medium",
+        "likelihood": 4,
+        "impact": 3
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "2nm Technology Leadership",
+        "detail": "Achieving volume production of N2 (2nm) process technology by 2025 to maintain 2-year technology lead over Samsung and Intel",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "AI Packaging Innovation",
+        "detail": "Scaling CoWoS and SoIC advanced packaging capacity to meet NVIDIA and AMD demand for AI GPU multi-chiplet designs",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Geographic Diversification",
+        "detail": "Building fabs in Arizona, Japan, and Germany to reduce geographic concentration risk and serve customers closer to end markets",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 10,
+      "market_position": 10,
+      "financial_health": 10,
+      "risk_profile": 6
+    },
+    "management_tone": "Optimistic",
+    "management_tone_score": 8,
+    "bull_case": "AI chip demand sustains 20%+ revenue growth through 2027, 2nm technology extends the competitive moat, and geographic diversification reduces geopolitical discount without materially compressing margins.",
+    "bear_case": "Cross-strait military conflict disrupts global chip supply, overseas fabs operate at uneconomic costs, and advanced packaging capacity additions from competitors reduce TSMC's pricing leverage.",
+    "analyst_verdict": "BUY \u2014 TSMC is the most critical technology company in the world with an unassailable process technology moat, though investors must price in the tail risk of a Taiwan contingency.",
+    "wacc": 0.09,
+    "growth_rate": 0.045,
+    "fcf_base": 28000,
+    "sensitivity": {
+      "rates": -0.05,
+      "inflation": -0.15,
+      "supply_chain": -0.6
+    }
+  },
+  "COST": {
+    "company_name": "Costco Wholesale Corporation",
+    "fiscal_year": "FY2024",
+    "sector": "Consumer Staples",
+    "business_model": "Costco operates membership warehouse clubs offering bulk merchandise at low margins. Revenue comes from merchandise sales and high-margin membership fees ($65-130/year). The company serves 130M+ cardholders across 890+ warehouses globally with a focus on value pricing and treasure-hunt shopping experience.",
+    "key_segments": [
+      "US Operations",
+      "International",
+      "Membership Fees",
+      "E-commerce",
+      "Kirkland Signature"
+    ],
+    "financial_highlights": [
+      "Revenue of $254B in FY2024, up 5% YoY with membership fee revenue of $4.8B at 93% renewal rate",
+      "Operating margin of 3.6% reflecting the intentional low-margin, high-volume business model",
+      "E-commerce sales grew 18% as same-day delivery and online-only SKUs expanded",
+      "Free cash flow of $7B supporting special dividends and consistent share buybacks"
+    ],
+    "top_risks": [
+      {
+        "risk": "Market Saturation",
+        "description": "Warehouse count approaching saturation in key US markets limits new unit growth to 3-4% annually",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 3
+      },
+      {
+        "risk": "Membership Fee Increase Timing",
+        "description": "Delayed membership fee increases create investor uncertainty, though each $5 increase adds $500M+ in high-margin revenue",
+        "severity": "Low",
+        "likelihood": 2,
+        "impact": 3
+      },
+      {
+        "risk": "Competition from Walmart/Amazon",
+        "description": "Sam's Club revitalization and Amazon bulk pricing compete for the value-seeking consumer demographic",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 3
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "Membership Monetization",
+        "detail": "Implementing periodic membership fee increases and expanding Executive membership tier benefits to drive ARPU",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "International Expansion",
+        "detail": "Accelerating warehouse openings in Japan, China, Australia, and European markets with strong membership demand",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "E-commerce & Logistics",
+        "detail": "Building out same-day delivery infrastructure and expanding Costco Logistics for large-item direct delivery",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 6,
+      "market_position": 9,
+      "financial_health": 9,
+      "risk_profile": 2
+    },
+    "management_tone": "Optimistic",
+    "management_tone_score": 8,
+    "bull_case": "Membership fee increase adds $700M+ in near-pure-profit revenue, international expansion sustains 4%+ comp growth, and Kirkland Signature captures additional private label share.",
+    "bear_case": "Consumer trade-down to dollar stores in a recession, e-commerce competition erodes warehouse traffic, and food deflation compresses same-store sales growth.",
+    "analyst_verdict": "BUY \u2014 Costco's membership model, 93% renewal rate, and relentless value proposition create one of the most durable competitive advantages in retail.",
+    "wacc": 0.07,
+    "growth_rate": 0.03,
+    "fcf_base": 7000,
+    "sensitivity": {
+      "rates": -0.05,
+      "inflation": -0.1,
+      "supply_chain": -0.15
+    }
+  },
+  "SBUX": {
+    "company_name": "Starbucks Corporation",
+    "fiscal_year": "FY2024",
+    "sector": "Consumer Discretionary",
+    "business_model": "Starbucks operates 38,000+ coffee shops globally through company-operated and licensed store models. Revenue is generated from beverage and food sales, packaged goods (CPG), and loyalty program monetization. The company's mobile app serves 34M+ active Starbucks Rewards members in the US alone.",
+    "key_segments": [
+      "US Company-Operated",
+      "International Licensed",
+      "China",
+      "CPG/Packaged",
+      "Starbucks Rewards"
+    ],
+    "financial_highlights": [
+      "Revenue of $36B in FY2024, down 1% YoY as US traffic declined amid value perception challenges",
+      "US same-store sales declined 2% driven by fewer transactions despite higher average ticket",
+      "China same-store sales declined 8% amid intense local competition from Luckin Coffee",
+      "Free cash flow of $4B supporting $3.4B in dividends and share repurchases"
+    ],
+    "top_risks": [
+      {
+        "risk": "Value Perception Crisis",
+        "description": "$7+ average ticket prices are driving consumer pushback and boycotts, particularly among younger demographics",
+        "severity": "High",
+        "likelihood": 4,
+        "impact": 4
+      },
+      {
+        "risk": "China Competitive Pressure",
+        "description": "Luckin Coffee operates 20,000+ stores in China at 30-40% lower price points, fundamentally challenging Starbucks' premium positioning",
+        "severity": "High",
+        "likelihood": 4,
+        "impact": 4
+      },
+      {
+        "risk": "Labor & Unionization",
+        "description": "Starbucks Workers United represents 400+ stores with ongoing organizing efforts that could increase labor costs and operational complexity",
+        "severity": "Medium",
+        "likelihood": 4,
+        "impact": 3
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "Back to Starbucks",
+        "detail": "New CEO Brian Niccol's turnaround plan focused on simplifying the menu, reducing wait times, and reconnecting with the coffeehouse experience",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "Digital & Loyalty Expansion",
+        "detail": "Leveraging the 34M-member Starbucks Rewards platform to drive personalized offers and increase visit frequency",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Store Format Innovation",
+        "detail": "Expanding drive-thru, pickup-only, and delivery-focused store formats to meet evolving consumer occasion preferences",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 6,
+      "market_position": 8,
+      "financial_health": 7,
+      "risk_profile": 5
+    },
+    "management_tone": "Cautiously Optimistic",
+    "management_tone_score": 5,
+    "bull_case": "Brian Niccol's turnaround restores US traffic growth, China stabilizes with localized strategy, and premium positioning is preserved while adding value-tier options.",
+    "bear_case": "Value perception worsens driving sustained traffic declines, China market share continues eroding to Luckin, and unionization pressures escalate across company-operated stores.",
+    "analyst_verdict": "HOLD \u2014 Starbucks' global brand and loyalty ecosystem provide a strong foundation, but the turnaround under new leadership needs 2-3 quarters to demonstrate results.",
+    "wacc": 0.085,
+    "growth_rate": 0.03,
+    "fcf_base": 4000,
+    "sensitivity": {
+      "rates": -0.1,
+      "inflation": -0.2,
+      "supply_chain": -0.15
+    }
+  },
+  "PEP": {
+    "company_name": "PepsiCo, Inc.",
+    "fiscal_year": "FY2024",
+    "sector": "Consumer Staples",
+    "business_model": "PepsiCo operates as a global food and beverage company through Frito-Lay North America (snacks), Quaker Foods, PepsiCo Beverages NA, and international divisions. Unlike Coca-Cola, PepsiCo owns both snack/food brands (Lay's, Doritos, Cheetos) and beverages (Pepsi, Mountain Dew, Gatorade), creating a diversified portfolio.",
+    "key_segments": [
+      "Frito-Lay North America",
+      "PepsiCo Beverages NA",
+      "International",
+      "Quaker Foods",
+      "Gatorade"
+    ],
+    "financial_highlights": [
+      "Revenue of $92B in FY2024 with organic revenue growth of 2% on flat volume and modest pricing",
+      "Frito-Lay operating margin of 31% reflecting strong snack pricing power and brand loyalty",
+      "Free cash flow of $8B supporting 3.1% dividend yield with 52 consecutive years of increases",
+      "International business represents 40%+ of revenue with faster organic growth than North America"
+    ],
+    "top_risks": [
+      {
+        "risk": "Volume Pressure",
+        "description": "Consumers are reducing snack and beverage purchase frequency as cumulative price increases reach affordability limits",
+        "severity": "High",
+        "likelihood": 4,
+        "impact": 3
+      },
+      {
+        "risk": "Health & GLP-1 Trends",
+        "description": "Rising health consciousness and GLP-1 appetite suppression drugs could structurally reduce demand for salty snacks and sugary beverages",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 4
+      },
+      {
+        "risk": "Quaker Product Recalls",
+        "description": "Quaker granola bar recalls for potential salmonella contamination damaged brand trust and caused $200M+ in revenue losses",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 3
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "Better-For-You Innovation",
+        "detail": "Expanding Simply, Bare, PopCorners, and other health-positioned brands to capture the $50B+ better-for-you snack market",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "International Expansion",
+        "detail": "Accelerating growth in India, Africa, and Southeast Asia where per-capita snack consumption is 10-20% of US levels",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Digital Commerce & DTC",
+        "detail": "Building direct-to-consumer platforms and e-commerce optimization to capture growing online snack and beverage purchasing",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 7,
+      "market_position": 9,
+      "financial_health": 8,
+      "risk_profile": 3
+    },
+    "management_tone": "Neutral",
+    "management_tone_score": 6,
+    "bull_case": "Volume recovery drives 4%+ organic growth, international markets accelerate, and better-for-you portfolio captures health-conscious consumers migrating from traditional snacks.",
+    "bear_case": "GLP-1 adoption structurally reduces snack consumption, private label gains share in a recessionary environment, and international currency headwinds offset organic growth.",
+    "analyst_verdict": "BUY \u2014 PepsiCo's diversified snack+beverage portfolio, pricing power, and 52-year dividend streak provide defensive growth characteristics with international upside.",
+    "wacc": 0.075,
+    "growth_rate": 0.025,
+    "fcf_base": 8000,
+    "sensitivity": {
+      "rates": -0.05,
+      "inflation": -0.1,
+      "supply_chain": -0.15
+    }
+  },
+  "MRK": {
+    "company_name": "Merck & Co., Inc.",
+    "fiscal_year": "FY2024",
+    "sector": "Healthcare",
+    "business_model": "Merck is a global pharmaceutical company focused on oncology (Keytruda), vaccines (Gardasil, VAXNEUVANCE), and animal health (Organon). Keytruda is the world's best-selling drug with $25B+ in annual revenue spanning 30+ tumor types. The company is aggressively investing to build a post-Keytruda portfolio before 2028 patent expiration.",
+    "key_segments": [
+      "Oncology",
+      "Vaccines",
+      "Hospital Acute Care",
+      "Animal Health",
+      "Cardiovascular"
+    ],
+    "financial_highlights": [
+      "Revenue of $64B in FY2024, up 7% YoY with Keytruda growing 18% to $25.3B",
+      "Gardasil revenue declined 10% due to China destocking, creating near-term headwinds",
+      "R&D investment of $14B (22% of revenue) focused on building the post-Keytruda pipeline",
+      "Free cash flow of $14B supporting the $11.4B Prometheus Biosciences acquisition for immunology"
+    ],
+    "top_risks": [
+      {
+        "risk": "Keytruda Patent Cliff",
+        "description": "Keytruda loses exclusivity in 2028 with $25B+ in annual revenue at risk from biosimilar competition",
+        "severity": "High",
+        "likelihood": 5,
+        "impact": 5
+      },
+      {
+        "risk": "Pipeline Concentration",
+        "description": "Merck must successfully replace Keytruda revenue through pipeline assets and M&A, requiring near-perfect execution",
+        "severity": "High",
+        "likelihood": 4,
+        "impact": 5
+      },
+      {
+        "risk": "China Volume Decline",
+        "description": "Gardasil revenue in China declined sharply as anti-corruption campaigns and inventory adjustments impacted vaccine distribution",
+        "severity": "Medium",
+        "likelihood": 4,
+        "impact": 3
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "Subcutaneous Keytruda",
+        "detail": "Developing subQ formulation of Keytruda to extend franchise lifecycle, improve patient convenience, and maintain share post-LOE",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "ADC & Bispecific Pipeline",
+        "detail": "Advancing 10+ antibody-drug conjugates and bispecific antibodies to build a diversified oncology portfolio beyond Keytruda",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Immunology Expansion",
+        "detail": "Leveraging the Prometheus acquisition (TL1A) to build a $10B+ immunology franchise in IBD and other autoimmune diseases",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 8,
+      "market_position": 9,
+      "financial_health": 8,
+      "risk_profile": 6
+    },
+    "management_tone": "Cautiously Optimistic",
+    "management_tone_score": 7,
+    "bull_case": "SubQ Keytruda extends franchise by 3+ years, ADC pipeline delivers 5+ blockbusters, and Prometheus TL1A becomes a $10B+ inflammatory disease franchise.",
+    "bear_case": "Keytruda biosimilar erosion exceeds 50% by 2030, pipeline assets fail in late-stage trials, and China vaccine recovery stalls, leaving a massive revenue gap.",
+    "analyst_verdict": "BUY \u2014 Merck's deep oncology pipeline and strategic M&A provide a credible path to replacing Keytruda revenue, though the 2028 cliff creates binary risk that warrants monitoring.",
+    "wacc": 0.085,
+    "growth_rate": 0.03,
+    "fcf_base": 14000,
+    "sensitivity": {
+      "rates": -0.05,
+      "inflation": -0.1,
+      "supply_chain": -0.2
+    }
+  },
+  "CVX": {
+    "company_name": "Chevron Corporation",
+    "fiscal_year": "FY2024",
+    "sector": "Energy",
+    "business_model": "Chevron is a global integrated energy company operating through Upstream (oil & gas exploration/production in the Permian Basin, Gulf of Mexico, Australia, Kazakhstan) and Downstream (refining, marketing, chemicals, lubricants). The company is the second-largest US oil producer.",
+    "key_segments": [
+      "Upstream Production",
+      "Downstream Refining",
+      "Chemicals",
+      "Renewable Fuels",
+      "LNG"
+    ],
+    "financial_highlights": [
+      "Revenue of $195B in FY2024 with net income of $21B at $78/barrel average Brent",
+      "Production of 3.1M BOE/day following the $53B Hess acquisition adding Guyana assets",
+      "Free cash flow of $23B enabling $17B+ in shareholder returns through buybacks and dividends",
+      "Permian Basin production grew 12% to 950K BOE/day with industry-leading capital efficiency"
+    ],
+    "top_risks": [
+      {
+        "risk": "Oil Price Dependency",
+        "description": "Each $10/barrel oil price decline reduces annual cash flow by approximately $3.5B",
+        "severity": "High",
+        "likelihood": 4,
+        "impact": 5
+      },
+      {
+        "risk": "Hess Arbitration Risk",
+        "description": "ExxonMobil's preemptive rights claim over Hess's Guyana assets could delay or block Chevron's transformative acquisition",
+        "severity": "High",
+        "likelihood": 3,
+        "impact": 5
+      },
+      {
+        "risk": "Energy Transition Pressure",
+        "description": "Activist investor pressure and stranded asset risk from accelerating renewable adoption could compress long-term valuation",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 3
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "Hess Integration",
+        "detail": "Closing and integrating the $53B Hess acquisition to capture Guyana's world-class Stabroek block with 11B+ barrels of recoverable resources",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "Permian Optimization",
+        "detail": "Driving Permian Basin production efficiency through automation, AI-guided drilling, and water recycling infrastructure",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Lower Carbon Ventures",
+        "detail": "Investing in hydrogen, carbon capture, renewable fuels, and offsets to position for evolving energy demand mix",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 6,
+      "market_position": 9,
+      "financial_health": 9,
+      "risk_profile": 5
+    },
+    "management_tone": "Optimistic",
+    "management_tone_score": 7,
+    "bull_case": "Hess deal closes successfully adding 30+ years of Guyana growth, oil stays above $80, and Chevron generates $30B+ annual FCF enabling 8%+ total shareholder yield.",
+    "bear_case": "Hess arbitration blocks the acquisition, oil prices fall below $60 on demand destruction, and accelerated energy transition reduces long-term oil demand outlook.",
+    "analyst_verdict": "BUY \u2014 Chevron's low-cost upstream portfolio, strong balance sheet, and 37-year dividend increase streak make it the premium integrated energy investment.",
+    "wacc": 0.085,
+    "growth_rate": 0.02,
+    "fcf_base": 23000,
+    "sensitivity": {
+      "rates": -0.1,
+      "inflation": 0.1,
+      "supply_chain": -0.2
+    }
+  },
+  "GE": {
+    "company_name": "GE Aerospace",
+    "fiscal_year": "FY2024",
+    "sector": "Industrials",
+    "business_model": "GE Aerospace (formerly General Electric) is the world's largest jet engine manufacturer, producing engines and propulsion systems for commercial and military aircraft. Following the spinoffs of GE HealthCare and GE Vernova, the company is a pure-play aerospace business. Key platforms include LEAP (narrowbody), GE9X (widebody), and T700 (military).",
+    "key_segments": [
+      "Commercial Engines & Services",
+      "Military Engines",
+      "Systems & Equipment",
+      "LEAP Engine",
+      "GE9X Engine"
+    ],
+    "financial_highlights": [
+      "Revenue of $38B in FY2024, up 10% YoY with services growing 14% at 70%+ margins",
+      "Operating margin expanded to 24% reflecting aftermarket pricing power and fleet utilization recovery",
+      "Commercial engine deliveries grew 8% addressing the severe post-pandemic supply shortage",
+      "Free cash flow of $6.1B as aftermarket demand normalized and shop visit volumes increased"
+    ],
+    "top_risks": [
+      {
+        "risk": "Supply Chain Constraints",
+        "description": "Engine delivery delays from casting, forging, and component shortages continue limiting new engine output and customer satisfaction",
+        "severity": "High",
+        "likelihood": 4,
+        "impact": 4
+      },
+      {
+        "risk": "LEAP Durability Issues",
+        "description": "Durability defect in LEAP-1B HPT blades requires accelerated shop visits, increasing warranty costs and reducing engine time-on-wing",
+        "severity": "High",
+        "likelihood": 4,
+        "impact": 4
+      },
+      {
+        "risk": "Narrow Customer Base",
+        "description": "Boeing (737 MAX) and Airbus (A320neo) production rates directly determine new engine demand, creating dependency on OEM execution",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 4
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "LEAP Durability Fix",
+        "detail": "Implementing upgraded HPT blade design to resolve durability issues and restore time-on-wing targets for the 3,700+ engine installed base",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "Aftermarket Expansion",
+        "detail": "Growing the $22B commercial services backlog through long-term service agreements and digital analytics-driven predictive maintenance",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Open Fan Architecture",
+        "detail": "Developing the revolutionary RISE open fan engine architecture targeting 20%+ fuel efficiency improvement for next-gen narrowbody aircraft",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 8,
+      "market_position": 10,
+      "financial_health": 8,
+      "risk_profile": 4
+    },
+    "management_tone": "Optimistic",
+    "management_tone_score": 8,
+    "bull_case": "LEAP durability issues are resolved, aftermarket revenue compounds at 15%+ annually, and GE captures 60%+ share of next-gen narrowbody engine selection with RISE technology.",
+    "bear_case": "Supply chain delays persist, LEAP warranty costs escalate, and Boeing's ongoing production crisis limits new engine orders, slowing revenue growth momentum.",
+    "analyst_verdict": "BUY \u2014 GE Aerospace's duopoly position, massive installed base of 44,000+ engines, and 70%+ margin aftermarket business create a rare high-quality industrial compounder.",
+    "wacc": 0.085,
+    "growth_rate": 0.035,
+    "fcf_base": 6100,
+    "sensitivity": {
+      "rates": -0.1,
+      "inflation": -0.2,
+      "supply_chain": -0.35
+    }
+  },
+  "LMT": {
+    "company_name": "Lockheed Martin Corporation",
+    "fiscal_year": "FY2024",
+    "sector": "Industrials",
+    "business_model": "Lockheed Martin is the world's largest defense contractor, operating through Aeronautics (F-35, F-16, C-130), Missiles & Fire Control (HIMARS, PAC-3, hypersonics), Rotary & Mission Systems (Sikorsky helicopters, radar), and Space (Orion, GPS satellites, hypersonic R&D). The F-35 program alone represents 27% of total revenue.",
+    "key_segments": [
+      "Aeronautics",
+      "Missiles & Fire Control",
+      "Rotary & Mission Systems",
+      "Space"
+    ],
+    "financial_highlights": [
+      "Revenue of $71B in FY2024, up 5% YoY with record backlog of $165B providing multi-year visibility",
+      "Operating margin of 13.5% reflecting mature program profitability partially offset by new program losses",
+      "F-35 deliveries of 148 aircraft with production rate targeting 180+/year by 2026",
+      "Free cash flow of $6.8B supporting 2.7% dividend yield with 21 years of consecutive dividend increases"
+    ],
+    "top_risks": [
+      {
+        "risk": "F-35 Sustainability Costs",
+        "description": "F-35 sustainment costs of $44K/flight hour significantly exceed targets, creating political risk and potential budget reprioritization",
+        "severity": "High",
+        "likelihood": 4,
+        "impact": 4
+      },
+      {
+        "risk": "Pentagon Budget Uncertainty",
+        "description": "Defense spending growth could slow under future administrations or sequestration scenarios, limiting top-line growth",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 3
+      },
+      {
+        "risk": "Classified Program Risk",
+        "description": "Large classified programs carry development risk that could result in write-downs if technical milestones are missed",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 4
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "F-35 TR3 Upgrade",
+        "detail": "Delivering the Technical Refresh 3 hardware/software upgrade to unlock Block 4 capabilities and resume full-rate production",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "Hypersonic Weapons",
+        "detail": "Developing and producing hypersonic strike weapons for all US military branches as a critical national security priority",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Space & Missile Defense",
+        "detail": "Expanding space-based sensor networks and next-gen missile defense interceptors as the space domain becomes militarized",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 8,
+      "market_position": 10,
+      "financial_health": 8,
+      "risk_profile": 3
+    },
+    "management_tone": "Optimistic",
+    "management_tone_score": 7,
+    "bull_case": "Global defense spending increases 5%+ annually driven by NATO rearmament and Indo-Pacific competition, F-35 sustains multi-decade production, and hypersonics open a $20B+ addressable market.",
+    "bear_case": "Pentagon budget cuts reduce procurement spending, F-35 sustainment costs trigger program restructuring, and international F-35 sales slow due to geopolitical considerations.",
+    "analyst_verdict": "BUY \u2014 Lockheed Martin's $165B backlog, critical national security franchises, and consistent capital returns make it a core defense holding in an era of rising global security threats.",
+    "wacc": 0.08,
+    "growth_rate": 0.025,
+    "fcf_base": 6800,
+    "sensitivity": {
+      "rates": -0.05,
+      "inflation": -0.15,
+      "supply_chain": -0.2
+    }
+  },
+  "ABBV": {
+    "company_name": "AbbVie Inc.",
+    "fiscal_year": "FY2024",
+    "sector": "Healthcare",
+    "business_model": "AbbVie is a global biopharmaceutical company focused on immunology (Skyrizi, Rinvoq), oncology (Imbruvica, Venclexta), neuroscience (Botox, Vraylar), and aesthetics (Botox Cosmetic, Juvederm). The company successfully navigated the Humira patent cliff through its diversified immunology franchise.",
+    "key_segments": [
+      "Immunology",
+      "Oncology",
+      "Neuroscience",
+      "Aesthetics",
+      "Eye Care"
+    ],
+    "financial_highlights": [
+      "Revenue of $56B in FY2024 as Skyrizi ($10.2B) and Rinvoq ($5.5B) offset Humira biosimilar erosion",
+      "Adjusted operating margin of 48% reflecting premium specialty pharma pricing power",
+      "R&D investment of $7.5B focused on expanding Skyrizi/Rinvoq labels and advancing neuroscience pipeline",
+      "Free cash flow of $22B supporting aggressive debt paydown from the $63B Allergan acquisition"
+    ],
+    "top_risks": [
+      {
+        "risk": "Humira Revenue Decline",
+        "description": "Humira revenue declined 35% to $8.7B from $21.2B peak as 10+ biosimilars entered the US market",
+        "severity": "High",
+        "likelihood": 5,
+        "impact": 4
+      },
+      {
+        "risk": "Immunology Concentration",
+        "description": "Skyrizi and Rinvoq represent 28%+ of revenue and must continue growing to fully replace Humira's lost revenue",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 4
+      },
+      {
+        "risk": "Aesthetics Demand Weakness",
+        "description": "GLP-1 weight loss drugs may reduce demand for body contouring procedures, impacting the CoolSculpting and liposuction-related aesthetics portfolio",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 3
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "Skyrizi/Rinvoq Label Expansion",
+        "detail": "Obtaining new indications for Skyrizi in ulcerative colitis and Rinvoq in atopic dermatitis to expand the immunology franchise to $27B+ peak sales",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "Neuroscience Pipeline",
+        "detail": "Advancing emraclidine (schizophrenia) and ABBV-951 (Parkinson's) to build a differentiated CNS franchise",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Oncology Next-Gen",
+        "detail": "Developing next-gen BTK inhibitors and ADCs to rebuild the oncology pipeline following Imbruvica's competitive decline",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 8,
+      "market_position": 8,
+      "financial_health": 8,
+      "risk_profile": 4
+    },
+    "management_tone": "Optimistic",
+    "management_tone_score": 8,
+    "bull_case": "Skyrizi/Rinvoq reach $27B combined peak sales by 2027, neuroscience pipeline delivers 2+ blockbusters, and Humira erosion bottoms out, driving revenue re-acceleration to 8%+ growth.",
+    "bear_case": "Skyrizi/Rinvoq face unexpected competition from new immunology entrants, Humira erosion accelerates beyond forecasts, and aesthetics demand weakens from GLP-1 cannibalization.",
+    "analyst_verdict": "BUY \u2014 AbbVie has successfully navigated the Humira cliff with Skyrizi/Rinvoq stepping up as worthy successors, and the 3.8% dividend yield provides income support during the transition.",
+    "wacc": 0.08,
+    "growth_rate": 0.035,
+    "fcf_base": 22000,
+    "sensitivity": {
+      "rates": -0.05,
+      "inflation": -0.1,
+      "supply_chain": -0.15
+    }
+  },
+  "SONY": {
+    "company_name": "Sony Group Corporation",
+    "fiscal_year": "FY2024",
+    "sector": "Technology",
+    "business_model": "Sony is a diversified Japanese technology and entertainment conglomerate operating through Game & Network Services (PlayStation), Music (Sony Music, Columbia), Pictures (Sony Pictures, Columbia), Entertainment Technology & Services (TVs, cameras, sensors), Imaging & Sensing Solutions (CMOS image sensors), and Financial Services.",
+    "key_segments": [
+      "Game & Network Services",
+      "Music",
+      "Pictures",
+      "Image Sensors",
+      "Electronics",
+      "Financial Services"
+    ],
+    "financial_highlights": [
+      "Revenue of $88B in FY2024, up 8% YoY with PS5 install base reaching 60M+ units",
+      "Music segment operating income grew 22% driven by streaming royalties and catalog acquisitions",
+      "CMOS image sensor market share of 50%+ with Apple iPhone as the anchor customer",
+      "Free cash flow of $6.5B supporting strategic content acquisitions and share buybacks"
+    ],
+    "top_risks": [
+      {
+        "risk": "Gaming Cyclicality",
+        "description": "PS5 mid-cycle dynamics and competition from Xbox, Nintendo Switch 2, and cloud gaming could slow hardware and software sales",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 3
+      },
+      {
+        "risk": "Image Sensor Concentration",
+        "description": "Apple represents 30%+ of image sensor revenue, creating single-customer dependency in the semiconductor business",
+        "severity": "High",
+        "likelihood": 3,
+        "impact": 4
+      },
+      {
+        "risk": "Content Cost Inflation",
+        "description": "Rising costs for music catalog acquisitions, game development, and film production could compress entertainment margins",
+        "severity": "Medium",
+        "likelihood": 3,
+        "impact": 3
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "PS5 Live Service Games",
+        "detail": "Launching multiple live service games to drive recurring revenue and PlayStation Network monetization beyond traditional game sales",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "Music & Anime Expansion",
+        "detail": "Acquiring music catalogs and anime studios to build the world's largest entertainment IP portfolio across East and West",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Automotive Sensors",
+        "detail": "Expanding CMOS image sensor penetration in autonomous driving applications through ADAS and LiDAR integration",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 8,
+      "market_position": 8,
+      "financial_health": 8,
+      "risk_profile": 4
+    },
+    "management_tone": "Optimistic",
+    "management_tone_score": 7,
+    "bull_case": "PlayStation sustains 15%+ software attach rates, music streaming royalties compound at 12%, and automotive image sensors create a $5B+ revenue stream by 2030.",
+    "bear_case": "PS5 live service games underperform, Apple diversifies image sensor suppliers, and anime/music acquisition spending fails to deliver acceptable returns on invested capital.",
+    "analyst_verdict": "BUY \u2014 Sony's unique position spanning gaming, music, film, and semiconductors creates a diversified entertainment-technology platform with multiple secular growth drivers.",
+    "wacc": 0.08,
+    "growth_rate": 0.035,
+    "fcf_base": 6500,
+    "sensitivity": {
+      "rates": -0.1,
+      "inflation": -0.15,
+      "supply_chain": -0.25
+    }
+  },
+  "TMO": {
+    "company_name": "Thermo Fisher Scientific Inc.",
+    "fiscal_year": "FY2024",
+    "sector": "Healthcare",
+    "business_model": "Thermo Fisher is the world's largest life sciences tools and diagnostics company, serving pharmaceutical, biotech, academic, and government customers. The company provides analytical instruments, reagents, consumables, software, and services essential for drug discovery, clinical trials, and manufacturing.",
+    "key_segments": [
+      "Life Sciences Solutions",
+      "Analytical Instruments",
+      "Specialty Diagnostics",
+      "Laboratory Products & Services"
+    ],
+    "financial_highlights": [
+      "Revenue of $43B in FY2024, down 2% YoY as COVID testing revenue normalized and biotech funding tightened",
+      "Core organic revenue growth of 1% as instrument replacement cycles and pharma outsourcing growth offset biotech spending weakness",
+      "Operating margin of 24% reflecting portfolio optimization and cost synergies from prior acquisitions",
+      "Free cash flow of $7.2B supporting strategic bolt-on M&A and $4B+ annual share buybacks"
+    ],
+    "top_risks": [
+      {
+        "risk": "Biotech Funding Downturn",
+        "description": "Reduced venture capital and IPO funding for emerging biotech companies has slowed instrument and consumable purchasing",
+        "severity": "Medium",
+        "likelihood": 4,
+        "impact": 3
+      },
+      {
+        "risk": "China Market Slowdown",
+        "description": "Anti-corruption campaigns and government procurement reforms in China are delaying instrument orders and reducing visibility",
+        "severity": "Medium",
+        "likelihood": 4,
+        "impact": 3
+      },
+      {
+        "risk": "Post-COVID Normalization",
+        "description": "COVID testing and vaccine/therapy revenue has declined from $8B+ peak to <$1B, creating a persistent revenue headwind",
+        "severity": "Medium",
+        "likelihood": 5,
+        "impact": 3
+      }
+    ],
+    "strategic_priorities": [
+      {
+        "priority": "Pharma Services Expansion",
+        "detail": "Growing the CDMO (contract development and manufacturing) business to capture pharma outsourcing of biologics production",
+        "time_horizon": "Short-term"
+      },
+      {
+        "priority": "AI-Enabled Instruments",
+        "detail": "Embedding AI and machine learning into analytical instruments to automate workflows and improve throughput for customers",
+        "time_horizon": "Medium-term"
+      },
+      {
+        "priority": "Cell & Gene Therapy Tools",
+        "detail": "Building the dominant consumables and instruments platform for the rapidly growing cell and gene therapy manufacturing market",
+        "time_horizon": "Long-term"
+      }
+    ],
+    "competitive_scores": {
+      "innovation": 8,
+      "market_position": 10,
+      "financial_health": 9,
+      "risk_profile": 3
+    },
+    "management_tone": "Cautiously Optimistic",
+    "management_tone_score": 7,
+    "bull_case": "Biotech funding recovers driving instrument demand, pharma outsourcing accelerates to CDMOs, and cell/gene therapy tools create a $5B+ high-growth market for Thermo Fisher.",
+    "bear_case": "Biotech funding remains depressed, China market deterioration worsens, and large-cap pharma brings drug manufacturing in-house, reducing CDMO growth.",
+    "analyst_verdict": "BUY \u2014 Thermo Fisher's mission-critical position in life sciences, 80% recurring revenue mix, and consistent M&A execution make it a core healthcare compounder.",
+    "wacc": 0.08,
+    "growth_rate": 0.035,
+    "fcf_base": 7200,
+    "sensitivity": {
+      "rates": -0.05,
+      "inflation": -0.1,
+      "supply_chain": -0.2
+    }
+  }
 }
