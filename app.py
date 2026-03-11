@@ -131,7 +131,7 @@ div[data-testid="stTabs"] button[aria-selected="true"] {
     animation: shimmer 8s linear infinite, fadeUp 1s ease-out forwards;
 }
 .hero-subtitle {
-    font-size: 18px; color: #a1a1aa; line-height: 1.6; font-weight: 400; max-width: 650px; margin-bottom: 40px;
+    font-size: 18px; color: #a1a1aa; line-height: 1.6; font-weight: 400; max-width: 850px; margin-bottom: 40px;
     animation: fadeUp 1s ease-out 0.2s forwards; opacity: 0;
 }
 
@@ -767,10 +767,36 @@ def fetch_live_data(ticker):
         except Exception:
             pass
             
+        market_cap = info.get('marketCap')
+        pe_ratio = info.get('trailingPE')
+        
+        # Tertiary Fallback for missing Market Cap and P/E (often missing in v8 chart fallback)
+        if not market_cap or str(market_cap) == 'N/A' or not pe_ratio or str(pe_ratio) == 'N/A':
+            try:
+                import urllib.request, re, gzip
+                url = f'https://finance.yahoo.com/quote/{ticker}'
+                req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0', 'Accept-Encoding': 'gzip, deflate'})
+                with urllib.request.urlopen(req) as r:
+                    html = r.read()
+                    if r.info().get('Content-Encoding') == 'gzip':
+                        html = gzip.decompress(html)
+                    html = html.decode('utf-8')
+                    mcap_m = re.search(r'data-field=\"regularMarketCap\"[^>]*value=\"([^>]+)\"', html)
+                    pe_m = re.search(r'data-field=\"trailingPE\"[^>]*value=\"([^>]+)\"', html)
+                    if not mcap_m: mcap_m = re.search(r'>Market Cap.*?<fin-streamer[^>]*>([\d\.]+T?B?M?)', html)
+                    if not pe_m: pe_m = re.search(r'>PE Ratio.*?<fin-streamer[^>]*>([\d\.]+)', html)
+                    
+                    if mcap_m:
+                        market_cap = mcap_m.group(1)
+                    if pe_m:
+                        pe_ratio = pe_m.group(1)
+            except Exception:
+                pass
+                
         return {
             'price': info.get('regularMarketPrice', 'N/A'),
-            'market_cap': info.get('marketCap') or 'N/A',  # Fix for $33B bug: use info.get directly
-            'pe_ratio': info.get('trailingPE', 'N/A'),
+            'market_cap': market_cap or 'N/A',
+            'pe_ratio': pe_ratio or 'N/A',
             'ev_ebitda': ev_ebitda,
             'week52_high': info.get('fiftyTwoWeekHigh', 'N/A'),
             'week52_low': info.get('fiftyTwoWeekLow', 'N/A'),
