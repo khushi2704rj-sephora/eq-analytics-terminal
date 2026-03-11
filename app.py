@@ -770,28 +770,41 @@ def fetch_live_data(ticker):
         market_cap = info.get('marketCap')
         pe_ratio = info.get('trailingPE')
         
-        # Tertiary Fallback for missing Market Cap and P/E (often missing in v8 chart fallback)
-        if not market_cap or str(market_cap) == 'N/A' or not pe_ratio or str(pe_ratio) == 'N/A':
+        # Tertiary Fallback for missing metrics via Finviz (highly structured table)
+        if not market_cap or str(market_cap) == 'N/A' or not pe_ratio or str(pe_ratio) == 'N/A' or str(beta) == 'N/A' or str(ev_ebitda) == 'N/A':
             try:
                 import urllib.request, re, gzip
-                url = f'https://finance.yahoo.com/quote/{ticker}'
-                req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0', 'Accept-Encoding': 'gzip, deflate'})
-                with urllib.request.urlopen(req) as r:
+                url = f'https://finviz.com/quote.ashx?t={ticker}'
+                req = urllib.request.Request(url, headers={
+                    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+                    'Accept-Language': 'en-US,en;q=0.5',
+                    'Accept-Encoding': 'gzip, deflate',
+                    'Connection': 'keep-alive'
+                })
+                with urllib.request.urlopen(req, timeout=5) as r:
                     html = r.read()
                     if r.info().get('Content-Encoding') == 'gzip':
                         html = gzip.decompress(html)
-                    html = html.decode('utf-8')
-                    mcap_m = re.search(r'data-field=\"regularMarketCap\"[^>]*value=\"([^>]+)\"', html)
-                    pe_m = re.search(r'data-field=\"trailingPE\"[^>]*value=\"([^>]+)\"', html)
+                    html = html.decode('utf-8', errors='ignore')
                     
-                    if not mcap_m: mcap_m = re.search(r'>Market Cap.*?<fin-streamer[^>]*>([\d\.]+T?B?M?)', html)
-                    if not pe_m: pe_m = re.search(r'>PE Ratio.*?<fin-streamer[^>]*>([\d\.]+)', html)
-                    
-                    if mcap_m:
-                        market_cap = mcap_m.group(1)
-                    if pe_m:
-                        pe_ratio = pe_m.group(1)
-            except Exception:
+                    if not market_cap or str(market_cap) == 'N/A':
+                        m = re.search(r'>Market Cap.*?<td[^>]*><b[^>]*>([^<]+)<\/b>', html)
+                        if m: market_cap = m.group(1)
+                        
+                    if not pe_ratio or str(pe_ratio) == 'N/A':
+                        m = re.search(r'>P/E.*?<td[^>]*><b[^>]*>([^<]+)<\/b>', html)
+                        if m: pe_ratio = m.group(1)
+                        
+                    if str(beta) == 'N/A':
+                        m = re.search(r'>Beta.*?<td[^>]*><b[^>]*>([^<]+)<\/b>', html)
+                        if m: beta = m.group(1)
+                        
+                    if str(ev_ebitda) == 'N/A':
+                        m = re.search(r'>EV/EBITDA.*?<td[^>]*><b[^>]*>([^<]+)<\/b>', html)
+                        if m: ev_ebitda = m.group(1)
+            except Exception as e:
+                print(f"Finviz Scraper Failed: {e}")
                 pass
                 
         return {
@@ -1335,6 +1348,8 @@ with tabs[1]:
                     return f'{prefix}{v:,.{decimals}f}{suffix}'
                 except (ValueError, TypeError):
                     return str(v)
+            
+            st.warning(f"DEBUG LIVE OBJECT: {live}")
             
             st.html(f'''
             <div style="display:flex; gap:16px; flex-wrap:wrap; margin-bottom:24px;">
